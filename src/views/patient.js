@@ -2,6 +2,7 @@ import { getEstimate, currentStationWaitEstimate } from "../engine/estimator.js"
 import { fmtDuration, el } from "../util.js";
 import { nameOf } from "../i18n.js";
 import { actionStepOut, actionReturn } from "../actions.js";
+import { renderJourneyTracker } from "./journeyTracker.js";
 
 function stationName(config, locale, stationId, data) {
   const s = data.stations.find((x) => x.id === stationId);
@@ -37,12 +38,98 @@ function computeLabFirstAlert(entityId, ctx) {
   };
 }
 
+// Small chip in the hero header giving a one-glance status word beyond the
+// station name — "waiting", "up now", "away"... a modern tracking-app
+// habit (delivery/ride apps always show a status word, not just a number).
+function heroStatusChip(entity, awayNudging) {
+  if (!entity) return null;
+  if (awayNudging) return { icon: "bi-bell-fill", label: "Head back now" };
+  if (entity.away) return { icon: "bi-geo-alt-fill", label: "Stepped out" };
+  if (entity.status === "called") return { icon: "bi-megaphone-fill", label: "You're being called" };
+  if (entity.status === "in_service") return { icon: "bi-play-circle-fill", label: "In progress" };
+  if (entity.status === "waiting") return { icon: "bi-hourglass-split", label: "Waiting" };
+  return null;
+}
+
+function renderHero(entityId, ctx) {
+  const { state, data, config, locale, t } = ctx;
+  const meta = data.entities.find((e) => e.id === entityId);
+  const entity = state.entities[entityId];
+
+  const hero = el("div", { class: "hero-card" });
+  hero.appendChild(el("div", { class: "hero-token" }, `${t("entity.id_prefix")} ${meta.display_token}`));
+
+  if (!entity || entity.status === "not_registered") {
+    hero.appendChild(
+      el("div", { class: "text-center py-3" }, [
+        el("i", { class: "bi bi-clock-history hero-terminal-icon" }),
+        el("div", { class: "hero-station mt-2" }, t("action.not_arrived"))
+      ])
+    );
+    return { hero, result: null, entity };
+  }
+  if (entity.status === "no_show") {
+    hero.appendChild(
+      el("div", { class: "text-center py-3" }, [
+        el("i", { class: "bi bi-exclamation-octagon-fill hero-terminal-icon" }),
+        el("div", { class: "hero-station mt-2" }, t("action.no_show"))
+      ])
+    );
+    return { hero, result: null, entity };
+  }
+  if (entity.status === "journey_complete") {
+    hero.appendChild(
+      el("div", { class: "text-center py-3" }, [
+        el("i", { class: "bi bi-check-circle-fill hero-terminal-icon" }),
+        el("div", { class: "hero-station mt-2" }, t("action.done")),
+        el(
+          "div",
+          { class: "hero-eta-unit mt-2" },
+          "Total visit time: " + fmtDuration(minutesBetween(meta.actual_arrival_min, entity.journeyCompletedAt))
+        )
+      ])
+    );
+    return { hero, result: null, entity };
+  }
+
+  const stName = stationName(config, locale, entity.currentStationId, data);
+  hero.appendChild(el("div", { class: "hero-station" }, stName));
+
+  const result = getEstimate(ctx.estimatorMode, entityId, state, data, config, ctx.nowMin);
+  ctx.logPredictionShown(entityId, entity.currentStationId, ctx.estimatorMode, result);
+
+  if (!result.available) {
+    hero.appendChild(el("div", { class: "hero-eta-unit mt-3" }, [el("i", { class: "bi bi-hourglass-split me-2" }), t("estimate.not_available")]));
+  } else if (result.isRange) {
+    hero.appendChild(
+      el("div", { class: "hero-eta" }, `${Math.max(0, Math.round(result.lowerBoundMin))}–${Math.max(0, Math.round(result.headlineMin))}`)
+    );
+    hero.appendChild(el("div", { class: "hero-eta-unit" }, `min, ${t("estimate.updating")} · until your visit is fully complete`));
+  } else {
+    hero.appendChild(el("div", { class: "hero-eta" }, `~${Math.max(0, Math.round(result.headlineMin))}`));
+    hero.appendChild(el("div", { class: "hero-eta-unit" }, "min for this station's queue only"));
+  }
+
+  const stepOutThreshold = (config.display && config.display.step_out_min_wait_min) || 20;
+  const nudgeThreshold = (config.display && config.display.return_nudge_lead_time_min) || 15;
+  let awayNudging = false;
+  if (entity.away) {
+    const stationWait = currentStationWaitEstimate(entityId, state, data, config, ctx.nowMin);
+    awayNudging = stationWait.available && stationWait.p80Min <= nudgeThreshold;
+  }
+  const chip = heroStatusChip(entity, awayNudging);
+  if (chip) {
+    hero.appendChild(el("div", { class: "hero-status-chip" }, [el("i", { class: `bi ${chip.icon}` }), chip.label]));
+  }
+
+  return { hero, result, entity, stepOutThreshold, nudgeThreshold, awayNudging };
+}
+
 export function renderPatientView(root, ctx) {
   const { state, data, config, t, locale } = ctx;
   root.innerHTML = "";
 
   const outer = el("div", { class: "row justify-content-center g-4" });
-
   const col = el("div", { class: "col-12 col-md-8 col-lg-5" });
 
   // entity picker
@@ -72,141 +159,54 @@ export function renderPatientView(root, ctx) {
 
   const entityId = ctx.app.selectedEntityId;
   const meta = data.entities.find((e) => e.id === entityId);
-  const entity = state.entities[entityId];
+  const { hero, result, entity, stepOutThreshold, nudgeThreshold, awayNudging } = renderHero(entityId, ctx);
 
-  const cardBody = el("div", { class: "card-body text-center px-4 py-5" });
-  cardBody.appendChild(
-    el("div", { class: "text-uppercase text-muted small fw-bold mb-1" }, `${t("entity.id_prefix")} ${meta.display_token}`)
-  );
+  const body = el("div", { class: "patient-body" });
 
-  if (!entity || entity.status === "not_registered") {
-    cardBody.appendChild(el("div", { class: "fs-4 fw-bold text-muted py-4" }, t("action.not_arrived")));
-  } else if (entity.status === "no_show") {
-    cardBody.appendChild(
-      el("div", { class: "py-4" }, [
-        el("i", { class: "bi bi-exclamation-octagon text-danger", style: "font-size:2.5rem" }),
-        el("div", { class: "fs-5 fw-bold text-danger mt-2" }, t("action.no_show"))
-      ])
-    );
-  } else if (entity.status === "journey_complete") {
-    cardBody.appendChild(
-      el("div", { class: "py-3" }, [
-        el("i", { class: "bi bi-check-circle-fill text-success", style: "font-size:2.8rem" }),
-        el("div", { class: "fs-4 fw-bold mt-2" }, t("action.done")),
-        el(
-          "div",
-          { class: "text-muted mt-2" },
-          "Total visit time: " + fmtDuration(minutesBetween(meta.actual_arrival_min, entity.journeyCompletedAt))
-        )
-      ])
-    );
-  } else {
-    const stName = stationName(config, locale, entity.currentStationId, data);
-    cardBody.appendChild(el("div", { class: "fs-3 fw-bold mb-3" }, stName));
-
-    const result = getEstimate(ctx.estimatorMode, entityId, state, data, config, ctx.nowMin);
-    ctx.logPredictionShown(entityId, entity.currentStationId, ctx.estimatorMode, result);
-
-    if (!result.available) {
-      cardBody.appendChild(
-        el("div", { class: "alert alert-secondary d-inline-block" }, [
-          el("i", { class: "bi bi-hourglass-split me-2" }),
-          t("estimate.not_available")
-        ])
-      );
-    } else if (result.isRange) {
-      cardBody.appendChild(
-        el("div", { class: "estimate-range" }, `${Math.max(0, Math.round(result.lowerBoundMin))}–${Math.max(0, Math.round(result.headlineMin))}`)
-      );
-      cardBody.appendChild(el("div", { class: "estimate-unit" }, `min, ${t("estimate.updating")}`));
-      cardBody.appendChild(el("div", { class: "text-muted small mt-1" }, "until your visit is fully complete"));
-    } else {
-      cardBody.appendChild(el("div", { class: "estimate-range" }, `~${Math.max(0, Math.round(result.headlineMin))}`));
-      cardBody.appendChild(el("div", { class: "estimate-unit" }, "min"));
-      cardBody.appendChild(
-        el("div", { class: "text-muted small mt-1" }, "for this station's queue only — doesn't account for delays")
-      );
-    }
-
-    cardBody.appendChild(
+  if (entity && !["not_registered", "no_show", "journey_complete"].includes(entity.status)) {
+    body.appendChild(
       el(
         "span",
-        { class: "badge rounded-pill text-bg-light border mt-3 px-3 py-2" },
+        { class: "badge rounded-pill text-bg-light border px-3 py-2" },
         ctx.estimatorMode === "proposed" ? t("estimate.heuristic_label") : "Baseline: people ahead × median time"
       )
     );
 
-    if (result.available && result.reasonText) {
-      cardBody.appendChild(
-        el("div", { class: "alert alert-warning text-start mt-3 mb-0" }, [
-          el("i", { class: "bi bi-info-circle-fill me-2" }),
-          el("strong", {}, "Why: "),
-          result.reasonText
-        ])
-      );
+    if (result && result.available && result.reasonText) {
+      body.appendChild(el("div", { class: "info-chip info-chip-why mt-3" }, [el("i", { class: "bi bi-info-circle-fill mt-1" }), el("span", {}, [el("strong", {}, "Why: "), result.reasonText])]));
     }
 
     const alert = computeLabFirstAlert(entityId, ctx);
-    const stepOutThreshold = (config.display && config.display.step_out_min_wait_min) || 20;
-    const nudgeThreshold = (config.display && config.display.return_nudge_lead_time_min) || 15;
-
     if (alert) {
-      cardBody.appendChild(
-        el("div", { class: "alert alert-primary text-start mt-3 mb-0 fw-semibold" }, [
-          el("i", { class: "bi bi-signpost-2-fill me-2" }),
-          alert.message
-        ])
-      );
+      body.appendChild(el("div", { class: "info-chip info-chip-alert mt-3" }, [el("i", { class: "bi bi-signpost-2-fill mt-1" }), alert.message]));
     } else if (entity.away) {
-      // stepped out of the physical waiting area — either a calm "we'll
-      // notify you" state, or, once their turn is close, a real nudge.
-      // Judge this on the wait for *this* station, not the whole
-      // remaining journey — a lab-and-return patient's total-visit
-      // estimate can stay high right up to the moment they're called.
-      const stationWait = currentStationWaitEstimate(entityId, state, data, config, ctx.nowMin);
-      const shouldNudge = stationWait.available && stationWait.p80Min <= nudgeThreshold;
-      if (shouldNudge) {
+      if (awayNudging) {
         ctx.logNudgeShown(entityId, entity.currentStationId);
-        cardBody.appendChild(
-          el("div", { class: "alert alert-danger text-start mt-3 mb-0 fw-bold" }, [
-            el("i", { class: "bi bi-bell-fill me-2" }),
-            t("action.return_now")
-          ])
-        );
+        body.appendChild(el("div", { class: "info-chip info-chip-nudge mt-3" }, [el("i", { class: "bi bi-bell-fill mt-1" }), t("action.return_now")]));
       } else {
-        cardBody.appendChild(
-          el("div", { class: "alert alert-info text-start mt-3 mb-0" }, [
-            el("i", { class: "bi bi-geo-alt-fill me-2" }),
-            t("action.stepped_out")
-          ])
-        );
+        body.appendChild(el("div", { class: "info-chip info-chip-away mt-3" }, [el("i", { class: "bi bi-geo-alt-fill mt-1" }), t("action.stepped_out")]));
       }
-      const backBtn = el("button", { class: "btn btn-outline-primary w-100 mt-3" }, [
-        el("i", { class: "bi bi-arrow-return-left me-2" }),
-        t("action.im_back")
-      ]);
+      const backBtn = el("button", { class: "btn btn-outline-primary pill-btn w-100 mt-3" }, [el("i", { class: "bi bi-arrow-return-left me-2" }), t("action.im_back")]);
       backBtn.addEventListener("click", () => ctx.dispatch(actionReturn, entityId, entity.currentStationId));
-      cardBody.appendChild(backBtn);
+      body.appendChild(backBtn);
     } else if (entity.status === "waiting" || entity.status === "called") {
-      cardBody.appendChild(
-        el("div", { class: "alert alert-light border text-start mt-3 mb-0" }, [
-          el("i", { class: "bi bi-hourglass-split me-2 text-muted" }),
-          t("action.wait")
-        ])
-      );
-      if (entity.status === "waiting" && result.available && result.headlineMin >= stepOutThreshold) {
-        const stepBtn = el("button", { class: "btn btn-outline-secondary w-100 mt-2" }, [
-          el("i", { class: "bi bi-box-arrow-right me-2" }),
-          t("action.step_out")
-        ]);
+      body.appendChild(el("div", { class: "info-chip info-chip-wait mt-3" }, [el("i", { class: "bi bi-hourglass-split mt-1" }), t("action.wait")]));
+      if (entity.status === "waiting" && result && result.available && result.headlineMin >= stepOutThreshold) {
+        const stepBtn = el("button", { class: "btn btn-outline-secondary pill-btn w-100 mt-2" }, [el("i", { class: "bi bi-box-arrow-right me-2" }), t("action.step_out")]);
         stepBtn.addEventListener("click", () => ctx.dispatch(actionStepOut, entityId, entity.currentStationId));
-        cardBody.appendChild(stepBtn);
+        body.appendChild(stepBtn);
       }
     }
   }
 
-  const phone = el("div", { class: "phone-frame" }, [el("div", { class: "phone-screen" }, [cardBody])]);
+  const phone = el("div", { class: "phone-frame" }, [el("div", { class: "phone-screen" }, [hero, body])]);
   col.appendChild(phone);
+
+  // the journey tracker — every checkpoint this visit could touch, in
+  // order, with exactly where the entity is right now
+  if (entity && entity.status !== "not_registered") {
+    col.appendChild(el("div", { class: "mt-3" }, [renderJourneyTracker(entityId, ctx)]));
+  }
 
   // prediction log
   const logCard = el("div", { class: "card mt-3 shadow-sm border-0" }, [
@@ -222,14 +222,10 @@ export function renderPatientView(root, ctx) {
           .reverse()
           .forEach((p) => {
             listGroup.appendChild(
-              el(
-                "li",
-                { class: "list-group-item small d-flex justify-content-between" },
-                [
-                  el("span", {}, `${p.ts.slice(11, 16)} — ${p.estimator}`),
-                  el("span", { class: "text-muted" }, `${p.p50Min}–${p.p80Min} min${p.reasonKey ? " (" + p.reasonKey + ")" : ""}`)
-                ]
-              )
+              el("li", { class: "list-group-item small d-flex justify-content-between" }, [
+                el("span", {}, `${p.ts.slice(11, 16)} — ${p.estimator}`),
+                el("span", { class: "text-muted" }, `${p.p50Min}–${p.p80Min} min${p.reasonKey ? " (" + p.reasonKey + ")" : ""}`)
+              ])
             );
           });
       } else {

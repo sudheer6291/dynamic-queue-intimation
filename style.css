@@ -108,6 +108,134 @@ body {
   font-weight: 700;
 }
 
+/* --- Patient/customer hero header --- */
+.hero-card {
+  background: linear-gradient(155deg, #6366f1, #4f46e5 55%, #4338ca);
+  color: #fff;
+  padding: 1.75rem 1.5rem 1.6rem;
+}
+.hero-token {
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  letter-spacing: 0.09em;
+  color: rgba(255, 255, 255, 0.72);
+  font-weight: 700;
+}
+.hero-station {
+  font-size: 1.35rem;
+  font-weight: 700;
+  margin-top: 0.15rem;
+  line-height: 1.25;
+}
+.hero-eta {
+  font-size: 3.1rem;
+  font-weight: 800;
+  line-height: 1;
+  margin-top: 0.9rem;
+  letter-spacing: -0.02em;
+}
+.hero-eta-unit {
+  font-size: 0.92rem;
+  color: rgba(255, 255, 255, 0.78);
+  font-weight: 600;
+  margin-top: 0.2rem;
+}
+.hero-status-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  background: rgba(255, 255, 255, 0.16);
+  border-radius: 999px;
+  padding: 0.35rem 0.8rem;
+  font-size: 0.78rem;
+  font-weight: 600;
+  margin-top: 1rem;
+}
+.hero-terminal-icon { font-size: 2.6rem; }
+
+.patient-body { padding: 1.25rem 1.25rem 1.5rem; }
+.info-chip {
+  border-radius: 14px;
+  padding: 0.85rem 1rem;
+  font-size: 0.88rem;
+  display: flex;
+  align-items: flex-start;
+  gap: 0.6rem;
+  text-align: left;
+}
+.info-chip + .info-chip { margin-top: 0.6rem; }
+.info-chip-why { background: #fff7e6; color: #92620a; }
+.info-chip-alert { background: #eef2ff; color: #3730a3; font-weight: 600; }
+.info-chip-nudge { background: #fee2e2; color: #b91c1c; font-weight: 700; }
+.info-chip-away { background: #e0f2fe; color: #075985; }
+.info-chip-wait { background: #f4f5f9; color: #565c75; }
+.pill-btn {
+  border-radius: 999px;
+  font-weight: 600;
+  padding: 0.65rem 1.1rem;
+}
+
+/* --- Journey tracker --- */
+.journey-card {
+  background: #fff;
+  border-radius: 20px;
+  padding: 1.25rem 1.25rem 0.4rem;
+  box-shadow: 0 10px 30px -20px rgba(30, 35, 56, 0.35);
+}
+.journey-card-title {
+  font-weight: 700;
+  font-size: 0.92rem;
+  color: var(--brand-ink);
+  margin-bottom: 0.9rem;
+}
+.journey-step { display: flex; gap: 0.85rem; }
+.journey-rail {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 28px;
+  flex-shrink: 0;
+}
+.journey-node {
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.8rem;
+  flex-shrink: 0;
+}
+.journey-node-done { background: #dcfce7; color: #16a34a; }
+.journey-node-current {
+  background: var(--bs-primary);
+  color: #fff;
+  box-shadow: 0 0 0 4px rgba(79, 70, 229, 0.18);
+  animation: journey-pulse 1.8s ease-in-out infinite;
+}
+.journey-node-upcoming {
+  background: #f4f5f9;
+  color: #b6bacb;
+  border: 1.5px dashed #d7dae5;
+}
+.journey-node-skipped { background: #f4f4f6; color: #c7cad6; }
+.journey-connector { width: 2px; flex: 1; min-height: 20px; margin: 2px 0; }
+.journey-connector-filled { background: #c9cdf5; }
+.journey-connector-upcoming {
+  background-image: repeating-linear-gradient(to bottom, #e2e4ee 0 4px, transparent 4px 8px);
+}
+.journey-text { padding-bottom: 1.05rem; flex: 1; }
+.journey-label { font-weight: 600; font-size: 0.9rem; color: var(--brand-ink); }
+.journey-label-upcoming, .journey-label-skipped { color: #9aa0b4; font-weight: 500; }
+.journey-label-current { color: var(--bs-primary); }
+.journey-caption { font-size: 0.76rem; color: var(--brand-soft); margin-top: 0.1rem; }
+.journey-step-last .journey-text { padding-bottom: 0.15rem; }
+
+@keyframes journey-pulse {
+  0%, 100% { box-shadow: 0 0 0 4px rgba(79, 70, 229, 0.18); }
+  50% { box-shadow: 0 0 0 9px rgba(79, 70, 229, 0.06); }
+}
+
 /* --- Board (display board) --- */
 .board-wrap {
   background: radial-gradient(circle at top left, #232a4d, #10142a 70%);

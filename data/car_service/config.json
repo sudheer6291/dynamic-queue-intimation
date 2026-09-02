@@ -83,6 +83,7 @@
       "frontdesk.register_walkin": { "en": "+ New Booking" },
       "frontdesk.register_priority": { "en": "Priority" },
       "patient.title": { "en": "Your Service Visit" },
+      "journey.title": { "en": "Your service journey today" },
       "comparison.yesterday": { "en": "yesterday" },
       "suggestion.pull_forward": { "en": "Pull forward a waitlisted vehicle to fill the gap" },
       "suggestion.lab_first": { "en": "Send diagnostic-flagged vehicles to Diagnostic Bay first while a bay is unavailable" },

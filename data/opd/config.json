@@ -85,6 +85,7 @@
       "frontdesk.register_walkin": { "en": "+ New Appointment", "hi": "+ नई अपॉइंटमेंट" },
       "frontdesk.register_priority": { "en": "Priority", "hi": "प्राथमिकता" },
       "patient.title": { "en": "Your Visit", "hi": "आपकी विज़िट" },
+      "journey.title": { "en": "Your journey today", "hi": "आज आपकी यात्रा" },
       "comparison.yesterday": { "en": "yesterday", "hi": "कल" },
       "suggestion.pull_forward": { "en": "Pull forward a waitlisted patient to fill the gap", "hi": "अंतर भरने के लिए प्रतीक्षा-सूची से मरीज़ को आगे लाएँ" },
       "suggestion.lab_first": { "en": "Send lab-bound patients to the lab first while the doctor is away", "hi": "डॉक्टर के अनुपस्थित रहने पर लैब जाने वाले मरीज़ों को पहले लैब भेजें" }

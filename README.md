@@ -180,6 +180,19 @@ All application logic still targets plain element IDs and a handful of
 functional classes (`.speed-btn`, `#entity-select`, …), so the visual
 layer can be restyled again without touching `src/engine/`.
 
+**The Patient/Customer screen** (`src/views/patient.js`) is redesigned
+around a modern consumer-app tracking pattern — a gradient "hero" header
+(token, current station, the big ETA number, a status chip) above a
+`src/views/journeyTracker.js` vertical timeline showing *every* checkpoint
+the visit could touch, in order: done (checkmark), current (pulsing,
+"you're here now"), and upcoming — including conditional steps not yet
+resolved, captioned with plain-English versions of their `condition_key`
+("if lab ordered"), or "not needed this visit" once resolved away. It's
+built purely from `route.steps` + the entity's own history/`stepIndex` —
+no vertical-specific code, so it renders correctly for OPD's five-step
+lab-and-return route and car/bike servicing's own routes without any
+per-vertical branching.
+
 ## The core idea (§3 of the brief)
 
 There are no screens populated from a fixed snapshot. `data/<vertical>/events.json`
