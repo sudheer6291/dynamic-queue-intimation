@@ -60,9 +60,16 @@ export function deriveState(data, allEvents, nowISO) {
   }
 
   function removeFromQueue(stationId, entityId) {
-    const q = stationState[stationId].queue;
-    const idx = q.indexOf(entityId);
-    if (idx !== -1) q.splice(idx, 1);
+    // stationId is trusted static data everywhere this ran before the
+    // runtime event log became externally writable (via /api/events, with
+    // no auth). A malformed or malicious event referencing an unknown
+    // station must not crash derivation for the whole vertical — so this
+    // (and every other stationState[...] lookup below) treats "unknown
+    // station" as a no-op rather than assuming it always exists.
+    const s = stationState[stationId];
+    if (!s) return -1;
+    const idx = s.queue.indexOf(entityId);
+    if (idx !== -1) s.queue.splice(idx, 1);
     return idx;
   }
 
@@ -82,8 +89,9 @@ export function deriveState(data, allEvents, nowISO) {
       }
       case "queue_joined": {
         const e = getEntity(ev.entity_id);
-        if (!stationState[ev.station_id].queue.includes(ev.entity_id)) {
-          stationState[ev.station_id].queue.push(ev.entity_id);
+        const s = stationState[ev.station_id];
+        if (s && !s.queue.includes(ev.entity_id)) {
+          s.queue.push(ev.entity_id);
         }
         e.currentStationId = ev.station_id;
         e.stepIndex = ev.step_index != null ? ev.step_index : e.stepIndex + 1;
@@ -95,11 +103,13 @@ export function deriveState(data, allEvents, nowISO) {
         break;
       }
       case "priority_insert": {
-        const q = stationState[ev.station_id].queue;
-        const idx = q.indexOf(ev.entity_id);
-        if (idx > 0) {
-          q.splice(idx, 1);
-          q.unshift(ev.entity_id);
+        const s = stationState[ev.station_id];
+        if (s) {
+          const idx = s.queue.indexOf(ev.entity_id);
+          if (idx > 0) {
+            s.queue.splice(idx, 1);
+            s.queue.unshift(ev.entity_id);
+          }
         }
         const e = getEntity(ev.entity_id);
         e.priority = true;
@@ -107,11 +117,13 @@ export function deriveState(data, allEvents, nowISO) {
         break;
       }
       case "pull_forward": {
-        const q = stationState[ev.station_id].queue;
-        const idx = q.indexOf(ev.entity_id);
-        if (idx > 0) {
-          q.splice(idx, 1);
-          q.unshift(ev.entity_id);
+        const s = stationState[ev.station_id];
+        if (s) {
+          const idx = s.queue.indexOf(ev.entity_id);
+          if (idx > 0) {
+            s.queue.splice(idx, 1);
+            s.queue.unshift(ev.entity_id);
+          }
         }
         getEntity(ev.entity_id).history.push(ev);
         break;
@@ -137,8 +149,9 @@ export function deriveState(data, allEvents, nowISO) {
       }
       case "reroute": {
         removeFromQueue(ev.from_station_id, ev.entity_id);
-        if (!stationState[ev.to_station_id].queue.includes(ev.entity_id)) {
-          stationState[ev.to_station_id].queue.push(ev.entity_id);
+        const toStation = stationState[ev.to_station_id];
+        if (toStation && !toStation.queue.includes(ev.entity_id)) {
+          toStation.queue.push(ev.entity_id);
         }
         const e = getEntity(ev.entity_id);
         e.currentStationId = ev.to_station_id;

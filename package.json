@@ -6,9 +6,14 @@
   "type": "module",
   "scripts": {
     "dev": "vercel dev",
-    "serve:static": "python3 -m http.server 8080"
+    "serve:static": "python3 -m http.server 8080",
+    "smoke:api": "node tools/smoke-test-api.mjs",
+    "smoke:ui": "node tools/smoke-test-ui.mjs"
   },
   "dependencies": {
     "@vercel/blob": "^2.8.0"
+  },
+  "devDependencies": {
+    "playwright": "^1.48.0"
   }
 }

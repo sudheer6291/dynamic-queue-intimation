@@ -121,6 +121,30 @@ deployment) and persistence becomes durable.
   is `in_service`" — rather than scraping the rendered DOM. Omit `now` to
   get the fully-replayed end-of-day state.
 
+**Automated smoke tests** (`tools/`) — two ready-to-run scripts against any
+deployed URL, no manual clicking required:
+
+```bash
+npm install               # pulls in @vercel/blob + playwright
+node tools/smoke-test-api.mjs https://your-app.vercel.app   # API contract + persistence round-trip
+node tools/smoke-test-ui.mjs  https://your-app.vercel.app   # real browser: Front Desk action -> reload -> still there
+```
+
+`smoke-test-api.mjs` is pure `fetch` (no browser): for each vertical it
+reads `/api/state`, posts a synthetic event, re-reads it with a *separate*
+request to prove it was actually persisted (not just echoed back), checks
+`deriveState()` picked it up, confirms `storage: "blob"` (flags
+`memory-fallback` as a warning, not a hard failure, since the app still
+works either way), then cleans up after itself via `DELETE`. Safe to run
+repeatedly against a live deployment.
+
+`smoke-test-ui.mjs` drives the actual deployed page with Playwright: Reset
+simulation for a clean slate, Call Next on Front Desk, then a hard page
+**reload** (no client state carried over) to prove the action survived via
+`fetchPersistedEvents` on load — not just that dispatch worked in the same
+tab — cross-checked against `/api/events` directly, then resets again to
+leave the deployment clean.
+
 **Zero regression by design.** `src/apiSync.js`'s three functions
 (`fetchPersistedEvents`, `syncEventsToServer`, `resetPersistedEvents`) all
 fail silently (caught, swallowed) if `/api/*` isn't reachable — e.g. when
