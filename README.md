@@ -411,6 +411,53 @@ someone's actually called).
   single-doctor waits look nothing like car/bike servicing's), so the
   feature is visible in a cold replay, not only when a viewer clicks it.
 
+## No-show risk — surfaced before it happens, not recovered after
+
+The existing no-show handling (`called` → grace period → `no_show` →
+pull-forward suggestion) only ever fires *after* the slot is already
+wasted. `src/engine/noShowRisk.js` adds the missing earlier step: a live,
+explainable risk flag on entities still waiting, so Front Desk can look
+twice before it's too late — not a trained model (this prototype's own
+"no ML" line, §9), a transparent heuristic built from three independently-
+scored, observable signals, each carrying its own plain-language reason
+exactly like a resource pause does:
+
+1. **Stepped out and overdue to return** — `entity.away` for longer than
+   `no_show_risk.away_overdue_min` (default 12 min). The strongest signal,
+   and the literal, honest story behind most real no-shows.
+2. **Already waiting well past the range shown** — the *current-station*
+   wait (same `currentStationWaitEstimate()` "step out" already uses, not
+   the whole-journey number) exceeds `p80 × no_show_risk.overwait_multiplier`
+   (default 1.5).
+3. **Arrived late against their own scheduled slot** — a real,
+   known-at-arrival fact already in every seed entity's metadata, past
+   `no_show_risk.late_arrival_threshold_min` (default 15 min) — deliberately
+   *not* a read of the seed's own `is_no_show_candidate` flag, which would
+   be peeking at the answer instead of predicting it.
+
+Scores combine into `low` / `medium` / `high`; only `medium`+ actually
+surfaces (a badge that fires too easily trains the operator to ignore it —
+the same "bound the update swing" discipline the estimator's own headline
+number follows) as an "⚠ at risk" badge in Front Desk's queue list
+(hover for the exact reason) and a live "At no-show risk right now" count
+on Admin.
+
+**Self-graded, the same way the estimator is.** Every flag actually shown
+is logged (`noshow_risk_flagged`, same "log what you told someone"
+discipline as `prediction_shown`/`return_nudge_shown`), and Admin's new
+"No-show risk — did the flag call it right?" panel
+(`computeNoShowRiskCalibration` in `calibration.js`) grades it the honest
+way: of everyone actually flagged today whose outcome has settled, what
+fraction really did no-show. This isn't hypothetical — the seed generators
+now give each scripted no-show entity a real `stepped_out` event ~20 min
+before their call with no matching `returned` (a true story: they got
+tired of waiting and genuinely never came back), and replaying OPD's full
+day catches both of its real no-shows at the `high` tier. Car and bike
+servicing's faster, multi-resource queues naturally produce far fewer of
+these flags — an entity called within seconds of joining a 3-mechanic bay
+never has time to become a flight risk, and the panel says so honestly
+("no flags settled yet today") rather than manufacturing false drama.
+
 ## Active re-sequencing (M5, §7)
 
 `src/engine/suggestions.js` computes exactly the two interventions the

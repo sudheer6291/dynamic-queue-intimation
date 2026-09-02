@@ -68,3 +68,28 @@ export function computeCalibration(data, allEvents, currentState) {
 
   return { proposed, baseline };
 }
+
+// Grades noShowRisk.js's own claim the same honest way: not "did the flag
+// feel right," but "of everyone actually flagged today, what fraction
+// really did no-show" — replayed straight from noshow_risk_flagged events
+// already sitting in each entity's own history, no recomputation needed
+// (unlike the estimate above, risk level isn't a point-in-time number that
+// drifts as state changes — an entity was flagged or it wasn't).
+// Unsettled entities (still mid-visit — flagged but not yet no-showed or
+// finished) are excluded on purpose: counting them either way would grade
+// a prediction against an outcome that hasn't happened yet.
+export function computeNoShowRiskCalibration(currentState) {
+  const byLevel = { high: { noShow: 0, showed: 0, total: 0 }, medium: { noShow: 0, showed: 0, total: 0 } };
+
+  for (const entity of Object.values(currentState.entities)) {
+    if (!["no_show", "journey_complete"].includes(entity.status)) continue;
+    const flags = entity.history.filter((h) => h.type === "noshow_risk_flagged");
+    if (!flags.length) continue;
+    const level = flags.some((f) => f.level === "high") ? "high" : "medium";
+    byLevel[level].total += 1;
+    if (entity.status === "no_show") byLevel[level].noShow += 1;
+    else byLevel[level].showed += 1;
+  }
+
+  return byLevel;
+}

@@ -1,6 +1,7 @@
 import { nameOf } from "../i18n.js";
 import { el } from "../util.js";
 import { computeLiveSuggestions } from "../engine/suggestions.js";
+import { computeNoShowRisk } from "../engine/noShowRisk.js";
 import {
   actionCallNext,
   actionConfirmArrival,
@@ -189,6 +190,14 @@ export function renderFrontDeskView(root, ctx) {
             queue.map((entityId, idx) => {
               const meta = data.entities.find((e) => e.id === entityId);
               const entity = state.entities[entityId];
+              // "low" is deliberately not shown here — a badge that fires
+              // too easily trains the operator to ignore it, the same
+              // "bound the update swing" discipline the estimator itself
+              // follows for its own headline number.
+              const risk = computeNoShowRisk(entityId, state, data, config, ctx.nowMin);
+              if (risk.level === "medium" || risk.level === "high") {
+                ctx.logNoShowRisk(entityId, stationId, risk.level, risk.reasons);
+              }
               const left = el("span", { class: "d-flex align-items-center gap-2" }, [
                 el("span", { class: "text-muted fw-bold", style: "width:22px" }, String(idx + 1)),
                 el("span", { class: "fw-semibold" }, meta.display_token),
@@ -198,6 +207,16 @@ export function renderFrontDeskView(root, ctx) {
                       el("i", { class: "bi bi-geo-alt-fill me-1" }),
                       t("frontdesk.away_badge")
                     ])
+                  : null,
+                risk.level === "high" || risk.level === "medium"
+                  ? el(
+                      "span",
+                      {
+                        class: `badge ${risk.level === "high" ? "bg-danger-subtle text-danger-emphasis" : "bg-warning-subtle text-warning-emphasis"}`,
+                        title: risk.reasons.join("; ")
+                      },
+                      [el("i", { class: "bi bi-exclamation-triangle-fill me-1" }), "at risk"]
+                    )
                   : null
               ]);
               const right = el("span", { class: "d-flex gap-2" });

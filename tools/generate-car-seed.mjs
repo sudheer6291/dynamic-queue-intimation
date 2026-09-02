@@ -257,6 +257,13 @@ while (
 
     if (flags.isNoShowCandidate && !bayNoShowResolved.has(entityId) && visit === "first") {
       const grace = 4;
+      // A real story for *why* they no-show: stepped out while waiting and
+      // genuinely never came back — also gives noShowRisk.js's "stepped
+      // out and overdue" signal something true to catch beforehand.
+      const stepOutLeadMin = 20;
+      const joinedAt = advisorCompletions[entityId].completeMin;
+      const stepOutAt = Math.max(joinedAt, startCandidate - stepOutLeadMin);
+      emit("stepped_out", stepOutAt, { entity_id: entityId, station_id: "st_bay" });
       emit("called", startCandidate, { entity_id: entityId, station_id: "st_bay", resource_id: resourceId });
       emit("no_show", startCandidate + grace, { entity_id: entityId, station_id: "st_bay" });
       bayNoShowResolved.add(entityId);

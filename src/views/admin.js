@@ -2,7 +2,8 @@ import { nameOf } from "../i18n.js";
 import { fmtDuration, parseISOToMin, el } from "../util.js";
 import { getEstimate } from "../engine/estimator.js";
 import { recoveredSlotsCount, computeLiveSuggestions } from "../engine/suggestions.js";
-import { computeCalibration } from "../engine/calibration.js";
+import { computeCalibration, computeNoShowRiskCalibration } from "../engine/calibration.js";
+import { countAtRisk } from "../engine/noShowRisk.js";
 import { whatIfStationLoad, busiestStationId } from "../engine/capacityPlanner.js";
 
 function calibrationBar(bucket) {
@@ -88,12 +89,14 @@ export function renderAdminView(root, ctx) {
   const physicallyWaiting = waitingEntities.filter((e) => !e.away).length;
   const currentlyAway = waitingEntities.filter((e) => e.away).length;
   const nudgesSent = state.nudgesLog.length;
+  const atRiskNow = countAtRisk(state, data, config, ctx.nowMin);
 
   wrap.appendChild(
     el("div", { class: "row g-3" }, [
       statCard("bi-building", String(physicallyWaiting), t("admin.physically_waiting"), "primary"),
       statCard("bi-geo-alt-fill", String(currentlyAway), t("admin.currently_away"), "info"),
-      statCard("bi-bell-fill", String(nudgesSent), "Return nudges sent today", "secondary")
+      statCard("bi-bell-fill", String(nudgesSent), "Return nudges sent today", "secondary"),
+      statCard("bi-exclamation-triangle-fill", String(atRiskNow), "At no-show risk right now", atRiskNow > 0 ? "danger" : "success")
     ])
   );
 
@@ -143,6 +146,43 @@ export function renderAdminView(root, ctx) {
                 ])
           ])
         ])
+      ])
+    ])
+  );
+
+  // --- no-show risk: did the flag call it right? ---
+  // Same self-grading discipline as the prediction-accuracy panel above,
+  // applied to noShowRisk.js's own claim instead of the estimator's.
+  const riskCal = computeNoShowRiskCalibration(state);
+  function riskCalBlock(bucket, label) {
+    if (bucket.total === 0) {
+      return el("div", { class: "text-muted small" }, `No ${label.toLowerCase()}-risk flags settled yet today.`);
+    }
+    const pct = Math.round((bucket.noShow / bucket.total) * 100);
+    return el("div", {}, [
+      el("div", { class: "d-flex justify-content-between small mb-1" }, [
+        el("span", { class: "fw-semibold" }, `${pct}% of flagged entities actually no-showed`),
+        el("span", { class: "text-muted" }, `${bucket.noShow} of ${bucket.total}`)
+      ]),
+      el("div", { class: "progress", style: "height:10px" }, [el("div", { class: "progress-bar bg-danger", style: `width:${pct}%` })])
+    ]);
+  }
+  wrap.appendChild(
+    el("div", { class: "card border-0 shadow-sm" }, [
+      el("div", { class: "card-header bg-white fw-semibold small text-uppercase text-muted" }, [
+        el("i", { class: "bi bi-exclamation-triangle-fill me-2" }),
+        "No-show risk — did the flag call it right?"
+      ]),
+      el("div", { class: "card-body" }, [
+        el("div", { class: "row g-4" }, [
+          el("div", { class: "col-12 col-md-6" }, [el("div", { class: "fw-semibold mb-2" }, "Flagged high risk"), riskCalBlock(riskCal.high, "High")]),
+          el("div", { class: "col-12 col-md-6" }, [el("div", { class: "fw-semibold mb-2" }, "Flagged medium risk"), riskCalBlock(riskCal.medium, "Medium")])
+        ]),
+        el(
+          "div",
+          { class: "text-muted small mt-3 border-top pt-2" },
+          "Graded only once an entity's outcome is settled (no-show or completed) — flagged-but-still-waiting entities aren't counted either way yet. Built from three observable signals (stepped out and overdue, already waiting past the range shown, arrived late against schedule), not a trained model — hover a queue badge in Front Desk for exactly which reason(s) fired."
+        )
       ])
     ])
   );

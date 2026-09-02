@@ -305,6 +305,17 @@ export function actionNudgeShown(entityId, stationId, ctx) {
   return { events: [makeEvent(config, nowISO, "return_nudge_shown", { entity_id: entityId, station_id: stationId })] };
 }
 
+// Logs that a no-show risk flag was actually shown to front desk — same
+// "log what you told someone" discipline as prediction_shown/
+// return_nudge_shown, and what lets calibration.js later grade whether a
+// flagged entity really did turn out more likely to no-show.
+export function actionNoShowRiskFlagged(entityId, stationId, level, reasons, ctx) {
+  const { config, nowISO } = ctx;
+  return {
+    events: [makeEvent(config, nowISO, "noshow_risk_flagged", { entity_id: entityId, station_id: stationId, level, reasons })]
+  };
+}
+
 export function actionPredictionShown(entityId, stationId, estimatorId, result, ctx) {
   const { config, nowISO } = ctx;
   if (!result || !result.available) return { events: [] };

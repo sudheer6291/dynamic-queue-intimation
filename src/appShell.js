@@ -18,7 +18,7 @@ import { VirtualClock } from "./clock.js";
 import { deriveState } from "./engine/deriveState.js";
 import { makeTranslator } from "./i18n.js";
 import { minOfDayToISO, minToHHMM, parseISOToMin } from "./util.js";
-import { actionPredictionShown, actionNudgeShown, actionRegisterEntity } from "./actions.js";
+import { actionPredictionShown, actionNudgeShown, actionRegisterEntity, actionNoShowRiskFlagged } from "./actions.js";
 import { fetchPersistedEvents, syncEventsToServer, resetPersistedEvents } from "./apiSync.js";
 
 const LS_VERTICAL = "dqi:vertical";
@@ -53,7 +53,8 @@ export function mountApp(viewSpec) {
     whatIfStation: null,
     whatIfDelta: 1,
     loggedPredictionBuckets: new Set(),
-    loggedNudgeBuckets: new Set()
+    loggedNudgeBuckets: new Set(),
+    loggedNoShowRiskBuckets: new Set()
   };
 
   const viewRoot = document.getElementById("view-root");
@@ -130,6 +131,15 @@ export function mountApp(viewSpec) {
         app.runtimeEvents.push(...events);
         syncEventsToServer(app.data.config.vertical_id, events);
       },
+      logNoShowRisk: (entityId, stationId, level, reasons) => {
+        if (level === "none") return;
+        const bucket = `${entityId}|${Math.floor(app.clock.nowMin / 5)}`;
+        if (app.loggedNoShowRiskBuckets.has(bucket)) return;
+        app.loggedNoShowRiskBuckets.add(bucket);
+        const { events } = actionNoShowRiskFlagged(entityId, stationId, level, reasons, { config: app.data.config, nowISO: iso });
+        app.runtimeEvents.push(...events);
+        syncEventsToServer(app.data.config.vertical_id, events);
+      },
       resetSimulation: () => resetSimulation(),
       registerAppointment: (priority) => registerAppointment(priority)
     };
@@ -173,6 +183,7 @@ export function mountApp(viewSpec) {
     app.runtimeEvents = [];
     app.loggedPredictionBuckets = new Set();
     app.loggedNudgeBuckets = new Set();
+    app.loggedNoShowRiskBuckets = new Set();
     render(true);
     await resetPersistedEvents(verticalId);
   }
@@ -281,6 +292,7 @@ export function mountApp(viewSpec) {
     app.runtimeEvents = await fetchPersistedEvents(verticalMeta.id);
     app.loggedPredictionBuckets = new Set();
     app.loggedNudgeBuckets = new Set();
+    app.loggedNoShowRiskBuckets = new Set();
     if (app.runtimeEvents.length) {
       toast(`Resumed ${app.runtimeEvents.length} action${app.runtimeEvents.length === 1 ? "" : "s"} from an earlier session`);
     }

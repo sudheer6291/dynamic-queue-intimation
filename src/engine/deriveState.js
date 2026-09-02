@@ -32,6 +32,7 @@ export function deriveState(data, allEvents, nowISO) {
   const suggestions = []; // {ts, suggestion, reasonKey, stationId, relatedEntityId, accepted}
   const predictionsLog = []; // flat log of every prediction_shown, for later "did it change behaviour" analysis
   const nudgesLog = []; // flat log of every "please head back" nudge actually shown
+  const noShowRiskLog = []; // flat log of every no-show risk flag actually shown to front desk
 
   function getEntity(id) {
     if (!entities[id]) {
@@ -144,6 +145,11 @@ export function deriveState(data, allEvents, nowISO) {
       }
       case "return_nudge_shown": {
         nudgesLog.push({ entityId: ev.entity_id, stationId: ev.station_id, ts: ev.ts });
+        getEntity(ev.entity_id).history.push(ev);
+        break;
+      }
+      case "noshow_risk_flagged": {
+        noShowRiskLog.push({ entityId: ev.entity_id, stationId: ev.station_id, level: ev.level, reasons: ev.reasons, ts: ev.ts });
         getEntity(ev.entity_id).history.push(ev);
         break;
       }
@@ -288,7 +294,8 @@ export function deriveState(data, allEvents, nowISO) {
     resources: resourceState,
     suggestions,
     predictionsLog,
-    nudgesLog
+    nudgesLog,
+    noShowRiskLog
   };
 }
 

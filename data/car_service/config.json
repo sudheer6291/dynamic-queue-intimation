@@ -12,6 +12,11 @@
     "pause_fallback_reason_default": "resource_unavailable",
     "empty_future_queue_buffer_floor": 0.15
   },
+  "no_show_risk": {
+    "away_overdue_min": 12,
+    "overwait_multiplier": 1.5,
+    "late_arrival_threshold_min": 15
+  },
   "display": {
     "headline_percentile": "p80",
     "lower_bound_percentile": "p50",

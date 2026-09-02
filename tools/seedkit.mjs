@@ -129,6 +129,13 @@ export function simulateStation({
 
     if (flags.isNoShowCandidate && !noShowResolved.has(entityId)) {
       const grace = 4;
+      // A real story for *why* they no-show, not a random dropout: they
+      // stepped out while waiting and genuinely never came back. Also
+      // gives noShowRisk.js's "stepped out and overdue" signal something
+      // true to catch before the no-show itself actually fires.
+      const stepOutLeadMin = 20;
+      const stepOutAt = Math.max(arrivalOf.get(entityId) || 0, startAt - stepOutLeadMin);
+      emit("stepped_out", stepOutAt, { entity_id: entityId, station_id: stationId });
       emit("called", startAt, { entity_id: entityId, station_id: stationId, resource_id: resourceId });
       emit("no_show", startAt + grace, { entity_id: entityId, station_id: stationId });
       noShowResolved.add(entityId);

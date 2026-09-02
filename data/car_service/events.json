@@ -251,7 +251,7 @@
     "step_index": 4
   },
   {
-    "id": "ev0368",
+    "id": "ev0370",
     "type": "called",
     "ts": "2026-09-02T09:06:00+05:30",
     "entity_id": "c01",
@@ -259,7 +259,7 @@
     "resource_id": "res_wash_1"
   },
   {
-    "id": "ev0369",
+    "id": "ev0371",
     "type": "service_started",
     "ts": "2026-09-02T09:06:00+05:30",
     "entity_id": "c01",
@@ -267,7 +267,7 @@
     "resource_id": "res_wash_1"
   },
   {
-    "id": "ev0370",
+    "id": "ev0372",
     "type": "service_completed",
     "ts": "2026-09-02T09:19:00+05:30",
     "entity_id": "c01",
@@ -276,7 +276,7 @@
     "duration_min": 13
   },
   {
-    "id": "ev0407",
+    "id": "ev0409",
     "type": "queue_joined",
     "ts": "2026-09-02T09:19:00+05:30",
     "entity_id": "c01",
@@ -284,7 +284,7 @@
     "step_index": 5
   },
   {
-    "id": "ev0420",
+    "id": "ev0422",
     "type": "called",
     "ts": "2026-09-02T09:19:00+05:30",
     "entity_id": "c01",
@@ -292,7 +292,7 @@
     "resource_id": "res_billing_1"
   },
   {
-    "id": "ev0421",
+    "id": "ev0423",
     "type": "service_started",
     "ts": "2026-09-02T09:19:00+05:30",
     "entity_id": "c01",
@@ -300,7 +300,7 @@
     "resource_id": "res_billing_1"
   },
   {
-    "id": "ev0422",
+    "id": "ev0424",
     "type": "service_completed",
     "ts": "2026-09-02T09:27:00+05:30",
     "entity_id": "c01",
@@ -309,7 +309,7 @@
     "duration_min": 8
   },
   {
-    "id": "ev0483",
+    "id": "ev0485",
     "type": "journey_completed",
     "ts": "2026-09-02T09:27:00+05:30",
     "entity_id": "c01"
@@ -431,7 +431,7 @@
     "step_index": 4
   },
   {
-    "id": "ev0371",
+    "id": "ev0373",
     "type": "called",
     "ts": "2026-09-02T09:35:00+05:30",
     "entity_id": "c02",
@@ -439,7 +439,7 @@
     "resource_id": "res_wash_1"
   },
   {
-    "id": "ev0372",
+    "id": "ev0374",
     "type": "service_started",
     "ts": "2026-09-02T09:35:00+05:30",
     "entity_id": "c02",
@@ -546,7 +546,7 @@
     "resource_id": "res_bay_2"
   },
   {
-    "id": "ev0373",
+    "id": "ev0375",
     "type": "service_completed",
     "ts": "2026-09-02T09:59:00+05:30",
     "entity_id": "c02",
@@ -555,7 +555,7 @@
     "duration_min": 24
   },
   {
-    "id": "ev0408",
+    "id": "ev0410",
     "type": "queue_joined",
     "ts": "2026-09-02T09:59:00+05:30",
     "entity_id": "c02",
@@ -563,7 +563,7 @@
     "step_index": 5
   },
   {
-    "id": "ev0423",
+    "id": "ev0425",
     "type": "called",
     "ts": "2026-09-02T09:59:00+05:30",
     "entity_id": "c02",
@@ -571,7 +571,7 @@
     "resource_id": "res_billing_1"
   },
   {
-    "id": "ev0424",
+    "id": "ev0426",
     "type": "service_started",
     "ts": "2026-09-02T09:59:00+05:30",
     "entity_id": "c02",
@@ -612,7 +612,7 @@
     "resource_id": "res_frontdesk_1"
   },
   {
-    "id": "ev0425",
+    "id": "ev0427",
     "type": "service_completed",
     "ts": "2026-09-02T10:04:00+05:30",
     "entity_id": "c02",
@@ -621,7 +621,7 @@
     "duration_min": 5
   },
   {
-    "id": "ev0484",
+    "id": "ev0486",
     "type": "journey_completed",
     "ts": "2026-09-02T10:04:00+05:30",
     "entity_id": "c02"
@@ -644,7 +644,7 @@
     "step_index": 5
   },
   {
-    "id": "ev0426",
+    "id": "ev0428",
     "type": "called",
     "ts": "2026-09-02T10:06:00+05:30",
     "entity_id": "c03",
@@ -652,7 +652,7 @@
     "resource_id": "res_billing_1"
   },
   {
-    "id": "ev0427",
+    "id": "ev0429",
     "type": "service_started",
     "ts": "2026-09-02T10:06:00+05:30",
     "entity_id": "c03",
@@ -693,7 +693,7 @@
     "resource_id": "res_advisor_1"
   },
   {
-    "id": "ev0428",
+    "id": "ev0430",
     "type": "service_completed",
     "ts": "2026-09-02T10:10:00+05:30",
     "entity_id": "c03",
@@ -702,7 +702,7 @@
     "duration_min": 4
   },
   {
-    "id": "ev0485",
+    "id": "ev0487",
     "type": "journey_completed",
     "ts": "2026-09-02T10:10:00+05:30",
     "entity_id": "c03"
@@ -989,7 +989,7 @@
     "resource_id": "res_bay_1"
   },
   {
-    "id": "ev0374",
+    "id": "ev0376",
     "type": "called",
     "ts": "2026-09-02T10:38:00+05:30",
     "entity_id": "c05",
@@ -997,7 +997,7 @@
     "resource_id": "res_wash_1"
   },
   {
-    "id": "ev0375",
+    "id": "ev0377",
     "type": "service_started",
     "ts": "2026-09-02T10:38:00+05:30",
     "entity_id": "c05",
@@ -1055,7 +1055,7 @@
     "resource_id": "res_bay_2"
   },
   {
-    "id": "ev0429",
+    "id": "ev0431",
     "type": "called",
     "ts": "2026-09-02T10:50:00+05:30",
     "entity_id": "c04",
@@ -1063,7 +1063,7 @@
     "resource_id": "res_billing_1"
   },
   {
-    "id": "ev0430",
+    "id": "ev0432",
     "type": "service_started",
     "ts": "2026-09-02T10:50:00+05:30",
     "entity_id": "c04",
@@ -1071,7 +1071,7 @@
     "resource_id": "res_billing_1"
   },
   {
-    "id": "ev0376",
+    "id": "ev0378",
     "type": "service_completed",
     "ts": "2026-09-02T10:56:00+05:30",
     "entity_id": "c05",
@@ -1080,7 +1080,7 @@
     "duration_min": 18
   },
   {
-    "id": "ev0409",
+    "id": "ev0411",
     "type": "queue_joined",
     "ts": "2026-09-02T10:56:00+05:30",
     "entity_id": "c05",
@@ -1088,7 +1088,7 @@
     "step_index": 5
   },
   {
-    "id": "ev0431",
+    "id": "ev0433",
     "type": "service_completed",
     "ts": "2026-09-02T10:57:00+05:30",
     "entity_id": "c04",
@@ -1097,7 +1097,7 @@
     "duration_min": 7
   },
   {
-    "id": "ev0432",
+    "id": "ev0434",
     "type": "called",
     "ts": "2026-09-02T10:57:00+05:30",
     "entity_id": "c05",
@@ -1105,7 +1105,7 @@
     "resource_id": "res_billing_1"
   },
   {
-    "id": "ev0433",
+    "id": "ev0435",
     "type": "service_started",
     "ts": "2026-09-02T10:57:00+05:30",
     "entity_id": "c05",
@@ -1113,13 +1113,13 @@
     "resource_id": "res_billing_1"
   },
   {
-    "id": "ev0486",
+    "id": "ev0488",
     "type": "journey_completed",
     "ts": "2026-09-02T10:57:00+05:30",
     "entity_id": "c04"
   },
   {
-    "id": "ev0434",
+    "id": "ev0436",
     "type": "service_completed",
     "ts": "2026-09-02T11:05:00+05:30",
     "entity_id": "c05",
@@ -1128,7 +1128,7 @@
     "duration_min": 8
   },
   {
-    "id": "ev0487",
+    "id": "ev0489",
     "type": "journey_completed",
     "ts": "2026-09-02T11:05:00+05:30",
     "entity_id": "c05"
@@ -1161,7 +1161,7 @@
     "step_index": 5
   },
   {
-    "id": "ev0435",
+    "id": "ev0437",
     "type": "called",
     "ts": "2026-09-02T11:06:00+05:30",
     "entity_id": "c06",
@@ -1169,7 +1169,7 @@
     "resource_id": "res_billing_1"
   },
   {
-    "id": "ev0436",
+    "id": "ev0438",
     "type": "service_started",
     "ts": "2026-09-02T11:06:00+05:30",
     "entity_id": "c06",
@@ -1177,7 +1177,7 @@
     "resource_id": "res_billing_1"
   },
   {
-    "id": "ev0437",
+    "id": "ev0439",
     "type": "service_completed",
     "ts": "2026-09-02T11:14:00+05:30",
     "entity_id": "c06",
@@ -1186,7 +1186,7 @@
     "duration_min": 8
   },
   {
-    "id": "ev0488",
+    "id": "ev0490",
     "type": "journey_completed",
     "ts": "2026-09-02T11:14:00+05:30",
     "entity_id": "c06"
@@ -1209,7 +1209,7 @@
     "step_index": 5
   },
   {
-    "id": "ev0438",
+    "id": "ev0440",
     "type": "called",
     "ts": "2026-09-02T11:24:00+05:30",
     "entity_id": "c07",
@@ -1217,7 +1217,7 @@
     "resource_id": "res_billing_1"
   },
   {
-    "id": "ev0439",
+    "id": "ev0441",
     "type": "service_started",
     "ts": "2026-09-02T11:24:00+05:30",
     "entity_id": "c07",
@@ -1225,7 +1225,7 @@
     "resource_id": "res_billing_1"
   },
   {
-    "id": "ev0440",
+    "id": "ev0442",
     "type": "service_completed",
     "ts": "2026-09-02T11:29:00+05:30",
     "entity_id": "c07",
@@ -1234,7 +1234,7 @@
     "duration_min": 5
   },
   {
-    "id": "ev0489",
+    "id": "ev0491",
     "type": "journey_completed",
     "ts": "2026-09-02T11:29:00+05:30",
     "entity_id": "c07"
@@ -1562,7 +1562,7 @@
     "resource_id": "res_bay_1"
   },
   {
-    "id": "ev0377",
+    "id": "ev0379",
     "type": "called",
     "ts": "2026-09-02T12:52:00+05:30",
     "entity_id": "c09",
@@ -1570,7 +1570,7 @@
     "resource_id": "res_wash_1"
   },
   {
-    "id": "ev0378",
+    "id": "ev0380",
     "type": "service_started",
     "ts": "2026-09-02T12:52:00+05:30",
     "entity_id": "c09",
@@ -1611,7 +1611,7 @@
     "resource_id": "res_diagnostic_1"
   },
   {
-    "id": "ev0379",
+    "id": "ev0381",
     "type": "service_completed",
     "ts": "2026-09-02T13:00:00+05:30",
     "entity_id": "c09",
@@ -1620,7 +1620,7 @@
     "duration_min": 8
   },
   {
-    "id": "ev0410",
+    "id": "ev0412",
     "type": "queue_joined",
     "ts": "2026-09-02T13:00:00+05:30",
     "entity_id": "c09",
@@ -1628,7 +1628,7 @@
     "step_index": 5
   },
   {
-    "id": "ev0441",
+    "id": "ev0443",
     "type": "called",
     "ts": "2026-09-02T13:00:00+05:30",
     "entity_id": "c09",
@@ -1636,7 +1636,7 @@
     "resource_id": "res_billing_1"
   },
   {
-    "id": "ev0442",
+    "id": "ev0444",
     "type": "service_started",
     "ts": "2026-09-02T13:00:00+05:30",
     "entity_id": "c09",
@@ -1677,7 +1677,7 @@
     "resource_id": "res_frontdesk_1"
   },
   {
-    "id": "ev0443",
+    "id": "ev0445",
     "type": "service_completed",
     "ts": "2026-09-02T13:06:00+05:30",
     "entity_id": "c09",
@@ -1686,7 +1686,7 @@
     "duration_min": 6
   },
   {
-    "id": "ev0490",
+    "id": "ev0492",
     "type": "journey_completed",
     "ts": "2026-09-02T13:06:00+05:30",
     "entity_id": "c09"
@@ -1808,7 +1808,7 @@
     "resource_id": "res_bay_1"
   },
   {
-    "id": "ev0380",
+    "id": "ev0382",
     "type": "called",
     "ts": "2026-09-02T13:26:00+05:30",
     "entity_id": "c10",
@@ -1816,7 +1816,7 @@
     "resource_id": "res_wash_1"
   },
   {
-    "id": "ev0381",
+    "id": "ev0383",
     "type": "service_started",
     "ts": "2026-09-02T13:26:00+05:30",
     "entity_id": "c10",
@@ -1857,7 +1857,7 @@
     "resource_id": "res_frontdesk_1"
   },
   {
-    "id": "ev0382",
+    "id": "ev0384",
     "type": "service_completed",
     "ts": "2026-09-02T13:36:00+05:30",
     "entity_id": "c10",
@@ -1866,7 +1866,7 @@
     "duration_min": 10
   },
   {
-    "id": "ev0411",
+    "id": "ev0413",
     "type": "queue_joined",
     "ts": "2026-09-02T13:36:00+05:30",
     "entity_id": "c10",
@@ -1874,7 +1874,7 @@
     "step_index": 5
   },
   {
-    "id": "ev0444",
+    "id": "ev0446",
     "type": "called",
     "ts": "2026-09-02T13:36:00+05:30",
     "entity_id": "c10",
@@ -1882,7 +1882,7 @@
     "resource_id": "res_billing_1"
   },
   {
-    "id": "ev0445",
+    "id": "ev0447",
     "type": "service_started",
     "ts": "2026-09-02T13:36:00+05:30",
     "entity_id": "c10",
@@ -1890,7 +1890,7 @@
     "resource_id": "res_billing_1"
   },
   {
-    "id": "ev0446",
+    "id": "ev0448",
     "type": "service_completed",
     "ts": "2026-09-02T13:40:00+05:30",
     "entity_id": "c10",
@@ -1899,7 +1899,7 @@
     "duration_min": 4
   },
   {
-    "id": "ev0491",
+    "id": "ev0493",
     "type": "journey_completed",
     "ts": "2026-09-02T13:40:00+05:30",
     "entity_id": "c10"
@@ -1988,7 +1988,7 @@
     "resource_id": "res_bay_1"
   },
   {
-    "id": "ev0383",
+    "id": "ev0385",
     "type": "called",
     "ts": "2026-09-02T13:50:00+05:30",
     "entity_id": "c08",
@@ -1996,7 +1996,7 @@
     "resource_id": "res_wash_1"
   },
   {
-    "id": "ev0384",
+    "id": "ev0386",
     "type": "service_started",
     "ts": "2026-09-02T13:50:00+05:30",
     "entity_id": "c08",
@@ -2087,7 +2087,7 @@
     "resource_id": "res_advisor_1"
   },
   {
-    "id": "ev0385",
+    "id": "ev0387",
     "type": "service_completed",
     "ts": "2026-09-02T14:03:00+05:30",
     "entity_id": "c08",
@@ -2096,7 +2096,7 @@
     "duration_min": 13
   },
   {
-    "id": "ev0386",
+    "id": "ev0388",
     "type": "called",
     "ts": "2026-09-02T14:03:00+05:30",
     "entity_id": "c11",
@@ -2104,7 +2104,7 @@
     "resource_id": "res_wash_1"
   },
   {
-    "id": "ev0387",
+    "id": "ev0389",
     "type": "service_started",
     "ts": "2026-09-02T14:03:00+05:30",
     "entity_id": "c11",
@@ -2112,7 +2112,7 @@
     "resource_id": "res_wash_1"
   },
   {
-    "id": "ev0412",
+    "id": "ev0414",
     "type": "queue_joined",
     "ts": "2026-09-02T14:03:00+05:30",
     "entity_id": "c08",
@@ -2120,7 +2120,7 @@
     "step_index": 5
   },
   {
-    "id": "ev0447",
+    "id": "ev0449",
     "type": "called",
     "ts": "2026-09-02T14:03:00+05:30",
     "entity_id": "c08",
@@ -2128,7 +2128,7 @@
     "resource_id": "res_billing_1"
   },
   {
-    "id": "ev0448",
+    "id": "ev0450",
     "type": "service_started",
     "ts": "2026-09-02T14:03:00+05:30",
     "entity_id": "c08",
@@ -2154,6 +2154,13 @@
   },
   {
     "id": "ev0301",
+    "type": "stepped_out",
+    "ts": "2026-09-02T14:05:00+05:30",
+    "entity_id": "c13",
+    "station_id": "st_bay"
+  },
+  {
+    "id": "ev0302",
     "type": "called",
     "ts": "2026-09-02T14:05:00+05:30",
     "entity_id": "c13",
@@ -2161,14 +2168,14 @@
     "resource_id": "res_bay_2"
   },
   {
-    "id": "ev0302",
+    "id": "ev0303",
     "type": "no_show",
     "ts": "2026-09-02T14:09:00+05:30",
     "entity_id": "c13",
     "station_id": "st_bay"
   },
   {
-    "id": "ev0303",
+    "id": "ev0304",
     "type": "resequence_suggested",
     "ts": "2026-09-02T14:09:00+05:30",
     "suggestion": "pull_forward",
@@ -2178,7 +2185,7 @@
     "accepted": true
   },
   {
-    "id": "ev0388",
+    "id": "ev0390",
     "type": "service_completed",
     "ts": "2026-09-02T14:10:00+05:30",
     "entity_id": "c11",
@@ -2187,7 +2194,7 @@
     "duration_min": 7
   },
   {
-    "id": "ev0413",
+    "id": "ev0415",
     "type": "queue_joined",
     "ts": "2026-09-02T14:10:00+05:30",
     "entity_id": "c11",
@@ -2195,7 +2202,7 @@
     "step_index": 5
   },
   {
-    "id": "ev0449",
+    "id": "ev0451",
     "type": "service_completed",
     "ts": "2026-09-02T14:18:00+05:30",
     "entity_id": "c08",
@@ -2204,7 +2211,7 @@
     "duration_min": 15
   },
   {
-    "id": "ev0450",
+    "id": "ev0452",
     "type": "called",
     "ts": "2026-09-02T14:18:00+05:30",
     "entity_id": "c11",
@@ -2212,7 +2219,7 @@
     "resource_id": "res_billing_1"
   },
   {
-    "id": "ev0451",
+    "id": "ev0453",
     "type": "service_started",
     "ts": "2026-09-02T14:18:00+05:30",
     "entity_id": "c11",
@@ -2220,13 +2227,13 @@
     "resource_id": "res_billing_1"
   },
   {
-    "id": "ev0492",
+    "id": "ev0494",
     "type": "journey_completed",
     "ts": "2026-09-02T14:18:00+05:30",
     "entity_id": "c08"
   },
   {
-    "id": "ev0452",
+    "id": "ev0454",
     "type": "service_completed",
     "ts": "2026-09-02T14:24:00+05:30",
     "entity_id": "c11",
@@ -2235,7 +2242,7 @@
     "duration_min": 6
   },
   {
-    "id": "ev0493",
+    "id": "ev0495",
     "type": "journey_completed",
     "ts": "2026-09-02T14:24:00+05:30",
     "entity_id": "c11"
@@ -2258,7 +2265,7 @@
     "step_index": 5
   },
   {
-    "id": "ev0453",
+    "id": "ev0455",
     "type": "called",
     "ts": "2026-09-02T14:27:00+05:30",
     "entity_id": "c12",
@@ -2266,7 +2273,7 @@
     "resource_id": "res_billing_1"
   },
   {
-    "id": "ev0454",
+    "id": "ev0456",
     "type": "service_started",
     "ts": "2026-09-02T14:27:00+05:30",
     "entity_id": "c12",
@@ -2357,7 +2364,7 @@
     "step_index": 1
   },
   {
-    "id": "ev0304",
+    "id": "ev0305",
     "type": "called",
     "ts": "2026-09-02T14:36:00+05:30",
     "entity_id": "c14",
@@ -2365,7 +2372,7 @@
     "resource_id": "res_bay_2"
   },
   {
-    "id": "ev0305",
+    "id": "ev0306",
     "type": "service_started",
     "ts": "2026-09-02T14:36:00+05:30",
     "entity_id": "c14",
@@ -2373,7 +2380,7 @@
     "resource_id": "res_bay_2"
   },
   {
-    "id": "ev0455",
+    "id": "ev0457",
     "type": "service_completed",
     "ts": "2026-09-02T14:39:00+05:30",
     "entity_id": "c12",
@@ -2382,7 +2389,7 @@
     "duration_min": 12
   },
   {
-    "id": "ev0494",
+    "id": "ev0496",
     "type": "journey_completed",
     "ts": "2026-09-02T14:39:00+05:30",
     "entity_id": "c12"
@@ -2471,7 +2478,7 @@
     "step_index": 1
   },
   {
-    "id": "ev0308",
+    "id": "ev0309",
     "type": "called",
     "ts": "2026-09-02T15:15:00+05:30",
     "entity_id": "c15",
@@ -2479,7 +2486,7 @@
     "resource_id": "res_bay_1"
   },
   {
-    "id": "ev0309",
+    "id": "ev0310",
     "type": "service_started",
     "ts": "2026-09-02T15:15:00+05:30",
     "entity_id": "c15",
@@ -2603,7 +2610,7 @@
     "step_index": 1
   },
   {
-    "id": "ev0504",
+    "id": "ev0506",
     "type": "stepped_out",
     "ts": "2026-09-02T15:43:00+05:30",
     "entity_id": "c16",
@@ -2660,7 +2667,7 @@
     "step_index": 1
   },
   {
-    "id": "ev0312",
+    "id": "ev0313",
     "type": "priority_insert",
     "ts": "2026-09-02T15:51:00+05:30",
     "entity_id": "c17",
@@ -2668,7 +2675,7 @@
     "reason": "Fleet customer — contracted SLA, escalated by dispatch"
   },
   {
-    "id": "ev0310",
+    "id": "ev0311",
     "type": "service_completed",
     "ts": "2026-09-02T15:52:00+05:30",
     "entity_id": "c15",
@@ -2677,7 +2684,7 @@
     "duration_min": 37
   },
   {
-    "id": "ev0311",
+    "id": "ev0312",
     "type": "queue_joined",
     "ts": "2026-09-02T15:52:00+05:30",
     "entity_id": "c15",
@@ -2685,39 +2692,39 @@
     "step_index": 4
   },
   {
-    "id": "ev0313",
-    "type": "called",
-    "ts": "2026-09-02T15:52:00+05:30",
-    "entity_id": "c17",
-    "station_id": "st_bay",
-    "resource_id": "res_bay_1"
-  },
-  {
     "id": "ev0314",
-    "type": "service_started",
+    "type": "called",
     "ts": "2026-09-02T15:52:00+05:30",
     "entity_id": "c17",
     "station_id": "st_bay",
     "resource_id": "res_bay_1"
   },
   {
-    "id": "ev0389",
-    "type": "called",
-    "ts": "2026-09-02T15:52:00+05:30",
-    "entity_id": "c15",
-    "station_id": "st_wash",
-    "resource_id": "res_wash_1"
-  },
-  {
-    "id": "ev0390",
+    "id": "ev0315",
     "type": "service_started",
     "ts": "2026-09-02T15:52:00+05:30",
-    "entity_id": "c15",
-    "station_id": "st_wash",
-    "resource_id": "res_wash_1"
+    "entity_id": "c17",
+    "station_id": "st_bay",
+    "resource_id": "res_bay_1"
   },
   {
     "id": "ev0391",
+    "type": "called",
+    "ts": "2026-09-02T15:52:00+05:30",
+    "entity_id": "c15",
+    "station_id": "st_wash",
+    "resource_id": "res_wash_1"
+  },
+  {
+    "id": "ev0392",
+    "type": "service_started",
+    "ts": "2026-09-02T15:52:00+05:30",
+    "entity_id": "c15",
+    "station_id": "st_wash",
+    "resource_id": "res_wash_1"
+  },
+  {
+    "id": "ev0393",
     "type": "service_completed",
     "ts": "2026-09-02T16:03:00+05:30",
     "entity_id": "c15",
@@ -2726,7 +2733,7 @@
     "duration_min": 11
   },
   {
-    "id": "ev0414",
+    "id": "ev0416",
     "type": "queue_joined",
     "ts": "2026-09-02T16:03:00+05:30",
     "entity_id": "c15",
@@ -2734,7 +2741,7 @@
     "step_index": 5
   },
   {
-    "id": "ev0456",
+    "id": "ev0458",
     "type": "called",
     "ts": "2026-09-02T16:03:00+05:30",
     "entity_id": "c15",
@@ -2742,7 +2749,7 @@
     "resource_id": "res_billing_1"
   },
   {
-    "id": "ev0457",
+    "id": "ev0459",
     "type": "service_started",
     "ts": "2026-09-02T16:03:00+05:30",
     "entity_id": "c15",
@@ -2750,7 +2757,7 @@
     "resource_id": "res_billing_1"
   },
   {
-    "id": "ev0458",
+    "id": "ev0460",
     "type": "service_completed",
     "ts": "2026-09-02T16:07:00+05:30",
     "entity_id": "c15",
@@ -2759,7 +2766,7 @@
     "duration_min": 4
   },
   {
-    "id": "ev0495",
+    "id": "ev0497",
     "type": "journey_completed",
     "ts": "2026-09-02T16:07:00+05:30",
     "entity_id": "c15"
@@ -2798,7 +2805,7 @@
     "resource_id": "res_frontdesk_1"
   },
   {
-    "id": "ev0505",
+    "id": "ev0507",
     "type": "returned",
     "ts": "2026-09-02T16:28:00+05:30",
     "entity_id": "c16",
@@ -2838,7 +2845,7 @@
     "resource_id": "res_advisor_1"
   },
   {
-    "id": "ev0306",
+    "id": "ev0307",
     "type": "service_completed",
     "ts": "2026-09-02T16:32:00+05:30",
     "entity_id": "c14",
@@ -2847,7 +2854,7 @@
     "duration_min": 116
   },
   {
-    "id": "ev0307",
+    "id": "ev0308",
     "type": "queue_joined",
     "ts": "2026-09-02T16:32:00+05:30",
     "entity_id": "c14",
@@ -2855,7 +2862,7 @@
     "step_index": 2
   },
   {
-    "id": "ev0317",
+    "id": "ev0318",
     "type": "called",
     "ts": "2026-09-02T16:32:00+05:30",
     "entity_id": "c16",
@@ -2863,7 +2870,7 @@
     "resource_id": "res_bay_2"
   },
   {
-    "id": "ev0318",
+    "id": "ev0319",
     "type": "service_started",
     "ts": "2026-09-02T16:32:00+05:30",
     "entity_id": "c16",
@@ -2871,7 +2878,7 @@
     "resource_id": "res_bay_2"
   },
   {
-    "id": "ev0321",
+    "id": "ev0322",
     "type": "called",
     "ts": "2026-09-02T16:32:00+05:30",
     "entity_id": "c14",
@@ -2879,7 +2886,7 @@
     "resource_id": "res_diagnostic_1"
   },
   {
-    "id": "ev0322",
+    "id": "ev0323",
     "type": "service_started",
     "ts": "2026-09-02T16:32:00+05:30",
     "entity_id": "c14",
@@ -2904,7 +2911,7 @@
     "step_index": 1
   },
   {
-    "id": "ev0315",
+    "id": "ev0316",
     "type": "service_completed",
     "ts": "2026-09-02T16:41:00+05:30",
     "entity_id": "c17",
@@ -2913,7 +2920,7 @@
     "duration_min": 49
   },
   {
-    "id": "ev0316",
+    "id": "ev0317",
     "type": "queue_joined",
     "ts": "2026-09-02T16:41:00+05:30",
     "entity_id": "c17",
@@ -2921,15 +2928,15 @@
     "step_index": 4
   },
   {
-    "id": "ev0325",
-    "type": "called",
-    "ts": "2026-09-02T16:41:00+05:30",
-    "entity_id": "c18",
-    "station_id": "st_bay",
-    "resource_id": "res_bay_1"
-  },
-  {
     "id": "ev0326",
+    "type": "called",
+    "ts": "2026-09-02T16:41:00+05:30",
+    "entity_id": "c18",
+    "station_id": "st_bay",
+    "resource_id": "res_bay_1"
+  },
+  {
+    "id": "ev0327",
     "type": "service_started",
     "ts": "2026-09-02T16:41:00+05:30",
     "entity_id": "c18",
@@ -2937,7 +2944,7 @@
     "resource_id": "res_bay_1"
   },
   {
-    "id": "ev0392",
+    "id": "ev0394",
     "type": "called",
     "ts": "2026-09-02T16:41:00+05:30",
     "entity_id": "c17",
@@ -2945,7 +2952,7 @@
     "resource_id": "res_wash_1"
   },
   {
-    "id": "ev0393",
+    "id": "ev0395",
     "type": "service_started",
     "ts": "2026-09-02T16:41:00+05:30",
     "entity_id": "c17",
@@ -2953,7 +2960,7 @@
     "resource_id": "res_wash_1"
   },
   {
-    "id": "ev0323",
+    "id": "ev0324",
     "type": "service_completed",
     "ts": "2026-09-02T16:46:00+05:30",
     "entity_id": "c14",
@@ -2962,7 +2969,7 @@
     "duration_min": 14
   },
   {
-    "id": "ev0324",
+    "id": "ev0325",
     "type": "queue_joined",
     "ts": "2026-09-02T16:46:00+05:30",
     "entity_id": "c14",
@@ -3003,7 +3010,7 @@
     "resource_id": "res_frontdesk_1"
   },
   {
-    "id": "ev0319",
+    "id": "ev0320",
     "type": "service_completed",
     "ts": "2026-09-02T16:57:00+05:30",
     "entity_id": "c16",
@@ -3012,7 +3019,7 @@
     "duration_min": 25
   },
   {
-    "id": "ev0320",
+    "id": "ev0321",
     "type": "queue_joined",
     "ts": "2026-09-02T16:57:00+05:30",
     "entity_id": "c16",
@@ -3020,7 +3027,7 @@
     "step_index": 4
   },
   {
-    "id": "ev0329",
+    "id": "ev0330",
     "type": "called",
     "ts": "2026-09-02T16:57:00+05:30",
     "entity_id": "c14",
@@ -3028,7 +3035,7 @@
     "resource_id": "res_bay_2"
   },
   {
-    "id": "ev0330",
+    "id": "ev0331",
     "type": "service_started",
     "ts": "2026-09-02T16:57:00+05:30",
     "entity_id": "c14",
@@ -3036,7 +3043,7 @@
     "resource_id": "res_bay_2"
   },
   {
-    "id": "ev0394",
+    "id": "ev0396",
     "type": "service_completed",
     "ts": "2026-09-02T17:02:00+05:30",
     "entity_id": "c17",
@@ -3045,7 +3052,7 @@
     "duration_min": 21
   },
   {
-    "id": "ev0395",
+    "id": "ev0397",
     "type": "called",
     "ts": "2026-09-02T17:02:00+05:30",
     "entity_id": "c16",
@@ -3053,7 +3060,7 @@
     "resource_id": "res_wash_1"
   },
   {
-    "id": "ev0396",
+    "id": "ev0398",
     "type": "service_started",
     "ts": "2026-09-02T17:02:00+05:30",
     "entity_id": "c16",
@@ -3061,7 +3068,7 @@
     "resource_id": "res_wash_1"
   },
   {
-    "id": "ev0415",
+    "id": "ev0417",
     "type": "queue_joined",
     "ts": "2026-09-02T17:02:00+05:30",
     "entity_id": "c17",
@@ -3069,7 +3076,7 @@
     "step_index": 5
   },
   {
-    "id": "ev0459",
+    "id": "ev0461",
     "type": "called",
     "ts": "2026-09-02T17:02:00+05:30",
     "entity_id": "c17",
@@ -3077,7 +3084,7 @@
     "resource_id": "res_billing_1"
   },
   {
-    "id": "ev0460",
+    "id": "ev0462",
     "type": "service_started",
     "ts": "2026-09-02T17:02:00+05:30",
     "entity_id": "c17",
@@ -3085,7 +3092,7 @@
     "resource_id": "res_billing_1"
   },
   {
-    "id": "ev0461",
+    "id": "ev0463",
     "type": "service_completed",
     "ts": "2026-09-02T17:08:00+05:30",
     "entity_id": "c17",
@@ -3094,7 +3101,7 @@
     "duration_min": 6
   },
   {
-    "id": "ev0496",
+    "id": "ev0498",
     "type": "journey_completed",
     "ts": "2026-09-02T17:08:00+05:30",
     "entity_id": "c17"
@@ -3133,7 +3140,7 @@
     "resource_id": "res_advisor_1"
   },
   {
-    "id": "ev0397",
+    "id": "ev0399",
     "type": "service_completed",
     "ts": "2026-09-02T17:14:00+05:30",
     "entity_id": "c16",
@@ -3142,7 +3149,7 @@
     "duration_min": 12
   },
   {
-    "id": "ev0416",
+    "id": "ev0418",
     "type": "queue_joined",
     "ts": "2026-09-02T17:14:00+05:30",
     "entity_id": "c16",
@@ -3150,7 +3157,7 @@
     "step_index": 5
   },
   {
-    "id": "ev0462",
+    "id": "ev0464",
     "type": "called",
     "ts": "2026-09-02T17:14:00+05:30",
     "entity_id": "c16",
@@ -3158,7 +3165,7 @@
     "resource_id": "res_billing_1"
   },
   {
-    "id": "ev0463",
+    "id": "ev0465",
     "type": "service_started",
     "ts": "2026-09-02T17:14:00+05:30",
     "entity_id": "c16",
@@ -3183,7 +3190,14 @@
     "step_index": 1
   },
   {
-    "id": "ev0464",
+    "id": "ev0334",
+    "type": "stepped_out",
+    "ts": "2026-09-02T17:20:00+05:30",
+    "entity_id": "c19",
+    "station_id": "st_bay"
+  },
+  {
+    "id": "ev0466",
     "type": "service_completed",
     "ts": "2026-09-02T17:26:00+05:30",
     "entity_id": "c16",
@@ -3192,13 +3206,13 @@
     "duration_min": 12
   },
   {
-    "id": "ev0497",
+    "id": "ev0499",
     "type": "journey_completed",
     "ts": "2026-09-02T17:26:00+05:30",
     "entity_id": "c16"
   },
   {
-    "id": "ev0331",
+    "id": "ev0332",
     "type": "service_completed",
     "ts": "2026-09-02T17:30:00+05:30",
     "entity_id": "c14",
@@ -3207,7 +3221,7 @@
     "duration_min": 33
   },
   {
-    "id": "ev0332",
+    "id": "ev0333",
     "type": "queue_joined",
     "ts": "2026-09-02T17:30:00+05:30",
     "entity_id": "c14",
@@ -3215,7 +3229,7 @@
     "step_index": 5
   },
   {
-    "id": "ev0333",
+    "id": "ev0335",
     "type": "called",
     "ts": "2026-09-02T17:30:00+05:30",
     "entity_id": "c19",
@@ -3223,7 +3237,7 @@
     "resource_id": "res_bay_2"
   },
   {
-    "id": "ev0465",
+    "id": "ev0467",
     "type": "called",
     "ts": "2026-09-02T17:30:00+05:30",
     "entity_id": "c14",
@@ -3231,7 +3245,7 @@
     "resource_id": "res_billing_1"
   },
   {
-    "id": "ev0466",
+    "id": "ev0468",
     "type": "service_started",
     "ts": "2026-09-02T17:30:00+05:30",
     "entity_id": "c14",
@@ -3272,14 +3286,14 @@
     "resource_id": "res_frontdesk_1"
   },
   {
-    "id": "ev0334",
+    "id": "ev0336",
     "type": "no_show",
     "ts": "2026-09-02T17:34:00+05:30",
     "entity_id": "c19",
     "station_id": "st_bay"
   },
   {
-    "id": "ev0335",
+    "id": "ev0337",
     "type": "resequence_suggested",
     "ts": "2026-09-02T17:34:00+05:30",
     "suggestion": "pull_forward",
@@ -3289,7 +3303,7 @@
     "accepted": true
   },
   {
-    "id": "ev0327",
+    "id": "ev0328",
     "type": "service_completed",
     "ts": "2026-09-02T17:38:00+05:30",
     "entity_id": "c18",
@@ -3298,7 +3312,7 @@
     "duration_min": 57
   },
   {
-    "id": "ev0328",
+    "id": "ev0329",
     "type": "queue_joined",
     "ts": "2026-09-02T17:38:00+05:30",
     "entity_id": "c18",
@@ -3339,7 +3353,7 @@
     "resource_id": "res_advisor_1"
   },
   {
-    "id": "ev0467",
+    "id": "ev0469",
     "type": "service_completed",
     "ts": "2026-09-02T17:43:00+05:30",
     "entity_id": "c14",
@@ -3348,7 +3362,7 @@
     "duration_min": 13
   },
   {
-    "id": "ev0468",
+    "id": "ev0470",
     "type": "called",
     "ts": "2026-09-02T17:43:00+05:30",
     "entity_id": "c18",
@@ -3356,7 +3370,7 @@
     "resource_id": "res_billing_1"
   },
   {
-    "id": "ev0469",
+    "id": "ev0471",
     "type": "service_started",
     "ts": "2026-09-02T17:43:00+05:30",
     "entity_id": "c18",
@@ -3364,13 +3378,13 @@
     "resource_id": "res_billing_1"
   },
   {
-    "id": "ev0498",
+    "id": "ev0500",
     "type": "journey_completed",
     "ts": "2026-09-02T17:43:00+05:30",
     "entity_id": "c14"
   },
   {
-    "id": "ev0470",
+    "id": "ev0472",
     "type": "service_completed",
     "ts": "2026-09-02T17:47:00+05:30",
     "entity_id": "c18",
@@ -3379,7 +3393,7 @@
     "duration_min": 4
   },
   {
-    "id": "ev0499",
+    "id": "ev0501",
     "type": "journey_completed",
     "ts": "2026-09-02T17:47:00+05:30",
     "entity_id": "c18"
@@ -3402,7 +3416,7 @@
     "step_index": 1
   },
   {
-    "id": "ev0336",
+    "id": "ev0338",
     "type": "called",
     "ts": "2026-09-02T17:49:00+05:30",
     "entity_id": "c20",
@@ -3410,7 +3424,7 @@
     "resource_id": "res_bay_2"
   },
   {
-    "id": "ev0337",
+    "id": "ev0339",
     "type": "service_started",
     "ts": "2026-09-02T17:49:00+05:30",
     "entity_id": "c20",
@@ -3567,7 +3581,7 @@
     "step_index": 1
   },
   {
-    "id": "ev0340",
+    "id": "ev0342",
     "type": "called",
     "ts": "2026-09-02T18:13:00+05:30",
     "entity_id": "c21",
@@ -3575,7 +3589,7 @@
     "resource_id": "res_bay_1"
   },
   {
-    "id": "ev0341",
+    "id": "ev0343",
     "type": "service_started",
     "ts": "2026-09-02T18:13:00+05:30",
     "entity_id": "c21",
@@ -3600,7 +3614,7 @@
     "step_index": 1
   },
   {
-    "id": "ev0338",
+    "id": "ev0340",
     "type": "service_completed",
     "ts": "2026-09-02T18:28:00+05:30",
     "entity_id": "c20",
@@ -3609,7 +3623,7 @@
     "duration_min": 39
   },
   {
-    "id": "ev0339",
+    "id": "ev0341",
     "type": "queue_joined",
     "ts": "2026-09-02T18:28:00+05:30",
     "entity_id": "c20",
@@ -3617,39 +3631,39 @@
     "step_index": 2
   },
   {
+    "id": "ev0346",
+    "type": "called",
+    "ts": "2026-09-02T18:28:00+05:30",
+    "entity_id": "c22",
+    "station_id": "st_bay",
+    "resource_id": "res_bay_2"
+  },
+  {
+    "id": "ev0347",
+    "type": "service_started",
+    "ts": "2026-09-02T18:28:00+05:30",
+    "entity_id": "c22",
+    "station_id": "st_bay",
+    "resource_id": "res_bay_2"
+  },
+  {
+    "id": "ev0350",
+    "type": "called",
+    "ts": "2026-09-02T18:28:00+05:30",
+    "entity_id": "c20",
+    "station_id": "st_diagnostic",
+    "resource_id": "res_diagnostic_1"
+  },
+  {
+    "id": "ev0351",
+    "type": "service_started",
+    "ts": "2026-09-02T18:28:00+05:30",
+    "entity_id": "c20",
+    "station_id": "st_diagnostic",
+    "resource_id": "res_diagnostic_1"
+  },
+  {
     "id": "ev0344",
-    "type": "called",
-    "ts": "2026-09-02T18:28:00+05:30",
-    "entity_id": "c22",
-    "station_id": "st_bay",
-    "resource_id": "res_bay_2"
-  },
-  {
-    "id": "ev0345",
-    "type": "service_started",
-    "ts": "2026-09-02T18:28:00+05:30",
-    "entity_id": "c22",
-    "station_id": "st_bay",
-    "resource_id": "res_bay_2"
-  },
-  {
-    "id": "ev0348",
-    "type": "called",
-    "ts": "2026-09-02T18:28:00+05:30",
-    "entity_id": "c20",
-    "station_id": "st_diagnostic",
-    "resource_id": "res_diagnostic_1"
-  },
-  {
-    "id": "ev0349",
-    "type": "service_started",
-    "ts": "2026-09-02T18:28:00+05:30",
-    "entity_id": "c20",
-    "station_id": "st_diagnostic",
-    "resource_id": "res_diagnostic_1"
-  },
-  {
-    "id": "ev0342",
     "type": "service_completed",
     "ts": "2026-09-02T18:37:00+05:30",
     "entity_id": "c21",
@@ -3658,7 +3672,7 @@
     "duration_min": 24
   },
   {
-    "id": "ev0343",
+    "id": "ev0345",
     "type": "queue_joined",
     "ts": "2026-09-02T18:37:00+05:30",
     "entity_id": "c21",
@@ -3666,7 +3680,7 @@
     "step_index": 5
   },
   {
-    "id": "ev0471",
+    "id": "ev0473",
     "type": "called",
     "ts": "2026-09-02T18:37:00+05:30",
     "entity_id": "c21",
@@ -3674,7 +3688,7 @@
     "resource_id": "res_billing_1"
   },
   {
-    "id": "ev0472",
+    "id": "ev0474",
     "type": "service_started",
     "ts": "2026-09-02T18:37:00+05:30",
     "entity_id": "c21",
@@ -3682,7 +3696,7 @@
     "resource_id": "res_billing_1"
   },
   {
-    "id": "ev0473",
+    "id": "ev0475",
     "type": "service_completed",
     "ts": "2026-09-02T18:41:00+05:30",
     "entity_id": "c21",
@@ -3691,13 +3705,13 @@
     "duration_min": 4
   },
   {
-    "id": "ev0500",
+    "id": "ev0502",
     "type": "journey_completed",
     "ts": "2026-09-02T18:41:00+05:30",
     "entity_id": "c21"
   },
   {
-    "id": "ev0350",
+    "id": "ev0352",
     "type": "service_completed",
     "ts": "2026-09-02T18:42:00+05:30",
     "entity_id": "c20",
@@ -3706,7 +3720,7 @@
     "duration_min": 14
   },
   {
-    "id": "ev0351",
+    "id": "ev0353",
     "type": "queue_joined",
     "ts": "2026-09-02T18:42:00+05:30",
     "entity_id": "c20",
@@ -3714,7 +3728,7 @@
     "step_index": 3
   },
   {
-    "id": "ev0352",
+    "id": "ev0354",
     "type": "called",
     "ts": "2026-09-02T18:42:00+05:30",
     "entity_id": "c20",
@@ -3722,7 +3736,7 @@
     "resource_id": "res_bay_1"
   },
   {
-    "id": "ev0353",
+    "id": "ev0355",
     "type": "service_started",
     "ts": "2026-09-02T18:42:00+05:30",
     "entity_id": "c20",
@@ -3730,7 +3744,7 @@
     "resource_id": "res_bay_1"
   },
   {
-    "id": "ev0354",
+    "id": "ev0356",
     "type": "service_completed",
     "ts": "2026-09-02T18:53:00+05:30",
     "entity_id": "c20",
@@ -3739,7 +3753,7 @@
     "duration_min": 11
   },
   {
-    "id": "ev0355",
+    "id": "ev0357",
     "type": "queue_joined",
     "ts": "2026-09-02T18:53:00+05:30",
     "entity_id": "c20",
@@ -3747,7 +3761,7 @@
     "step_index": 4
   },
   {
-    "id": "ev0398",
+    "id": "ev0400",
     "type": "called",
     "ts": "2026-09-02T18:53:00+05:30",
     "entity_id": "c20",
@@ -3755,7 +3769,7 @@
     "resource_id": "res_wash_1"
   },
   {
-    "id": "ev0399",
+    "id": "ev0401",
     "type": "service_started",
     "ts": "2026-09-02T18:53:00+05:30",
     "entity_id": "c20",
@@ -3763,7 +3777,7 @@
     "resource_id": "res_wash_1"
   },
   {
-    "id": "ev0346",
+    "id": "ev0348",
     "type": "service_completed",
     "ts": "2026-09-02T18:54:00+05:30",
     "entity_id": "c22",
@@ -3772,7 +3786,7 @@
     "duration_min": 26
   },
   {
-    "id": "ev0347",
+    "id": "ev0349",
     "type": "queue_joined",
     "ts": "2026-09-02T18:54:00+05:30",
     "entity_id": "c22",
@@ -3846,7 +3860,7 @@
     "resource_id": "res_advisor_1"
   },
   {
-    "id": "ev0400",
+    "id": "ev0402",
     "type": "service_completed",
     "ts": "2026-09-02T19:06:00+05:30",
     "entity_id": "c20",
@@ -3855,7 +3869,7 @@
     "duration_min": 13
   },
   {
-    "id": "ev0401",
+    "id": "ev0403",
     "type": "called",
     "ts": "2026-09-02T19:06:00+05:30",
     "entity_id": "c22",
@@ -3863,7 +3877,7 @@
     "resource_id": "res_wash_1"
   },
   {
-    "id": "ev0402",
+    "id": "ev0404",
     "type": "service_started",
     "ts": "2026-09-02T19:06:00+05:30",
     "entity_id": "c22",
@@ -3871,7 +3885,7 @@
     "resource_id": "res_wash_1"
   },
   {
-    "id": "ev0417",
+    "id": "ev0419",
     "type": "queue_joined",
     "ts": "2026-09-02T19:06:00+05:30",
     "entity_id": "c20",
@@ -3879,7 +3893,7 @@
     "step_index": 5
   },
   {
-    "id": "ev0474",
+    "id": "ev0476",
     "type": "called",
     "ts": "2026-09-02T19:06:00+05:30",
     "entity_id": "c20",
@@ -3887,7 +3901,7 @@
     "resource_id": "res_billing_1"
   },
   {
-    "id": "ev0475",
+    "id": "ev0477",
     "type": "service_started",
     "ts": "2026-09-02T19:06:00+05:30",
     "entity_id": "c20",
@@ -3895,7 +3909,7 @@
     "resource_id": "res_billing_1"
   },
   {
-    "id": "ev0476",
+    "id": "ev0478",
     "type": "service_completed",
     "ts": "2026-09-02T19:11:00+05:30",
     "entity_id": "c20",
@@ -3904,7 +3918,7 @@
     "duration_min": 5
   },
   {
-    "id": "ev0501",
+    "id": "ev0503",
     "type": "journey_completed",
     "ts": "2026-09-02T19:11:00+05:30",
     "entity_id": "c20"
@@ -3927,7 +3941,7 @@
     "step_index": 1
   },
   {
-    "id": "ev0356",
+    "id": "ev0358",
     "type": "called",
     "ts": "2026-09-02T19:14:00+05:30",
     "entity_id": "c23",
@@ -3935,7 +3949,7 @@
     "resource_id": "res_bay_1"
   },
   {
-    "id": "ev0357",
+    "id": "ev0359",
     "type": "service_started",
     "ts": "2026-09-02T19:14:00+05:30",
     "entity_id": "c23",
@@ -3943,7 +3957,7 @@
     "resource_id": "res_bay_1"
   },
   {
-    "id": "ev0403",
+    "id": "ev0405",
     "type": "service_completed",
     "ts": "2026-09-02T19:17:00+05:30",
     "entity_id": "c22",
@@ -3952,7 +3966,7 @@
     "duration_min": 11
   },
   {
-    "id": "ev0418",
+    "id": "ev0420",
     "type": "queue_joined",
     "ts": "2026-09-02T19:17:00+05:30",
     "entity_id": "c22",
@@ -3960,7 +3974,7 @@
     "step_index": 5
   },
   {
-    "id": "ev0477",
+    "id": "ev0479",
     "type": "called",
     "ts": "2026-09-02T19:17:00+05:30",
     "entity_id": "c22",
@@ -3968,7 +3982,7 @@
     "resource_id": "res_billing_1"
   },
   {
-    "id": "ev0478",
+    "id": "ev0480",
     "type": "service_started",
     "ts": "2026-09-02T19:17:00+05:30",
     "entity_id": "c22",
@@ -3976,7 +3990,7 @@
     "resource_id": "res_billing_1"
   },
   {
-    "id": "ev0479",
+    "id": "ev0481",
     "type": "service_completed",
     "ts": "2026-09-02T19:21:00+05:30",
     "entity_id": "c22",
@@ -3985,13 +3999,13 @@
     "duration_min": 4
   },
   {
-    "id": "ev0502",
+    "id": "ev0504",
     "type": "journey_completed",
     "ts": "2026-09-02T19:21:00+05:30",
     "entity_id": "c22"
   },
   {
-    "id": "ev0358",
+    "id": "ev0360",
     "type": "service_completed",
     "ts": "2026-09-02T20:13:00+05:30",
     "entity_id": "c23",
@@ -4000,7 +4014,7 @@
     "duration_min": 59
   },
   {
-    "id": "ev0359",
+    "id": "ev0361",
     "type": "queue_joined",
     "ts": "2026-09-02T20:13:00+05:30",
     "entity_id": "c23",
@@ -4008,7 +4022,7 @@
     "step_index": 2
   },
   {
-    "id": "ev0360",
+    "id": "ev0362",
     "type": "called",
     "ts": "2026-09-02T20:13:00+05:30",
     "entity_id": "c23",
@@ -4016,7 +4030,7 @@
     "resource_id": "res_diagnostic_1"
   },
   {
-    "id": "ev0361",
+    "id": "ev0363",
     "type": "service_started",
     "ts": "2026-09-02T20:13:00+05:30",
     "entity_id": "c23",
@@ -4024,7 +4038,7 @@
     "resource_id": "res_diagnostic_1"
   },
   {
-    "id": "ev0362",
+    "id": "ev0364",
     "type": "service_completed",
     "ts": "2026-09-02T20:26:00+05:30",
     "entity_id": "c23",
@@ -4033,7 +4047,7 @@
     "duration_min": 13
   },
   {
-    "id": "ev0363",
+    "id": "ev0365",
     "type": "queue_joined",
     "ts": "2026-09-02T20:26:00+05:30",
     "entity_id": "c23",
@@ -4041,7 +4055,7 @@
     "step_index": 3
   },
   {
-    "id": "ev0364",
+    "id": "ev0366",
     "type": "called",
     "ts": "2026-09-02T20:26:00+05:30",
     "entity_id": "c23",
@@ -4049,7 +4063,7 @@
     "resource_id": "res_bay_2"
   },
   {
-    "id": "ev0365",
+    "id": "ev0367",
     "type": "service_started",
     "ts": "2026-09-02T20:26:00+05:30",
     "entity_id": "c23",
@@ -4057,7 +4071,7 @@
     "resource_id": "res_bay_2"
   },
   {
-    "id": "ev0366",
+    "id": "ev0368",
     "type": "service_completed",
     "ts": "2026-09-02T20:43:00+05:30",
     "entity_id": "c23",
@@ -4066,7 +4080,7 @@
     "duration_min": 17
   },
   {
-    "id": "ev0367",
+    "id": "ev0369",
     "type": "queue_joined",
     "ts": "2026-09-02T20:43:00+05:30",
     "entity_id": "c23",
@@ -4074,7 +4088,7 @@
     "step_index": 4
   },
   {
-    "id": "ev0404",
+    "id": "ev0406",
     "type": "called",
     "ts": "2026-09-02T20:43:00+05:30",
     "entity_id": "c23",
@@ -4082,7 +4096,7 @@
     "resource_id": "res_wash_1"
   },
   {
-    "id": "ev0405",
+    "id": "ev0407",
     "type": "service_started",
     "ts": "2026-09-02T20:43:00+05:30",
     "entity_id": "c23",
@@ -4090,7 +4104,7 @@
     "resource_id": "res_wash_1"
   },
   {
-    "id": "ev0406",
+    "id": "ev0408",
     "type": "service_completed",
     "ts": "2026-09-02T21:04:00+05:30",
     "entity_id": "c23",
@@ -4099,7 +4113,7 @@
     "duration_min": 21
   },
   {
-    "id": "ev0419",
+    "id": "ev0421",
     "type": "queue_joined",
     "ts": "2026-09-02T21:04:00+05:30",
     "entity_id": "c23",
@@ -4107,7 +4121,7 @@
     "step_index": 5
   },
   {
-    "id": "ev0480",
+    "id": "ev0482",
     "type": "called",
     "ts": "2026-09-02T21:04:00+05:30",
     "entity_id": "c23",
@@ -4115,7 +4129,7 @@
     "resource_id": "res_billing_1"
   },
   {
-    "id": "ev0481",
+    "id": "ev0483",
     "type": "service_started",
     "ts": "2026-09-02T21:04:00+05:30",
     "entity_id": "c23",
@@ -4123,7 +4137,7 @@
     "resource_id": "res_billing_1"
   },
   {
-    "id": "ev0482",
+    "id": "ev0484",
     "type": "service_completed",
     "ts": "2026-09-02T21:11:00+05:30",
     "entity_id": "c23",
@@ -4132,7 +4146,7 @@
     "duration_min": 7
   },
   {
-    "id": "ev0503",
+    "id": "ev0505",
     "type": "journey_completed",
     "ts": "2026-09-02T21:11:00+05:30",
     "entity_id": "c23"
