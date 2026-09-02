@@ -1,0 +1,4 @@
+[
+  { "id": "opd", "path": "data/opd", "label_key": "vertical.name" },
+  { "id": "vehicle_service", "path": "data/vehicle_service", "label_key": "vertical.name" }
+]

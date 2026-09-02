@@ -1,0 +1,6 @@
+[
+  { "id": "res_reception_1", "station_id": "st_reception", "name_key": "resource.reception_desk" },
+  { "id": "res_doctor_1", "station_id": "st_opd_gen", "name_key": "resource.doctor_1" },
+  { "id": "res_lab_1", "station_id": "st_lab", "name_key": "resource.lab_tech_1" },
+  { "id": "res_pharmacy_1", "station_id": "st_pharmacy", "name_key": "resource.pharmacist_1" }
+]

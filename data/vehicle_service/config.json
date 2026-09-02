@@ -1,0 +1,77 @@
+{
+  "vertical_id": "vehicle_service",
+  "date": "2026-09-02",
+  "day_start": "2026-09-02T08:00:00+05:30",
+  "day_end": "2026-09-02T18:00:00+05:30",
+  "entry_station_id": "st_checkin",
+  "default_route_id": "route_standard",
+  "estimator": {
+    "rolling_window": 5,
+    "min_samples_for_observed_mean": 3,
+    "queue_wait_inflation_p80": 1.35,
+    "pause_fallback_reason_default": "resource_unavailable"
+  },
+  "display": {
+    "headline_percentile": "p80",
+    "lower_bound_percentile": "p50",
+    "min_lead_time_min": 5,
+    "max_swing_per_update_min": 15
+  },
+  "doctor_view_station_id": "st_bay",
+  "comparison": {
+    "yesterday_mean_wait_min": 75,
+    "yesterday_label_key": "comparison.yesterday"
+  },
+  "locale": {
+    "default": "en",
+    "available": ["en"],
+    "strings": {
+      "app.title": { "en": "Dynamic Queue Intimation" },
+      "vertical.name": { "en": "Vehicle Service Centre" },
+      "entity.label": { "en": "Vehicle" },
+      "entity.label_plural": { "en": "Vehicles" },
+      "entity.id_prefix": { "en": "Job Card" },
+      "station.checkin": { "en": "Check-in" },
+      "station.bay": { "en": "Service Bay" },
+      "station.wash": { "en": "Wash" },
+      "station.billing": { "en": "Billing" },
+      "resource.advisor_1": { "en": "Service Advisor" },
+      "resource.bay_1": { "en": "Bay 1 Technician" },
+      "resource.bay_2": { "en": "Bay 2 Technician" },
+      "resource.wash_1": { "en": "Wash Technician" },
+      "resource.billing_1": { "en": "Billing Clerk" },
+      "route.standard": { "en": "Standard Service Visit" },
+      "action.wait": { "en": "Please wait, your vehicle is in queue" },
+      "action.go_to_station": { "en": "Please head to {station} now" },
+      "action.done": { "en": "Service complete. Thank you." },
+      "action.not_arrived": { "en": "Vehicle not checked in yet" },
+      "action.no_show": { "en": "Marked as no-show" },
+      "estimate.not_available": { "en": "Estimate not available yet — gathering data" },
+      "estimate.heuristic_label": { "en": "Heuristic estimate (not AI)" },
+      "estimate.updating": { "en": "updating" },
+      "board.title": { "en": "Now Serving" },
+      "doctor.done_button": { "en": "Done — Next Vehicle" },
+      "doctor.next_up": { "en": "Next" },
+      "doctor.no_patient": { "en": "No vehicle waiting" },
+      "admin.title": { "en": "Admin Dashboard" },
+      "frontdesk.title": { "en": "Front Desk" },
+      "frontdesk.call_next": { "en": "Call Next" },
+      "frontdesk.no_show": { "en": "No-show" },
+      "frontdesk.priority_insert": { "en": "Insert Priority" },
+      "frontdesk.pull_forward": { "en": "Pull Forward" },
+      "patient.title": { "en": "Your Service Visit" },
+      "comparison.yesterday": { "en": "yesterday" },
+      "suggestion.pull_forward": { "en": "Pull forward a waitlisted vehicle to fill the gap" },
+      "suggestion.lab_first": { "en": "Send flagged vehicles ahead while the resource is unavailable" },
+      "screen.patient": { "en": "Customer view" },
+      "screen.frontdesk": { "en": "Front desk" },
+      "screen.doctor": { "en": "Bay view" },
+      "screen.admin": { "en": "Admin dashboard" },
+      "screen.board": { "en": "Display board" }
+    }
+  },
+  "seed": {
+    "reception_desk_open_at": "2026-09-02T08:00:00+05:30",
+    "doctor_scheduled_start": "2026-09-02T08:00:00+05:30"
+  }
+}

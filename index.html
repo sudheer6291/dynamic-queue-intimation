@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
+  <title>Dynamic Queue Intimation — Prototype</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header class="topbar">
+    <div class="topbar-row">
+      <div class="brand">
+        <span class="brand-mark" aria-hidden="true">◔</span>
+        <span class="brand-name">Dynamic Queue Intimation</span>
+        <span class="brand-sub" id="vertical-name">—</span>
+      </div>
+      <div class="topbar-controls">
+        <label class="control-inline">
+          <span>Vertical</span>
+          <select id="vertical-select"></select>
+        </label>
+        <label class="control-inline">
+          <span>Language</span>
+          <select id="locale-select"></select>
+        </label>
+      </div>
+    </div>
+    <nav class="tabs" id="tabs" role="tablist" aria-label="Screens"></nav>
+  </header>
+
+  <div class="clockbar" id="clockbar">
+    <button id="clock-playpause" class="btn btn-primary" aria-label="Play or pause the clock">▶</button>
+    <button id="clock-back" class="btn" title="Step back 5 min">« 5m</button>
+    <button id="clock-fwd" class="btn" title="Step forward 5 min">5m »</button>
+    <div class="clock-time" id="clock-time">08:00</div>
+    <input type="range" id="clock-scrub" min="0" max="1" value="0" step="1" class="clock-scrub" aria-label="Scrub to time of day" />
+    <div class="speed-group" role="group" aria-label="Playback speed">
+      <button class="speed-btn" data-speed="1">×1</button>
+      <button class="speed-btn" data-speed="10">×10</button>
+      <button class="speed-btn" data-speed="60">×60</button>
+      <button class="speed-btn" data-speed="180">×180</button>
+    </div>
+    <label class="control-inline estimator-toggle" id="estimator-toggle-wrap">
+      <span>Estimator</span>
+      <select id="estimator-select">
+        <option value="proposed">Proposed (range)</option>
+        <option value="baseline">Baseline (arithmetic)</option>
+      </select>
+    </label>
+  </div>
+
+  <main id="view-root" class="view-root" aria-live="polite"></main>
+
+  <div id="toast" class="toast" hidden></div>
+
+  <script type="module" src="src/app.js"></script>
+</body>
+</html>

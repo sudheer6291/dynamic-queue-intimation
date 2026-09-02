@@ -1,0 +1,83 @@
+{
+  "vertical_id": "opd",
+  "date": "2026-09-02",
+  "day_start": "2026-09-02T08:00:00+05:30",
+  "day_end": "2026-09-02T18:00:00+05:30",
+  "entry_station_id": "st_reception",
+  "default_route_id": "route_standard",
+  "estimator": {
+    "rolling_window": 5,
+    "min_samples_for_observed_mean": 3,
+    "queue_wait_inflation_p80": 1.35,
+    "pause_fallback_reason_default": "resource_unavailable"
+  },
+  "display": {
+    "headline_percentile": "p80",
+    "lower_bound_percentile": "p50",
+    "min_lead_time_min": 5,
+    "max_swing_per_update_min": 15
+  },
+  "resequencing": {
+    "pause_alt_route": {
+      "trigger_station_id": "st_opd_gen",
+      "flag_field": "pre_flagged_lab",
+      "alt_station_id": "st_lab"
+    }
+  },
+  "doctor_view_station_id": "st_opd_gen",
+  "comparison": {
+    "yesterday_mean_wait_min": 52,
+    "yesterday_label_key": "comparison.yesterday"
+  },
+  "locale": {
+    "default": "en",
+    "available": ["en", "hi"],
+    "strings": {
+      "app.title": { "en": "Dynamic Queue Intimation", "hi": "डायनामिक कतार सूचना" },
+      "screen.patient": { "en": "Patient view", "hi": "मरीज़ स्क्रीन" },
+      "screen.frontdesk": { "en": "Front desk", "hi": "फ्रंट डेस्क" },
+      "screen.doctor": { "en": "Doctor view", "hi": "डॉक्टर स्क्रीन" },
+      "screen.admin": { "en": "Admin dashboard", "hi": "प्रबंधक डैशबोर्ड" },
+      "screen.board": { "en": "Display board", "hi": "डिस्प्ले बोर्ड" },
+      "vertical.name": { "en": "Hospital OPD", "hi": "अस्पताल ओपीडी" },
+      "entity.label": { "en": "Patient", "hi": "मरीज़" },
+      "entity.label_plural": { "en": "Patients", "hi": "मरीज़" },
+      "entity.id_prefix": { "en": "Token", "hi": "टोकन" },
+      "station.reception": { "en": "Reception", "hi": "स्वागत कक्ष" },
+      "station.opd_gen": { "en": "Doctor Consultation", "hi": "डॉक्टर परामर्श" },
+      "station.lab": { "en": "Lab", "hi": "प्रयोगशाला" },
+      "station.pharmacy": { "en": "Pharmacy", "hi": "फार्मेसी" },
+      "resource.reception_desk": { "en": "Reception Desk", "hi": "स्वागत डेस्क" },
+      "resource.doctor_1": { "en": "Dr. Rao", "hi": "डॉ. राव" },
+      "resource.lab_tech_1": { "en": "Lab Technician", "hi": "लैब तकनीशियन" },
+      "resource.pharmacist_1": { "en": "Pharmacist", "hi": "फार्मासिस्ट" },
+      "route.standard": { "en": "Standard OPD Visit", "hi": "मानक ओपीडी विज़िट" },
+      "action.wait": { "en": "Please wait, you'll be called", "hi": "कृपया प्रतीक्षा करें, आपको बुलाया जाएगा" },
+      "action.go_to_station": { "en": "Please head to {station} now", "hi": "कृपया अभी {station} जाएँ" },
+      "action.done": { "en": "Visit complete. Thank you.", "hi": "विज़िट पूर्ण हुई। धन्यवाद।" },
+      "action.not_arrived": { "en": "Not checked in yet", "hi": "अभी चेक-इन नहीं हुआ" },
+      "action.no_show": { "en": "Marked as no-show", "hi": "अनुपस्थित के रूप में चिह्नित" },
+      "estimate.not_available": { "en": "Estimate not available yet — gathering data", "hi": "अनुमान अभी उपलब्ध नहीं — डेटा एकत्र हो रहा है" },
+      "estimate.heuristic_label": { "en": "Heuristic estimate (not AI)", "hi": "अनुमानित गणना (AI नहीं)" },
+      "estimate.updating": { "en": "updating", "hi": "अपडेट हो रहा है" },
+      "board.title": { "en": "Now Serving", "hi": "अभी सेवा में" },
+      "doctor.done_button": { "en": "Done — Next Patient", "hi": "पूर्ण — अगला मरीज़" },
+      "doctor.next_up": { "en": "Next", "hi": "अगला" },
+      "doctor.no_patient": { "en": "No patient waiting", "hi": "कोई मरीज़ प्रतीक्षा में नहीं" },
+      "admin.title": { "en": "Admin Dashboard", "hi": "प्रबंधक डैशबोर्ड" },
+      "frontdesk.title": { "en": "Front Desk", "hi": "फ्रंट डेस्क" },
+      "frontdesk.call_next": { "en": "Call Next", "hi": "अगला बुलाएँ" },
+      "frontdesk.no_show": { "en": "No-show", "hi": "अनुपस्थित" },
+      "frontdesk.priority_insert": { "en": "Insert Priority", "hi": "प्राथमिकता जोड़ें" },
+      "frontdesk.pull_forward": { "en": "Pull Forward", "hi": "आगे लाएँ" },
+      "patient.title": { "en": "Your Visit", "hi": "आपकी विज़िट" },
+      "comparison.yesterday": { "en": "yesterday", "hi": "कल" },
+      "suggestion.pull_forward": { "en": "Pull forward a waitlisted patient to fill the gap", "hi": "अंतर भरने के लिए प्रतीक्षा-सूची से मरीज़ को आगे लाएँ" },
+      "suggestion.lab_first": { "en": "Send lab-bound patients to the lab first while the doctor is away", "hi": "डॉक्टर के अनुपस्थित रहने पर लैब जाने वाले मरीज़ों को पहले लैब भेजें" }
+    }
+  },
+  "seed": {
+    "reception_desk_open_at": "2026-09-02T08:00:00+05:30",
+    "doctor_scheduled_start": "2026-09-02T08:00:00+05:30"
+  }
+}

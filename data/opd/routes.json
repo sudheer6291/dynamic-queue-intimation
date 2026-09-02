@@ -1,0 +1,33 @@
+[
+  {
+    "id": "route_standard",
+    "name_key": "route.standard",
+    "steps": [
+      { "step_index": 0, "station_id": "st_reception", "conditional": false },
+      { "step_index": 1, "station_id": "st_opd_gen", "conditional": false },
+      {
+        "step_index": 2,
+        "station_id": "st_lab",
+        "conditional": true,
+        "condition_key": "lab_ordered",
+        "probability": 0.35
+      },
+      {
+        "step_index": 3,
+        "station_id": "st_opd_gen",
+        "conditional": true,
+        "condition_key": "lab_ordered",
+        "probability": 0.35,
+        "revisit": true,
+        "service_time_override": { "median_min": 4, "p80_min": 7 }
+      },
+      {
+        "step_index": 4,
+        "station_id": "st_pharmacy",
+        "conditional": true,
+        "condition_key": "medicine_prescribed",
+        "probability": 0.7
+      }
+    ]
+  }
+]
