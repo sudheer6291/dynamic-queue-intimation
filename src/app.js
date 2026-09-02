@@ -29,6 +29,8 @@ const app = {
   estimatorMode: "proposed",
   selectedStation: null,
   selectedEntityId: null,
+  whatIfStation: null,
+  whatIfDelta: 1,
   loggedPredictionBuckets: new Set(),
   loggedNudgeBuckets: new Set()
 };
@@ -59,6 +61,7 @@ function ctx() {
   const state = deriveState(app.data, allEvents, iso);
   return {
     state,
+    allEvents,
     data: app.data,
     config: app.data.config,
     t: makeTranslator(app.data.config, app.locale),
@@ -72,6 +75,14 @@ function ctx() {
     toast,
     setSelectedStation: (id) => {
       app.selectedStation = id;
+      scheduleRender(true);
+    },
+    setWhatIfStation: (id) => {
+      app.whatIfStation = id;
+      scheduleRender(true);
+    },
+    setWhatIfDelta: (delta) => {
+      app.whatIfDelta = delta;
       scheduleRender(true);
     },
     setSelectedEntity: (id) => {

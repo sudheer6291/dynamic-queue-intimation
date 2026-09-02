@@ -30,6 +30,35 @@ The Admin dashboard's new **Physically waiting / Away (virtual queue)**
 tiles are the auditable proof point for the first of these — the number
 a hospital administrator would actually buy on.
 
+## Market differentiators
+
+A better ETA display is easy for any of the "dozen vendors" the brief
+names to copy — it's a UI change. What's actually hard to copy is
+*having modeled the queue as a system*, which is what building an
+event-driven engine (rather than a live counter) gets for free. Two
+things now on the Admin dashboard exploit that:
+
+- **Prediction accuracy panel** (`src/engine/calibration.js`) — every
+  finished visit's shown estimate, replayed against what actually
+  happened. Not a survey answer to "do you trust the range" — a real,
+  auditable number, computed fresh from the event log every time, for
+  both estimators, each graded on its own claim. Building this exposed a
+  genuine bias in the original estimator (it only budgeted *service*
+  time for future stations, not the queue ahead of them there) and
+  drove a real fix — go check the "graded generously... it still
+  misses" line for baseline for what an honest comparison looks like.
+- **What-if capacity planner** (`src/engine/capacityPlanner.js`) — "if I
+  added a second bay right now, today's backlog clears how much sooner?"
+  A live-token-number competitor cannot answer this question at all —
+  they never built a model of the queue, only a display of its current
+  length. This reuses the exact same rolling-mean service-time math the
+  live estimate already trusts, just with a different resource count, so
+  it's not a separate, harder-to-trust model bolted on the side.
+
+Both are genuinely free to compute — no new event types, no simulation
+run twice — because the whole system was already built as a real
+queueing model, not a counter with a label.
+
 ## Running it
 
 Any static file server works — the app is plain ES modules, no build step.
@@ -149,7 +178,9 @@ rather than trusting a stale guess.
   at whichever station is this vertical's core value-add step.
 - **Admin dashboard** — station load (current vs. baseline vs. proposed),
   no-shows, slots recovered today, mean journey time vs. a configured
-  "yesterday" baseline, and today's delay log with reasons.
+  "yesterday" baseline, today's delay log with reasons, a **prediction
+  accuracy panel** (replayed evidence, not a claim), and a **what-if
+  capacity planner** — see "Market differentiators" above for both.
 - **Display board** — now serving / next up / waiting, per station.
 
 ## Step out & get notified

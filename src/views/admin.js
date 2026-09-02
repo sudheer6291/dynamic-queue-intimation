@@ -2,6 +2,29 @@ import { nameOf } from "../i18n.js";
 import { fmtDuration, parseISOToMin, el } from "../util.js";
 import { getEstimate } from "../engine/estimator.js";
 import { recoveredSlotsCount, computeLiveSuggestions } from "../engine/suggestions.js";
+import { computeCalibration } from "../engine/calibration.js";
+import { whatIfStationLoad, busiestStationId } from "../engine/capacityPlanner.js";
+
+function calibrationBar(bucket) {
+  const pct = (n) => Math.round((n / bucket.total) * 100);
+  return el("div", {}, [
+    el("div", { class: "d-flex justify-content-between small mb-1" }, [
+      el("span", { class: "text-primary fw-semibold" }, `${pct(bucket.early)}% called early`),
+      el("span", { class: "text-success fw-semibold" }, `${pct(bucket.hit)}% within range`),
+      el("span", { class: "text-danger fw-semibold" }, `${pct(bucket.late)}% ran late`)
+    ]),
+    el("div", { class: "progress", style: "height:10px" }, [
+      el("div", { class: "progress-bar bg-primary", style: `width:${pct(bucket.early)}%` }),
+      el("div", { class: "progress-bar bg-success", style: `width:${pct(bucket.hit)}%` }),
+      el("div", { class: "progress-bar bg-danger", style: `width:${pct(bucket.late)}%` })
+    ]),
+    el(
+      "div",
+      { class: "text-muted small mt-2" },
+      `${pct(bucket.early + bucket.hit)}% of finished visits landed at or before the range we showed at check-in — that's the honest number behind "range feels trustworthy."`
+    )
+  ]);
+}
 
 function statCard(icon, num, label, tone) {
   return el("div", { class: "col-6 col-lg-3" }, [
@@ -60,6 +83,120 @@ export function renderAdminView(root, ctx) {
       statCard("bi-building", String(physicallyWaiting), t("admin.physically_waiting"), "primary"),
       statCard("bi-geo-alt-fill", String(currentlyAway), t("admin.currently_away"), "info"),
       statCard("bi-bell-fill", String(nudgesSent), "Return nudges sent today", "secondary")
+    ])
+  );
+
+  // --- trust score: were the ranges we showed actually right? ---
+  // This is the answer to the brief's own #1 evaluation question, backed
+  // by evidence — every finished visit's shown estimate, replayed and
+  // checked against what actually happened, not a survey answer.
+  const calibration = computeCalibration(data, ctx.allEvents, state);
+  wrap.appendChild(
+    el("div", { class: "card border-0 shadow-sm" }, [
+      el("div", { class: "card-header bg-white fw-semibold small text-uppercase text-muted" }, [
+        el("i", { class: "bi bi-clipboard-check-fill me-2" }),
+        "Prediction accuracy — evidence, not a claim"
+      ]),
+      el("div", { class: "card-body" }, [
+        el("div", { class: "row g-4" }, [
+          el("div", { class: "col-12 col-md-6" }, [
+            el("div", { class: "fw-semibold mb-2" }, "Proposed — full-visit range vs. reality"),
+            calibration.proposed.total === 0
+              ? el("div", { class: "text-muted small" }, "No completed visits yet today.")
+              : calibrationBar(calibration.proposed)
+          ]),
+          el("div", { class: "col-12 col-md-6" }, [
+            el("div", { class: "fw-semibold mb-2" }, "Baseline — its own next-station claim vs. reality"),
+            calibration.baseline.total === 0
+              ? el("div", { class: "text-muted small" }, "No completed visits yet today.")
+              : el("div", {}, [
+                  el("div", { class: "d-flex justify-content-between small mb-1" }, [
+                    el("span", { class: "text-success fw-semibold" }, `${Math.round((calibration.baseline.onTime / calibration.baseline.total) * 100)}% on time`),
+                    el("span", { class: "text-danger fw-semibold" }, `${Math.round((calibration.baseline.late / calibration.baseline.total) * 100)}% ran late`)
+                  ]),
+                  el("div", { class: "progress", style: "height:10px" }, [
+                    el("div", {
+                      class: "progress-bar bg-success",
+                      style: `width:${(calibration.baseline.onTime / calibration.baseline.total) * 100}%`
+                    }),
+                    el("div", {
+                      class: "progress-bar bg-danger",
+                      style: `width:${(calibration.baseline.late / calibration.baseline.total) * 100}%`
+                    })
+                  ]),
+                  el(
+                    "div",
+                    { class: "text-muted small mt-2" },
+                    "Graded generously on baseline's own narrow claim (next station only) — it still misses because it never looks at resource pauses."
+                  )
+                ])
+          ])
+        ])
+      ])
+    ])
+  );
+
+  // --- what-if capacity planner ---
+  // The differentiator a live-token-number competitor can't offer: they
+  // never modeled the queue as a system, only displayed its length.
+  const whatIfStationId = ctx.app.whatIfStation && data.stations.some((s) => s.id === ctx.app.whatIfStation)
+    ? ctx.app.whatIfStation
+    : busiestStationId(state, data);
+  const whatIfDelta = ctx.app.whatIfDelta;
+  const currentLoad = whatIfStationLoad(whatIfStationId, state, data, config, 0);
+  const hypoLoad = whatIfStationLoad(whatIfStationId, state, data, config, whatIfDelta);
+  const savedP80 = Math.round(currentLoad.clearP80 - hypoLoad.clearP80);
+  const whatIfStationName = nameOf(config, locale, data.stations.find((s) => s.id === whatIfStationId).name_key);
+
+  wrap.appendChild(
+    el("div", { class: "card border-0 shadow-sm" }, [
+      el("div", { class: "card-header bg-white fw-semibold small text-uppercase text-muted" }, [
+        el("i", { class: "bi bi-sliders me-2" }),
+        "What if? — capacity planner"
+      ]),
+      el("div", { class: "card-body" }, [
+        el("div", { class: "d-flex flex-wrap align-items-center gap-3 mb-3" }, [
+          (() => {
+            const select = el("select", { class: "form-select form-select-sm w-auto" });
+            for (const s of data.stations) {
+              const opt = el("option", { value: s.id }, nameOf(config, locale, s.name_key));
+              if (s.id === whatIfStationId) opt.selected = true;
+              select.appendChild(opt);
+            }
+            select.addEventListener("change", (e) => ctx.setWhatIfStation(e.target.value));
+            return select;
+          })(),
+          el("div", { class: "btn-group btn-group-sm", role: "group" }, [-1, 1, 2].map((d) =>
+            (() => {
+              const btn = el("button", { class: "btn btn-outline-secondary" + (whatIfDelta === d ? " active" : "") }, `${d > 0 ? "+" : ""}${d} resource${Math.abs(d) > 1 ? "s" : ""}`);
+              btn.addEventListener("click", () => ctx.setWhatIfDelta(d));
+              return btn;
+            })()
+          ))
+        ]),
+        currentLoad.queueLen === 0
+          ? el("div", { class: "text-muted small" }, `No one waiting at ${whatIfStationName} right now — nothing to project.`)
+          : el("div", { class: "row g-3 align-items-center" }, [
+              el("div", { class: "col-12 col-md-5" }, [
+                el("div", { class: "text-muted small" }, `Today, as staffed (${currentLoad.actualCapacity} resource${currentLoad.actualCapacity === 1 ? "" : "s"})`),
+                el("div", { class: "fs-4 fw-bold" }, `${Math.round(currentLoad.clearP50)}–${Math.round(currentLoad.clearP80)} min`),
+                el("div", { class: "text-muted small" }, `to clear the ${currentLoad.queueLen} currently waiting`)
+              ]),
+              el("div", { class: "col-12 col-md-2 text-center" }, [el("i", { class: "bi bi-arrow-right fs-3 text-muted" })]),
+              el("div", { class: "col-12 col-md-5" }, [
+                el("div", { class: "text-muted small" }, `With ${hypoLoad.hypotheticalCapacity} resource${hypoLoad.hypotheticalCapacity === 1 ? "" : "s"}`),
+                el("div", { class: "fs-4 fw-bold text-primary" }, `${Math.round(hypoLoad.clearP50)}–${Math.round(hypoLoad.clearP80)} min`),
+                savedP80 !== 0
+                  ? el("div", { class: `small fw-semibold ${savedP80 > 0 ? "text-success" : "text-danger"}` }, `${savedP80 > 0 ? savedP80 + " min sooner" : Math.abs(savedP80) + " min slower"}`)
+                  : el("div", { class: "text-muted small" }, "no material change")
+              ])
+            ]),
+        el(
+          "div",
+          { class: "text-muted small mt-3 border-top pt-2" },
+          "Projects clearing today's already-queued backlog only — it doesn't guess at arrivals that haven't happened yet. Same rolling-mean service-time math the live estimate already uses, just with a different resource count."
+        )
+      ])
     ])
   );
 

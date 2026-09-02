@@ -8,7 +8,7 @@
   "estimator": {
     "rolling_window": 5,
     "min_samples_for_observed_mean": 3,
-    "queue_wait_inflation_p80": 1.35,
+    "queue_wait_inflation_p80": 1.5,
     "pause_fallback_reason_default": "resource_unavailable"
   },
   "display": {
