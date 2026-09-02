@@ -68,12 +68,51 @@ python3 -m http.server 8080
 # open http://localhost:8080/index.html
 ```
 
-Served this way, every runtime action (Front Desk calls, patient step-outs,
-Doctor completes...) lives only in the browser tab's memory — reload and the
-day resets to the seed. That's fine for a demo; it's not enough for
-automation testing, where a suite needs the state it just created to survive
-between requests and to be assertable as structured JSON, not scraped off
-the DOM. See the next section.
+`index.html` is a landing page that links out to each role's own separate
+page — see "One screen per role" below. Served this way (no `/api/*`
+routes), every runtime action (Front Desk calls, patient step-outs, Doctor
+completes...) lives only in that browser's memory — reload and the day
+resets to the seed. That's fine for a demo; it's not enough for automation
+testing, where a suite needs the state it just created to survive between
+requests and to be assertable as structured JSON, not scraped off the
+DOM. See the next section.
+
+## One screen per role
+
+There is no shared tab bar anywhere in this app, and no single page that
+can switch between Patient, Front Desk, Doctor, Admin, and the Display
+board — each is its own separate HTML page with its own `<script
+type="module">` entry point:
+
+| Role | Page | Entry script |
+|---|---|---|
+| Patient / Customer | `patient.html` | `src/entries/patient.js` |
+| Front Desk | `frontdesk.html` | `src/entries/frontdesk.js` |
+| Doctor / core station | `doctor.html` | `src/entries/doctor.js` |
+| Admin dashboard | `admin.html` | `src/entries/admin.js` |
+| Display board | `board.html` | `src/entries/board.js` |
+
+`index.html` is purely a demo-convenience landing page listing links to
+all five — it has no app logic of its own and isn't meant to represent
+anything a real user would see; in a real deployment each role's URL
+would simply be handed to that role directly (a receptionist's terminal
+bookmarks `frontdesk.html`, a patient gets a link/QR code to
+`patient.html`), the same way this app's own out-of-scope note below
+still holds: there's still no login, but "everyone shares one page with
+a tab bar" — which a single login *would* have implied — is gone.
+
+All five pages share one runtime (`src/appShell.js`, which every entry
+script calls with exactly one view — `mountApp({ id, render })`) so
+there's a single implementation of the clock, vertical/locale selection,
+`dispatch()`, and the runtime-events sync, not five copies. What's
+genuinely shared *state* across those separate page loads: the vertical,
+locale, and clock position persist via `localStorage` (per-browser, not a
+security boundary — picking up right where another role's page left the
+clock is a demo nicety, not real cross-device sync), and the actual
+queue/entity state persists the same way it already did, through the
+runtime-events API (`src/apiSync.js`) — so navigating from `frontdesk.html`
+to `doctor.html` mid-demo feels like walking over to a different terminal
+on the same shared system, not restarting the simulation.
 
 ## Persistence & deployment (Vercel)
 
@@ -149,12 +188,14 @@ since that mode never promised cross-function consistency), then cleans
 up after itself via `DELETE`. Safe to run repeatedly against a live
 deployment.
 
-`smoke-test-ui.mjs` drives the actual deployed page with Playwright: Reset
-simulation for a clean slate, Call Next on Front Desk, then a hard page
-**reload** (no client state carried over) to prove the action survived via
-`fetchPersistedEvents` on load — not just that dispatch worked in the same
-tab — cross-checked against `/api/events` directly, then resets again to
-leave the deployment clean.
+`smoke-test-ui.mjs` drives the actual deployed pages with Playwright,
+navigating between `admin.html` and `frontdesk.html` as real separate page
+loads (see "One screen per role"): Reset simulation for a clean slate,
+Call Next on Front Desk, then a hard page **reload** (no client state
+carried over) to prove the action survived via `fetchPersistedEvents` on
+load — not just that dispatch worked in the same page — cross-checked
+against `/api/events` directly, then resets again to leave the deployment
+clean.
 
 **Zero regression by design.** `src/apiSync.js`'s three functions
 (`fetchPersistedEvents`, `syncEventsToServer`, `resetPersistedEvents`) all
@@ -420,13 +461,15 @@ immediately. Both new verticals also exercise `capacity > 1` stations
 - **No domain words in the engine.** `deriveState.js`, `estimator.js`,
   and `suggestions.js` are clean. `actions.js` (shared action logic, not
   a view) was also cleaned — the doctor-specific action is named
-  `actionStationDone`. `app.js` still imports files named `patient.js` /
-  `doctor.js` and uses `"patient"` / `"doctor"` as internal routing ids —
-  those are the view-layer screen identifiers from §6 of the brief itself
-  (view components are explicitly exempted by this checkpoint); all
-  user-visible tab labels are pulled from `config.locale.strings`
-  (`screen.*` keys), so relabeling them per vertical needs no code change,
-  as the car/bike verticals demonstrate ("Customer view", "Bay view").
+  `actionStationDone`. `src/appShell.js` and `src/entries/*.js` still
+  import files named `patient.js` / `doctor.js` and use `"patient"` /
+  `"doctor"` as internal routing ids — those are the view-layer screen
+  identifiers from §6 of the brief itself (view components are explicitly
+  exempted by this checkpoint); the role badge on every page is pulled
+  from `config.locale.strings` (`screen.*` keys) at render time, so
+  relabeling per vertical needs no code change — car/bike's own pages
+  show "Customer view" / "Bay view" from the exact same
+  `patient.html`/`doctor.html` + `src/entries/patient.js`/`doctor.js`.
 - **Events are append-only.** Nothing in `deriveState.js` mutates an
   event; state is always rebuilt from the full log up to `now`.
 - **Every prediction is logged.** `prediction_shown` events are appended
@@ -451,9 +494,13 @@ immediately. Both new verticals also exercise `capacity > 1` stations
 
 ## Out of scope (§9)
 
-No login/roles, no database, no HIS/EMR integration, no real SMS/WhatsApp
-(the patient view is a rendered phone-frame mock instead), no ML, no
-billing, no native apps — as specified.
+No database, no HIS/EMR integration, no real SMS/WhatsApp (the patient
+view is a rendered phone-frame mock instead), no ML, no billing, no
+native apps — as specified. **No login** still holds exactly as written —
+there is no authentication anywhere in this app — but "no roles" no
+longer does: each role now has its own separate page (see "One screen per
+role" above), which is the access-separation a login system would have
+been *for*, just without accounts or passwords behind it.
 
 ## Regenerating seed data
 

@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
+  <title>Admin dashboard — Dynamic Queue Intimation</title>
+  <link rel="stylesheet" href="vendor/bootstrap/css/bootstrap.min.css" />
+  <link rel="stylesheet" href="vendor/bootstrap-icons/bootstrap-icons.min.css" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header class="sticky-top">
+  <nav class="navbar navbar-expand-md navbar-light bg-white border-bottom shadow-sm">
+    <div class="container-fluid px-3 px-md-4">
+      <span class="navbar-brand d-flex align-items-center gap-2 mb-0 flex-wrap">
+        <span class="brand-mark"><i class="bi bi-clock-history"></i></span>
+        <span class="fw-bold">Dynamic Queue Intimation</span>
+        <span class="role-badge"><i class="bi bi-speedometer2 me-1"></i><span id="role-badge-text">Admin</span></span>
+        <span class="text-muted small d-none d-sm-inline" id="vertical-name">—</span>
+      </span>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navControls" aria-label="Toggle controls">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse flex-grow-0" id="navControls">
+        <div class="d-flex flex-column flex-md-row gap-2 gap-md-3 align-items-md-center ms-md-4 my-2 my-md-0">
+          <div class="d-flex align-items-center gap-2">
+            <label for="vertical-select" class="form-label small text-muted mb-0">Vertical</label>
+            <select id="vertical-select" class="form-select form-select-sm"></select>
+          </div>
+          <div class="d-flex align-items-center gap-2">
+            <label for="locale-select" class="form-label small text-muted mb-0">Language</label>
+            <select id="locale-select" class="form-select form-select-sm"></select>
+          </div>
+          <a href="index.html" class="small role-switch-link"><i class="bi bi-box-arrow-left me-1"></i>All role screens (demo)</a>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <div class="clockbar">
+    <div class="container-fluid px-3 px-md-4 py-2 d-flex flex-wrap align-items-center gap-2">
+      <button id="clock-playpause" class="btn btn-primary btn-icon" aria-label="Play or pause the clock">
+        <i class="bi bi-play-fill"></i>
+      </button>
+      <div class="btn-group" role="group" aria-label="Step time">
+        <button id="clock-back" class="btn btn-outline-light btn-sm" title="Step back 5 min"><i class="bi bi-skip-backward-fill"></i> 5m</button>
+        <button id="clock-fwd" class="btn btn-outline-light btn-sm" title="Step forward 5 min">5m <i class="bi bi-skip-forward-fill"></i></button>
+      </div>
+      <div class="clock-time font-monospace" id="clock-time">08:00</div>
+      <input type="range" id="clock-scrub" min="0" max="1" value="0" step="1" class="form-range clock-scrub flex-grow-1" aria-label="Scrub to time of day" />
+      <div class="btn-group speed-group" role="group" aria-label="Playback speed">
+        <button class="btn btn-outline-light btn-sm speed-btn" data-speed="1">×1</button>
+        <button class="btn btn-outline-light btn-sm speed-btn" data-speed="10">×10</button>
+        <button class="btn btn-outline-light btn-sm speed-btn" data-speed="60">×60</button>
+        <button class="btn btn-outline-light btn-sm speed-btn" data-speed="180">×180</button>
+      </div>
+    </div>
+  </div>
+  </header>
+
+  <main id="view-root" class="view-root container-fluid px-3 px-md-4 py-4" aria-live="polite"></main>
+
+  <div id="toast" class="toast-fixed" hidden></div>
+
+  <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <script type="module" src="src/entries/admin.js"></script>
+</body>
+</html>

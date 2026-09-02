@@ -35,6 +35,51 @@ body {
   line-height: 1;
 }
 
+/* --- Role badge (each role's own page — no shared tab bar) --- */
+.role-badge {
+  display: inline-flex;
+  align-items: center;
+  background: #eef0ff;
+  color: var(--bs-primary);
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  border-radius: 999px;
+  padding: 0.28rem 0.65rem;
+}
+.role-switch-link {
+  color: var(--brand-soft);
+  text-decoration: none;
+  white-space: nowrap;
+}
+.role-switch-link:hover { color: var(--bs-primary); }
+
+/* --- Landing / role-picker page --- */
+.landing-wrap { background: var(--bs-body-bg); min-height: calc(100vh - 60px); }
+.role-grid { max-width: 1100px; margin: 0 auto; }
+.role-card {
+  display: block;
+  background: #fff;
+  border-radius: 18px;
+  padding: 1.75rem 1.5rem;
+  height: 100%;
+  text-decoration: none;
+  color: inherit;
+  box-shadow: 0 10px 30px -20px rgba(30, 35, 56, 0.35);
+  border: 1px solid transparent;
+  transition: transform 0.15s ease, box-shadow 0.15s ease, border-color 0.15s ease;
+}
+.role-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 16px 36px -18px rgba(79, 70, 229, 0.35);
+  border-color: rgba(79, 70, 229, 0.25);
+  color: inherit;
+}
+.role-card-icon { font-size: 1.8rem; color: var(--bs-primary); }
+.role-card-title { font-weight: 700; font-size: 1.1rem; margin-top: 0.6rem; color: var(--brand-ink); }
+.role-card-desc { font-size: 0.86rem; color: var(--brand-soft); margin-top: 0.35rem; line-height: 1.45; }
+
 /* --- Clock toolbar --- */
 .clockbar {
   background: linear-gradient(180deg, #171b30, #10142a);
