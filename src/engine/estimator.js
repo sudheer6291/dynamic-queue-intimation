@@ -119,11 +119,26 @@ function resolvedConditionKeys(entity, route) {
   return set;
 }
 
-function futureRemaining(entityId, state, data, config) {
+function futureRemaining(entityId, state, data, config, nowMin) {
   const entity = state.entities[entityId];
   const route = data.routes.find((r) => r.id === entity.routeId);
   if (!route) return { p50: 0, p80: 0, items: [] };
   const resolved = resolvedConditionKeys(entity, route);
+
+  // How much of the day has actually happened yet, as a 0..1 ramp used
+  // below to size the "someone might still show up" buffer on an empty
+  // future queue. At the literal start of the day nothing has happened
+  // anywhere yet, so an empty queue is certain, not speculative — full
+  // buffer weight there just taxes the very first token for a risk that
+  // hasn't had time to materialize. By ramp_min minutes in, queues have
+  // had a real chance to form, so an empty one *is* meaningful signal and
+  // the buffer returns to full strength — matching how the rest of the
+  // day (where calibration.js's accuracy numbers are actually measured)
+  // already behaved before this existed.
+  const dayStartMin = parseISOToMin(data.config.day_start);
+  const rampMin = config.estimator.empty_queue_ramp_min ?? 45;
+  const activityFactor = rampMin > 0 ? Math.min(1, Math.max(0, (nowMin - dayStartMin) / rampMin)) : 1;
+
   let p50 = 0;
   let p80 = 0;
   const items = [];
@@ -149,12 +164,20 @@ function futureRemaining(entityId, state, data, config) {
     if (futureStationState) {
       const futureCapacity = Math.max(1, resourcesForStation(data, step.station_id).length);
       const futureStats = getStationServiceStats(step.station_id, state, data, config);
-      // p80 additionally assumes at least one person-equivalent of
-      // uncertainty buffer even at an empty queue right now — "no one's
-      // there yet" is not a promise no one will be there by the time this
-      // entity arrives.
+      // p80 additionally assumes some uncertainty buffer even at an empty
+      // queue right now — "no one's there yet" is not a promise no one
+      // will be there by the time this entity arrives — but only once the
+      // day has had a chance to get going (activityFactor); right at
+      // day_start that assumption was costing the very first token a full
+      // extra person's worth of p80 wait at every remaining station,
+      // turning a ~17 min p50 into an ~82 min p80 purely from four
+      // stations each taxed for a risk that hadn't had time to exist yet.
+      // A queue that's actually observed to have people in it always
+      // keeps full weight, regardless of the time of day.
+      const emptyQueueBufferFloor = config.estimator.empty_future_queue_buffer_floor ?? 0.15;
+      const emptyQueueBuffer = emptyQueueBufferFloor + (1 - emptyQueueBufferFloor) * activityFactor;
       const aheadP50 = futureStationState.queue.length;
-      const aheadP80 = Math.max(futureStationState.queue.length, 1);
+      const aheadP80 = futureStationState.queue.length > 0 ? futureStationState.queue.length : emptyQueueBuffer;
       stepP50 += (aheadP50 * futureStats.median) / futureCapacity;
       stepP80 += ((aheadP80 * futureStats.p80) / futureCapacity) * (config.estimator.queue_wait_inflation_p80 || 1.3);
     }
@@ -202,7 +225,7 @@ export function proposedEstimate(entityId, state, data, config, nowMin) {
   if (["journey_complete", "no_show"].includes(entity.status)) return { available: false, reasonKey: entity.status };
 
   const current = currentStationWait(entityId, state, data, config, nowMin);
-  const future = futureRemaining(entityId, state, data, config);
+  const future = futureRemaining(entityId, state, data, config, nowMin);
 
   const p50 = current.p50 + future.p50;
   const p80 = current.p80 + future.p80;
