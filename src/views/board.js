@@ -1,26 +1,11 @@
 import { nameOf } from "../i18n.js";
+import { el } from "../util.js";
 
 export function renderBoardView(root, ctx) {
   const { state, data, config, t, locale } = ctx;
   root.innerHTML = "";
 
-  const wrap = document.createElement("div");
-  wrap.className = "board";
-
-  const h2 = document.createElement("h2");
-  h2.textContent = t("board.title");
-  h2.style.color = "#fff";
-  wrap.appendChild(h2);
-
-  const table = document.createElement("table");
-  const thead = document.createElement("tr");
-  ["Station", "Now serving", "Next up", "Waiting"].forEach((h) => {
-    const th = document.createElement("th");
-    th.textContent = h;
-    thead.appendChild(th);
-  });
-  table.appendChild(thead);
-
+  const rows = [];
   for (const station of data.stations) {
     const resources = data.resources.filter((r) => r.station_id === station.id);
     const serving = resources
@@ -34,20 +19,33 @@ export function renderBoardView(root, ctx) {
     const queue = state.stations[station.id].queue;
     const next = queue[0] ? data.entities.find((e) => e.id === queue[0]).display_token : "—";
 
-    const tr = document.createElement("tr");
-    const cells = [
-      nameOf(config, locale, station.name_key),
-      paused ? "Delayed" : serving.length ? serving.join(", ") : "—",
-      next,
-      String(queue.length)
-    ];
-    cells.forEach((c) => {
-      const td = document.createElement("td");
-      td.textContent = c;
-      tr.appendChild(td);
-    });
-    table.appendChild(tr);
+    rows.push(
+      el("tr", {}, [
+        el("td", { class: "fw-semibold" }, nameOf(config, locale, station.name_key)),
+        el(
+          "td",
+          {},
+          paused
+            ? el("span", { class: "badge bg-danger" }, "Delayed")
+            : serving.length
+              ? el("span", { class: "badge bg-warning text-dark" }, serving.join(", "))
+              : "—"
+        ),
+        el("td", {}, next),
+        el("td", {}, el("span", { class: "badge bg-primary rounded-pill" }, String(queue.length)))
+      ])
+    );
   }
-  wrap.appendChild(table);
-  root.appendChild(wrap);
+
+  root.appendChild(
+    el("div", { class: "board-wrap p-4 shadow" }, [
+      el("h2", { class: "h4 fw-bold mb-3 text-white" }, [el("i", { class: "bi bi-tv me-2" }), t("board.title")]),
+      el("div", { class: "table-responsive" }, [
+        el("table", { class: "table table-borderless mb-0" }, [
+          el("thead", {}, [el("tr", {}, ["Station", "Now serving", "Next up", "Waiting"].map((h) => el("th", {}, h)))]),
+          el("tbody", {}, rows)
+        ])
+      ])
+    ])
+  );
 }

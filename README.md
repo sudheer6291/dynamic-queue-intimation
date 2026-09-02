@@ -15,6 +15,21 @@ python3 -m http.server 8080
 # open http://localhost:8080/index.html
 ```
 
+## UI
+
+The interface is built on **Bootstrap 5.3** (navbar, nav-pills, cards,
+badges, alerts, list-groups, tables) plus **Bootstrap Icons**, for a
+polished, familiar, accessible customer experience out of the box —
+color-coded resource/queue status, a phone-frame mock for the patient
+screen, a dark ops-console styling for the clock toolbar and display
+board, and responsive layouts down to a 390px mobile viewport (with a
+collapsing navbar). Both libraries are vendored under `vendor/` (self-hosted,
+not loaded from a CDN) — MIT licensed, see `vendor/NOTICE.md` — so the
+prototype has no runtime dependency on third-party network availability.
+All application logic still targets plain element IDs and a handful of
+functional classes (`.speed-btn`, `#entity-select`, …), so the visual
+layer can be restyled again without touching `src/engine/`.
+
 ## The core idea (§3 of the brief)
 
 There are no screens populated from a fixed snapshot. `data/<vertical>/events.json`

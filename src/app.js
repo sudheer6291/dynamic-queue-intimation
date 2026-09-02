@@ -105,7 +105,7 @@ function render(force) {
   const c = ctx();
   clockTimeEl.textContent = minToHHMM(app.clock.nowMin);
   clockScrub.value = String(Math.round(app.clock.nowMin));
-  playPauseBtn.textContent = app.clock.playing ? "⏸" : "▶";
+  playPauseBtn.innerHTML = app.clock.playing ? '<i class="bi bi-pause-fill"></i>' : '<i class="bi bi-play-fill"></i>';
   document.getElementById("vertical-name").textContent = c.t("vertical.name");
 
   const estimatorWrap = document.getElementById("estimator-toggle-wrap");
@@ -125,17 +125,21 @@ function setupTabs() {
   const tabsEl = document.getElementById("tabs");
   tabsEl.innerHTML = "";
   const t = app.data ? makeTranslator(app.data.config, app.locale) : (k) => k;
+  const icons = { patient: "bi-person-badge", frontdesk: "bi-clipboard2-pulse", doctor: "bi-check2-circle", admin: "bi-speedometer2", board: "bi-tv" };
   for (const v of VIEWS) {
+    const li = document.createElement("li");
+    li.className = "nav-item";
     const btn = document.createElement("button");
-    btn.className = "tab" + (v.id === app.currentView ? " active" : "");
-    btn.textContent = t(v.labelKey);
+    btn.className = "nav-link" + (v.id === app.currentView ? " active" : "");
+    btn.innerHTML = `<i class="bi ${icons[v.id] || "bi-circle"} me-1"></i>${t(v.labelKey)}`;
     btn.setAttribute("role", "tab");
     btn.addEventListener("click", () => {
       app.currentView = v.id;
       setupTabs();
       render(true);
     });
-    tabsEl.appendChild(btn);
+    li.appendChild(btn);
+    tabsEl.appendChild(li);
   }
 }
 

@@ -1,5 +1,5 @@
 import { nameOf } from "../i18n.js";
-import { parseISOToMin } from "../util.js";
+import { parseISOToMin, el } from "../util.js";
 import { actionStationDone } from "../actions.js";
 
 export function renderDoctorView(root, ctx) {
@@ -10,54 +10,53 @@ export function renderDoctorView(root, ctx) {
   const station = data.stations.find((s) => s.id === stationId);
   const resources = data.resources.filter((r) => r.station_id === stationId);
 
-  const wrap = document.createElement("div");
-  wrap.className = "panel doctor-wrap";
+  const card = el("div", { class: "card border-0 shadow-lg text-center mx-auto", style: "max-width:520px" });
+  const body = el("div", { class: "card-body p-4 p-md-5" });
 
-  const title = document.createElement("h2");
-  title.textContent = nameOf(config, locale, station.name_key);
-  wrap.appendChild(title);
+  body.appendChild(el("h2", { class: "h4 fw-bold text-muted mb-3" }, nameOf(config, locale, station.name_key)));
 
   const pausedResource = resources.map((r) => state.resources[r.id]).find((r) => r.status === "paused");
   if (pausedResource) {
-    const chip = document.createElement("div");
-    chip.className = "chip chip-bad";
-    chip.style.marginBottom = "10px";
-    chip.textContent = `Unavailable — ${pausedResource.pausedReasonText}`;
-    wrap.appendChild(chip);
+    body.appendChild(
+      el("div", { class: "alert alert-danger" }, [
+        el("i", { class: "bi bi-exclamation-triangle-fill me-2" }),
+        `Unavailable — ${pausedResource.pausedReasonText}`
+      ])
+    );
   }
 
   const serving = resources.map((r) => state.resources[r.id]).find((r) => r.status === "serving");
-  const current = document.createElement("div");
-  current.className = "doctor-current";
-  const elapsed = document.createElement("div");
-  elapsed.className = "doctor-elapsed";
+  let currentText, elapsedText;
 
   if (serving) {
     const meta = data.entities.find((e) => e.id === serving.currentEntityId);
-    current.textContent = `${t("doctor.next_up")}: ${meta.display_token}`;
+    currentText = `${t("doctor.next_up")}: ${meta.display_token}`;
     const startMin = parseISOToMin(state.entities[serving.currentEntityId].serviceStartedAt);
-    elapsed.textContent = `In progress — ${Math.max(0, Math.round(ctx.nowMin - startMin))} min so far`;
+    elapsedText = `In progress — ${Math.max(0, Math.round(ctx.nowMin - startMin))} min so far`;
   } else {
     const queue = state.stations[stationId].queue;
     if (queue.length > 0) {
       const meta = data.entities.find((e) => e.id === queue[0]);
-      current.textContent = `${t("doctor.next_up")}: ${meta.display_token}`;
-      elapsed.textContent = `${queue.length - 1} more waiting after`;
+      currentText = `${t("doctor.next_up")}: ${meta.display_token}`;
+      elapsedText = `${queue.length - 1} more waiting after`;
     } else {
-      current.textContent = t("doctor.no_patient");
-      elapsed.textContent = "";
+      currentText = t("doctor.no_patient");
+      elapsedText = "";
     }
   }
-  wrap.appendChild(current);
-  wrap.appendChild(elapsed);
 
-  const btn = document.createElement("button");
-  btn.className = "btn btn-primary done-button";
-  btn.textContent = t("doctor.done_button");
+  body.appendChild(el("div", { class: "display-5 fw-bold my-2" }, currentText));
+  body.appendChild(el("div", { class: "text-muted mb-4" }, elapsedText || " "));
+
+  const btn = el("button", { class: "btn btn-primary done-button w-100" }, [
+    el("i", { class: "bi bi-check2-circle me-2" }),
+    t("doctor.done_button")
+  ]);
   const queueEmpty = state.stations[stationId].queue.length === 0;
   btn.disabled = !serving && queueEmpty;
   btn.addEventListener("click", () => ctx.dispatch(actionStationDone, stationId));
-  wrap.appendChild(btn);
+  body.appendChild(btn);
 
-  root.appendChild(wrap);
+  card.appendChild(body);
+  root.appendChild(el("div", { class: "row justify-content-center mt-4" }, [el("div", { class: "col-12" }, [card])]));
 }

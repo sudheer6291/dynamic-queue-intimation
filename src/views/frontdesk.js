@@ -1,4 +1,5 @@
 import { nameOf } from "../i18n.js";
+import { el } from "../util.js";
 import { computeLiveSuggestions } from "../engine/suggestions.js";
 import {
   actionCallNext,
@@ -9,47 +10,45 @@ import {
   actionApplyLabFirstSuggestion
 } from "../actions.js";
 
+const STATUS_BADGE = {
+  paused: "bg-danger-subtle text-danger-emphasis",
+  serving: "bg-warning-subtle text-warning-emphasis",
+  idle: "bg-success-subtle text-success-emphasis"
+};
+
 export function renderFrontDeskView(root, ctx) {
   const { state, data, config, t, locale } = ctx;
   root.innerHTML = "";
 
-  const wrap = document.createElement("div");
-  wrap.className = "panel";
+  const wrap = el("div", { class: "row g-4" });
+  const main = el("div", { class: "col-12" });
 
-  const h1 = document.createElement("h2");
-  h1.textContent = t("frontdesk.title");
-  wrap.appendChild(h1);
+  main.appendChild(el("h2", { class: "h4 fw-bold mb-3" }, [el("i", { class: "bi bi-clipboard2-pulse me-2 text-primary" }), t("frontdesk.title")]));
 
-  const stationTabs = document.createElement("div");
-  stationTabs.className = "station-tabs";
+  // station selector as pill nav
+  const stationTabs = el("ul", { class: "nav nav-pills gap-2 mb-3" });
   for (const s of data.stations) {
-    const b = document.createElement("button");
-    b.className = "station-tab" + (s.id === ctx.app.selectedStation ? " active" : "");
     const queueLen = state.stations[s.id].queue.length;
-    b.textContent = `${nameOf(config, locale, s.name_key)} (${queueLen})`;
-    b.addEventListener("click", () => ctx.setSelectedStation(s.id));
-    stationTabs.appendChild(b);
+    const li = el("li", { class: "nav-item" });
+    const btn = el(
+      "button",
+      { class: "nav-link station-pill border" + (s.id === ctx.app.selectedStation ? " active" : "") },
+      [`${nameOf(config, locale, s.name_key)} `, el("span", { class: "badge rounded-pill text-bg-light ms-1" }, String(queueLen))]
+    );
+    btn.addEventListener("click", () => ctx.setSelectedStation(s.id));
+    li.appendChild(btn);
+    stationTabs.appendChild(li);
   }
-  wrap.appendChild(stationTabs);
+  main.appendChild(stationTabs);
 
   const stationId = ctx.app.selectedStation || data.stations[0].id;
   const station = data.stations.find((s) => s.id === stationId);
   const resources = data.resources.filter((r) => r.station_id === stationId);
 
-  // suggestions relevant to this station
-  const live = computeLiveSuggestions(state, data, config, ctx.nowMin).filter(
-    (s) => s.stationId === stationId
-  );
+  // live suggestions
+  const live = computeLiveSuggestions(state, data, config, ctx.nowMin).filter((s) => s.stationId === stationId);
   for (const sug of live) {
-    const banner = document.createElement("div");
-    banner.className = "suggestion-banner";
-    const msg = document.createElement("span");
-    msg.textContent =
-      sug.kind === "pull_forward" ? t("suggestion.pull_forward") : t("suggestion.lab_first");
-    banner.appendChild(msg);
-    const applyBtn = document.createElement("button");
-    applyBtn.className = "btn btn-primary";
-    applyBtn.textContent = "Apply";
+    const applyBtn = el("button", { class: "btn btn-primary btn-sm" }, "Apply");
     applyBtn.addEventListener("click", () => {
       if (sug.kind === "pull_forward") {
         ctx.dispatch(actionPullForward, stationId, sug.relatedEntityId, "Recovering slot freed by no-show");
@@ -57,142 +56,117 @@ export function renderFrontDeskView(root, ctx) {
         ctx.dispatch(actionApplyLabFirstSuggestion, sug.stationId, sug.altStationId, sug.entityIds);
       }
     });
-    banner.appendChild(applyBtn);
-    wrap.appendChild(banner);
+    main.appendChild(
+      el("div", { class: "alert alert-primary d-flex align-items-center justify-content-between shadow-sm" }, [
+        el("span", {}, [el("i", { class: "bi bi-lightbulb-fill me-2" }), sug.kind === "pull_forward" ? t("suggestion.pull_forward") : t("suggestion.lab_first")]),
+        applyBtn
+      ])
+    );
   }
 
-  // resources
-  const resPanel = document.createElement("div");
-  resPanel.className = "panel";
-  resPanel.style.marginTop = "10px";
-  const rh = document.createElement("h3");
-  rh.textContent = "Resources";
-  resPanel.appendChild(rh);
-  for (const r of resources) {
-    const rs = state.resources[r.id];
-    const row = document.createElement("div");
-    row.className = "resource-row";
-    const name = document.createElement("span");
-    name.textContent = nameOf(config, locale, r.name_key);
-    row.appendChild(name);
-    const status = document.createElement("span");
-    if (rs.status === "paused") {
-      status.className = "chip chip-bad";
-      status.textContent = `Paused — ${rs.pausedReasonText || "unavailable"}`;
-    } else if (rs.status === "serving") {
-      status.className = "chip chip-warn";
-      const meta = data.entities.find((e) => e.id === rs.currentEntityId);
-      status.textContent = `Serving ${meta ? meta.display_token : rs.currentEntityId}`;
-    } else {
-      status.className = "chip chip-good";
-      status.textContent = "Idle";
-    }
-    row.appendChild(status);
-    resPanel.appendChild(row);
-  }
-  wrap.appendChild(resPanel);
+  const row = el("div", { class: "row g-3" });
 
-  // actions
-  const actionRow = document.createElement("div");
-  actionRow.className = "action-row";
-  const calledEntity = Object.values(state.entities).find(
-    (e) => e.currentStationId === stationId && e.status === "called"
-  );
+  // resources card
+  const resCard = el("div", { class: "col-12" }, [
+    el("div", { class: "card border-0 shadow-sm" }, [
+      el("div", { class: "card-header bg-white fw-semibold small text-uppercase text-muted" }, "Resources"),
+      el(
+        "ul",
+        { class: "list-group list-group-flush" },
+        resources.map((r) => {
+          const rs = state.resources[r.id];
+          let label, badgeClass;
+          if (rs.status === "paused") {
+            label = `Paused — ${rs.pausedReasonText || "unavailable"}`;
+            badgeClass = STATUS_BADGE.paused;
+          } else if (rs.status === "serving") {
+            const meta = data.entities.find((e) => e.id === rs.currentEntityId);
+            label = `Serving ${meta ? meta.display_token : rs.currentEntityId}`;
+            badgeClass = STATUS_BADGE.serving;
+          } else {
+            label = "Idle";
+            badgeClass = STATUS_BADGE.idle;
+          }
+          return el("li", { class: "list-group-item d-flex justify-content-between align-items-center" }, [
+            nameOf(config, locale, r.name_key),
+            el("span", { class: `badge rounded-pill ${badgeClass}` }, label)
+          ]);
+        })
+      )
+    ])
+  ]);
+  row.appendChild(resCard);
 
-  const callBtn = document.createElement("button");
-  callBtn.className = "btn btn-primary";
-  callBtn.textContent = t("frontdesk.call_next");
+  // action buttons
+  const calledEntity = Object.values(state.entities).find((e) => e.currentStationId === stationId && e.status === "called");
+  const actionRow = el("div", { class: "col-12 d-flex flex-wrap gap-2" });
+
+  const callBtn = el("button", { class: "btn btn-primary" }, [el("i", { class: "bi bi-megaphone-fill me-1" }), t("frontdesk.call_next")]);
   callBtn.disabled = state.stations[stationId].queue.length === 0 || !!calledEntity;
   callBtn.addEventListener("click", () => ctx.dispatch(actionCallNext, stationId));
   actionRow.appendChild(callBtn);
 
   if (calledEntity) {
     const meta = data.entities.find((e) => e.id === calledEntity.id);
-    const confirmBtn = document.createElement("button");
-    confirmBtn.className = "btn";
-    confirmBtn.textContent = `Confirm arrival — ${meta.display_token}`;
+    const confirmBtn = el("button", { class: "btn btn-outline-primary" }, [
+      el("i", { class: "bi bi-person-check-fill me-1" }),
+      `Confirm arrival — ${meta.display_token}`
+    ]);
     confirmBtn.addEventListener("click", () => ctx.dispatch(actionConfirmArrival, stationId));
     actionRow.appendChild(confirmBtn);
   }
 
-  const noShowBtn = document.createElement("button");
-  noShowBtn.className = "btn btn-danger";
-  noShowBtn.textContent = t("frontdesk.no_show");
+  const noShowBtn = el("button", { class: "btn btn-outline-danger" }, [el("i", { class: "bi bi-person-dash-fill me-1" }), t("frontdesk.no_show")]);
   noShowBtn.disabled = !calledEntity;
   noShowBtn.addEventListener("click", () => ctx.dispatch(actionMarkNoShow, stationId));
   actionRow.appendChild(noShowBtn);
-  wrap.appendChild(actionRow);
+  row.appendChild(actionRow);
 
   // queue
-  const queuePanel = document.createElement("div");
-  queuePanel.className = "panel";
-  queuePanel.style.marginTop = "10px";
-  const qh = document.createElement("h3");
-  qh.textContent = `Queue — ${nameOf(config, locale, station.name_key)}`;
-  queuePanel.appendChild(qh);
-
-  const list = document.createElement("ul");
-  list.className = "queue-list";
   const queue = state.stations[stationId].queue;
-  if (queue.length === 0) {
-    const empty = document.createElement("div");
-    empty.className = "muted";
-    empty.textContent = "No one waiting.";
-    queuePanel.appendChild(empty);
-  }
-  queue.forEach((entityId, idx) => {
-    const meta = data.entities.find((e) => e.id === entityId);
-    const entity = state.entities[entityId];
-    const li = document.createElement("li");
-    li.className = "queue-item" + (entity.priority ? " priority" : "");
+  const queueCard = el("div", { class: "col-12" }, [
+    el("div", { class: "card border-0 shadow-sm" }, [
+      el("div", { class: "card-header bg-white fw-semibold small text-uppercase text-muted" }, `Queue — ${nameOf(config, locale, station.name_key)}`),
+      queue.length === 0
+        ? el("div", { class: "card-body text-muted" }, "No one waiting.")
+        : el(
+            "ul",
+            { class: "list-group list-group-flush" },
+            queue.map((entityId, idx) => {
+              const meta = data.entities.find((e) => e.id === entityId);
+              const entity = state.entities[entityId];
+              const left = el("span", { class: "d-flex align-items-center gap-2" }, [
+                el("span", { class: "text-muted fw-bold", style: "width:22px" }, String(idx + 1)),
+                el("span", { class: "fw-semibold" }, meta.display_token),
+                entity.priority ? el("span", { class: "badge bg-warning-subtle text-warning-emphasis" }, "priority") : null
+              ]);
+              const right = el("span", { class: "d-flex gap-2" });
+              if (idx !== 0) {
+                const pullBtn = el("button", { class: "btn btn-sm btn-outline-secondary" }, t("frontdesk.pull_forward"));
+                pullBtn.addEventListener("click", () =>
+                  ctx.dispatch(actionPullForward, stationId, entityId, "Manually pulled forward by front desk")
+                );
+                right.appendChild(pullBtn);
+              }
+              if (!entity.priority) {
+                const prBtn = el("button", { class: "btn btn-sm btn-outline-secondary" }, t("frontdesk.priority_insert"));
+                prBtn.addEventListener("click", () =>
+                  ctx.dispatch(actionPriorityInsert, stationId, entityId, "Marked priority by front desk")
+                );
+                right.appendChild(prBtn);
+              }
+              return el(
+                "li",
+                { class: "list-group-item d-flex justify-content-between align-items-center" + (entity.priority ? " bg-warning-subtle" : "") },
+                [left, right]
+              );
+            })
+          )
+    ])
+  ]);
+  row.appendChild(queueCard);
 
-    const left = document.createElement("span");
-    left.style.display = "flex";
-    left.style.gap = "10px";
-    left.style.alignItems = "center";
-    const pos = document.createElement("span");
-    pos.className = "queue-pos";
-    pos.textContent = String(idx + 1);
-    const token = document.createElement("span");
-    token.className = "queue-token";
-    token.textContent = meta.display_token;
-    left.appendChild(pos);
-    left.appendChild(token);
-    if (entity.priority) {
-      const chip = document.createElement("span");
-      chip.className = "chip chip-warn";
-      chip.textContent = "priority";
-      left.appendChild(chip);
-    }
-    li.appendChild(left);
-
-    const right = document.createElement("span");
-    right.style.display = "flex";
-    right.style.gap = "6px";
-
-    if (idx !== 0) {
-      const pullBtn = document.createElement("button");
-      pullBtn.className = "btn btn-ghost";
-      pullBtn.textContent = t("frontdesk.pull_forward");
-      pullBtn.addEventListener("click", () =>
-        ctx.dispatch(actionPullForward, stationId, entityId, "Manually pulled forward by front desk")
-      );
-      right.appendChild(pullBtn);
-    }
-    if (!entity.priority) {
-      const prBtn = document.createElement("button");
-      prBtn.className = "btn btn-ghost";
-      prBtn.textContent = t("frontdesk.priority_insert");
-      prBtn.addEventListener("click", () =>
-        ctx.dispatch(actionPriorityInsert, stationId, entityId, "Marked priority by front desk")
-      );
-      right.appendChild(prBtn);
-    }
-    li.appendChild(right);
-    list.appendChild(li);
-  });
-  queuePanel.appendChild(list);
-  wrap.appendChild(queuePanel);
-
+  main.appendChild(row);
+  wrap.appendChild(main);
   root.appendChild(wrap);
 }

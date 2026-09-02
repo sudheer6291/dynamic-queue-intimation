@@ -1,5 +1,5 @@
 import { getEstimate } from "../engine/estimator.js";
-import { fmtDuration } from "../util.js";
+import { fmtDuration, el } from "../util.js";
 import { nameOf } from "../i18n.js";
 
 function stationName(config, locale, stationId, data) {
@@ -40,169 +40,163 @@ export function renderPatientView(root, ctx) {
   const { state, data, config, t, locale } = ctx;
   root.innerHTML = "";
 
-  const wrap = document.createElement("div");
-  wrap.className = "grid";
-  wrap.style.maxWidth = "480px";
-  wrap.style.margin = "0 auto";
+  const outer = el("div", { class: "row justify-content-center g-4" });
 
-  const picker = document.createElement("div");
-  picker.className = "entity-picker";
-  const label = document.createElement("span");
-  label.className = "muted";
-  label.textContent = `${t("entity.label")}:`;
-  const select = document.createElement("select");
-  for (const e of data.entities) {
-    const opt = document.createElement("option");
-    opt.value = e.id;
-    const st = state.entities[e.id];
-    const statusTag = st && st.status === "no_show" ? " (no-show)" : st && st.status === "journey_complete" ? " (done)" : "";
-    opt.textContent = `${e.display_token}${statusTag}`;
-    if (e.id === ctx.app.selectedEntityId) opt.selected = true;
-    select.appendChild(opt);
-  }
-  select.addEventListener("change", (e) => ctx.setSelectedEntity(e.target.value));
-  picker.appendChild(label);
-  picker.appendChild(select);
-  wrap.appendChild(picker);
+  const col = el("div", { class: "col-12 col-md-8 col-lg-5" });
+
+  // entity picker
+  const pickerCard = el("div", { class: "d-flex align-items-center justify-content-center gap-2 mb-3" }, [
+    el("span", { class: "text-muted small text-uppercase fw-semibold" }, `${t("entity.label")}`),
+    (() => {
+      const select = el("select", { id: "entity-select", class: "form-select form-select-sm w-auto" });
+      for (const e of data.entities) {
+        const st = state.entities[e.id];
+        const statusTag =
+          st && st.status === "no_show" ? " (no-show)" : st && st.status === "journey_complete" ? " (done)" : "";
+        const opt = el("option", { value: e.id }, `${e.display_token}${statusTag}`);
+        if (e.id === ctx.app.selectedEntityId) opt.selected = true;
+        select.appendChild(opt);
+      }
+      select.addEventListener("change", (e) => ctx.setSelectedEntity(e.target.value));
+      return select;
+    })()
+  ]);
+  col.appendChild(pickerCard);
 
   const entityId = ctx.app.selectedEntityId;
   const meta = data.entities.find((e) => e.id === entityId);
   const entity = state.entities[entityId];
 
-  const phone = document.createElement("div");
-  phone.className = "phone-frame";
-  const screen = document.createElement("div");
-  screen.className = "phone-screen";
-  const card = document.createElement("div");
-  card.className = "patient-card";
-
-  const tokenEl = document.createElement("div");
-  tokenEl.className = "patient-token";
-  tokenEl.textContent = `${t("entity.id_prefix")} ${meta.display_token}`;
-  card.appendChild(tokenEl);
+  const cardBody = el("div", { class: "card-body text-center px-4 py-5" });
+  cardBody.appendChild(
+    el("div", { class: "text-uppercase text-muted small fw-bold mb-1" }, `${t("entity.id_prefix")} ${meta.display_token}`)
+  );
 
   if (!entity || entity.status === "not_registered") {
-    card.appendChild(makeLine("patient-station", t("action.not_arrived")));
+    cardBody.appendChild(el("div", { class: "fs-4 fw-bold text-muted py-4" }, t("action.not_arrived")));
   } else if (entity.status === "no_show") {
-    card.appendChild(makeLine("patient-station", t("action.no_show")));
+    cardBody.appendChild(
+      el("div", { class: "py-4" }, [
+        el("i", { class: "bi bi-exclamation-octagon text-danger", style: "font-size:2.5rem" }),
+        el("div", { class: "fs-5 fw-bold text-danger mt-2" }, t("action.no_show"))
+      ])
+    );
   } else if (entity.status === "journey_complete") {
-    card.appendChild(makeLine("patient-station", t("action.done")));
-    const total = document.createElement("div");
-    total.className = "estimate-caption";
-    total.textContent = "Total visit time: " + fmtDuration(minutesBetween(meta.actual_arrival_min, entity.journeyCompletedAt, config));
-    card.appendChild(total);
+    cardBody.appendChild(
+      el("div", { class: "py-3" }, [
+        el("i", { class: "bi bi-check-circle-fill text-success", style: "font-size:2.8rem" }),
+        el("div", { class: "fs-4 fw-bold mt-2" }, t("action.done")),
+        el(
+          "div",
+          { class: "text-muted mt-2" },
+          "Total visit time: " + fmtDuration(minutesBetween(meta.actual_arrival_min, entity.journeyCompletedAt))
+        )
+      ])
+    );
   } else {
     const stName = stationName(config, locale, entity.currentStationId, data);
-    card.appendChild(makeLine("patient-station", stName));
+    cardBody.appendChild(el("div", { class: "fs-3 fw-bold mb-3" }, stName));
 
     const result = getEstimate(ctx.estimatorMode, entityId, state, data, config, ctx.nowMin);
     ctx.logPredictionShown(entityId, entity.currentStationId, ctx.estimatorMode, result);
 
     if (!result.available) {
-      const na = document.createElement("div");
-      na.className = "estimate-caption";
-      na.textContent = t("estimate.not_available");
-      card.appendChild(na);
+      cardBody.appendChild(
+        el("div", { class: "alert alert-secondary d-inline-block" }, [
+          el("i", { class: "bi bi-hourglass-split me-2" }),
+          t("estimate.not_available")
+        ])
+      );
     } else if (result.isRange) {
-      const range = document.createElement("div");
-      range.className = "estimate-range";
-      range.textContent = `${Math.max(0, Math.round(result.lowerBoundMin))}–${Math.max(
-        0,
-        Math.round(result.headlineMin)
-      )}`;
-      card.appendChild(range);
-      const unit = document.createElement("div");
-      unit.className = "estimate-unit";
-      unit.textContent = `min, ${t("estimate.updating")}`;
-      card.appendChild(unit);
-      const scope = document.createElement("div");
-      scope.className = "estimate-caption";
-      scope.textContent = "until your visit is fully complete";
-      card.appendChild(scope);
+      cardBody.appendChild(
+        el("div", { class: "estimate-range" }, `${Math.max(0, Math.round(result.lowerBoundMin))}–${Math.max(0, Math.round(result.headlineMin))}`)
+      );
+      cardBody.appendChild(el("div", { class: "estimate-unit" }, `min, ${t("estimate.updating")}`));
+      cardBody.appendChild(el("div", { class: "text-muted small mt-1" }, "until your visit is fully complete"));
     } else {
-      const range = document.createElement("div");
-      range.className = "estimate-range";
-      range.textContent = `~${Math.max(0, Math.round(result.headlineMin))}`;
-      card.appendChild(range);
-      const unit = document.createElement("div");
-      unit.className = "estimate-unit";
-      unit.textContent = "min";
-      card.appendChild(unit);
-      const scope = document.createElement("div");
-      scope.className = "estimate-caption";
-      scope.textContent = "for this station's queue only — doesn't account for delays";
-      card.appendChild(scope);
+      cardBody.appendChild(el("div", { class: "estimate-range" }, `~${Math.max(0, Math.round(result.headlineMin))}`));
+      cardBody.appendChild(el("div", { class: "estimate-unit" }, "min"));
+      cardBody.appendChild(
+        el("div", { class: "text-muted small mt-1" }, "for this station's queue only — doesn't account for delays")
+      );
     }
 
-    const heur = document.createElement("div");
-    heur.className = "estimate-heuristic-note";
-    heur.textContent = ctx.estimatorMode === "proposed" ? t("estimate.heuristic_label") : "Baseline: people ahead × median time";
-    card.appendChild(heur);
+    cardBody.appendChild(
+      el(
+        "span",
+        { class: "badge rounded-pill text-bg-light border mt-3 px-3 py-2" },
+        ctx.estimatorMode === "proposed" ? t("estimate.heuristic_label") : "Baseline: people ahead × median time"
+      )
+    );
 
     if (result.available && result.reasonText) {
-      const why = document.createElement("div");
-      why.className = "why-box";
-      why.innerHTML = `<strong>Why:</strong> ${result.reasonText}`;
-      card.appendChild(why);
+      cardBody.appendChild(
+        el("div", { class: "alert alert-warning text-start mt-3 mb-0" }, [
+          el("i", { class: "bi bi-info-circle-fill me-2" }),
+          el("strong", {}, "Why: "),
+          result.reasonText
+        ])
+      );
     }
 
     const alert = computeLabFirstAlert(entityId, ctx);
     if (alert) {
-      const box = document.createElement("div");
-      box.className = "alert-box";
-      box.textContent = alert.message;
-      card.appendChild(box);
+      cardBody.appendChild(
+        el("div", { class: "alert alert-primary text-start mt-3 mb-0 fw-semibold" }, [
+          el("i", { class: "bi bi-signpost-2-fill me-2" }),
+          alert.message
+        ])
+      );
     } else if (entity.status === "waiting" || entity.status === "called") {
-      const box = document.createElement("div");
-      box.className = "alert-box";
-      box.style.background = "#f3f5f8";
-      box.style.color = "var(--ink-soft)";
-      box.style.fontWeight = "400";
-      box.textContent = t("action.wait");
-      card.appendChild(box);
+      cardBody.appendChild(
+        el("div", { class: "alert alert-light border text-start mt-3 mb-0" }, [
+          el("i", { class: "bi bi-hourglass-split me-2 text-muted" }),
+          t("action.wait")
+        ])
+      );
     }
   }
 
-  screen.appendChild(card);
-  phone.appendChild(screen);
-  wrap.appendChild(phone);
+  const phone = el("div", { class: "phone-frame" }, [el("div", { class: "phone-screen" }, [cardBody])]);
+  col.appendChild(phone);
 
-  const debugPanel = document.createElement("div");
-  debugPanel.className = "panel";
-  debugPanel.style.marginTop = "8px";
-  const h3 = document.createElement("h3");
-  h3.textContent = "Prediction log (for this patient)";
-  debugPanel.appendChild(h3);
-  const tl = document.createElement("div");
-  tl.className = "timeline";
-  if (entity && entity.predictions.length) {
-    entity.predictions
-      .slice(-8)
-      .reverse()
-      .forEach((p) => {
-        const row = document.createElement("div");
-        row.textContent = `${p.ts.slice(11, 16)} — ${p.estimator}: ${p.p50Min}–${p.p80Min} min${
-          p.reasonKey ? " (" + p.reasonKey + ")" : ""
-        }`;
-        tl.appendChild(row);
-      });
-  } else {
-    tl.innerHTML = '<div class="muted">No predictions logged yet.</div>';
-  }
-  debugPanel.appendChild(tl);
-  wrap.appendChild(debugPanel);
+  // prediction log
+  const logCard = el("div", { class: "card mt-3 shadow-sm border-0" }, [
+    el("div", { class: "card-header bg-white fw-semibold small text-uppercase text-muted" }, [
+      el("i", { class: "bi bi-journal-text me-2" }),
+      "Prediction log (for this patient)"
+    ]),
+    (() => {
+      const listGroup = el("ul", { class: "list-group list-group-flush timeline" });
+      if (entity && entity.predictions.length) {
+        entity.predictions
+          .slice(-8)
+          .reverse()
+          .forEach((p) => {
+            listGroup.appendChild(
+              el(
+                "li",
+                { class: "list-group-item small d-flex justify-content-between" },
+                [
+                  el("span", {}, `${p.ts.slice(11, 16)} — ${p.estimator}`),
+                  el("span", { class: "text-muted" }, `${p.p50Min}–${p.p80Min} min${p.reasonKey ? " (" + p.reasonKey + ")" : ""}`)
+                ]
+              )
+            );
+          });
+      } else {
+        listGroup.appendChild(el("li", { class: "list-group-item text-muted small" }, "No predictions logged yet."));
+      }
+      return listGroup;
+    })()
+  ]);
+  col.appendChild(logCard);
 
-  root.appendChild(wrap);
+  outer.appendChild(col);
+  root.appendChild(outer);
 }
 
-function makeLine(cls, text) {
-  const d = document.createElement("div");
-  d.className = cls;
-  d.textContent = text;
-  return d;
-}
-
-function minutesBetween(startMin, endISO, config) {
+function minutesBetween(startMin, endISO) {
   const t = endISO.split("T")[1];
   const [hh, mm] = t.split(":").map(Number);
   return hh * 60 + mm - startMin;
