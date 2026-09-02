@@ -6,7 +6,7 @@
 import { writeFileSync } from "fs";
 import { fileURLToPath } from "url";
 import path from "path";
-import { mulberry32, makeSampler, makeIsoFormatter, makeEmitter, simulateStation } from "./seedkit.mjs";
+import { mulberry32, makeSampler, makeIsoFormatter, makeEmitter, simulateStation, injectStepOutDemo } from "./seedkit.mjs";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const OUT_DIR = path.join(__dirname, "..", "data", "bike_service");
@@ -175,6 +175,11 @@ for (const [entityId, c] of Object.entries(billingCompletions)) {
   emit("journey_completed", c.completeMin, { entity_id: entityId });
 }
 
+// --- demonstrate "step out & get notified" for long waits ---
+// lower threshold than car/OPD — bike servicing is fast by design, so even
+// a 15+ minute station wait is worth stepping out for.
+const stepOutCount = injectStepOutDemo(events, emit, { leadMin: 2, returnLeadMin: 3, minWaitMin: 8, maxCount: 4 });
+
 // --- tags + finalize ---
 events.sort((a, b) => a.ts_min - b.ts_min || a.id.localeCompare(b.id));
 const journeyStats = entities.map((e) => {
@@ -192,6 +197,7 @@ writeFileSync(path.join(OUT_DIR, "entities.json"), JSON.stringify(entities, null
 writeFileSync(path.join(OUT_DIR, "events.json"), JSON.stringify(cleanEvents, null, 2) + "\n");
 
 console.log("bike_service: total events", cleanEvents.length);
+console.log("Step-out demo entities:", stepOutCount);
 console.log(
   "longest journeys:",
   journeyStats

@@ -31,6 +31,7 @@ export function deriveState(data, allEvents, nowISO) {
 
   const suggestions = []; // {ts, suggestion, reasonKey, stationId, relatedEntityId, accepted}
   const predictionsLog = []; // flat log of every prediction_shown, for later "did it change behaviour" analysis
+  const nudgesLog = []; // flat log of every "please head back" nudge actually shown
 
   function getEntity(id) {
     if (!entities[id]) {
@@ -49,6 +50,8 @@ export function deriveState(data, allEvents, nowISO) {
         noShowAt: null,
         journeyCompletedAt: null,
         lastCompletedStationId: null,
+        away: false, // stepped out of the physical waiting area, still queued
+        awaySince: null,
         history: [],
         predictions: []
       };
@@ -113,6 +116,25 @@ export function deriveState(data, allEvents, nowISO) {
         getEntity(ev.entity_id).history.push(ev);
         break;
       }
+      case "stepped_out": {
+        const e = getEntity(ev.entity_id);
+        e.away = true;
+        e.awaySince = ev.ts;
+        e.history.push(ev);
+        break;
+      }
+      case "returned": {
+        const e = getEntity(ev.entity_id);
+        e.away = false;
+        e.awaySince = null;
+        e.history.push(ev);
+        break;
+      }
+      case "return_nudge_shown": {
+        nudgesLog.push({ entityId: ev.entity_id, stationId: ev.station_id, ts: ev.ts });
+        getEntity(ev.entity_id).history.push(ev);
+        break;
+      }
       case "reroute": {
         removeFromQueue(ev.from_station_id, ev.entity_id);
         if (!stationState[ev.to_station_id].queue.includes(ev.entity_id)) {
@@ -141,6 +163,8 @@ export function deriveState(data, allEvents, nowISO) {
         }
         const e = getEntity(ev.entity_id);
         e.status = "in_service";
+        e.away = false;
+        e.awaySince = null;
         e.serviceStartedAt = ev.ts;
         e.history.push(ev);
         break;
@@ -250,7 +274,8 @@ export function deriveState(data, allEvents, nowISO) {
     stations: stationState,
     resources: resourceState,
     suggestions,
-    predictionsLog
+    predictionsLog,
+    nudgesLog
   };
 }
 

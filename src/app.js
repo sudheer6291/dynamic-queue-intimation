@@ -9,7 +9,7 @@ import { renderFrontDeskView } from "./views/frontdesk.js";
 import { renderDoctorView } from "./views/doctor.js";
 import { renderAdminView } from "./views/admin.js";
 import { renderBoardView } from "./views/board.js";
-import { actionPredictionShown } from "./actions.js";
+import { actionPredictionShown, actionNudgeShown } from "./actions.js";
 
 const VIEWS = [
   { id: "patient", labelKey: "screen.patient", render: renderPatientView },
@@ -29,7 +29,8 @@ const app = {
   estimatorMode: "proposed",
   selectedStation: null,
   selectedEntityId: null,
-  loggedPredictionBuckets: new Set()
+  loggedPredictionBuckets: new Set(),
+  loggedNudgeBuckets: new Set()
 };
 
 const viewRoot = document.getElementById("view-root");
@@ -86,6 +87,13 @@ function ctx() {
         config: app.data.config,
         nowISO: iso
       });
+      app.runtimeEvents.push(...events);
+    },
+    logNudgeShown: (entityId, stationId) => {
+      const bucket = `${entityId}|${Math.floor(app.clock.nowMin / 5)}`;
+      if (app.loggedNudgeBuckets.has(bucket)) return;
+      app.loggedNudgeBuckets.add(bucket);
+      const { events } = actionNudgeShown(entityId, stationId, { state, config: app.data.config, nowISO: iso });
       app.runtimeEvents.push(...events);
     }
   };
@@ -214,6 +222,7 @@ async function loadAndStart(verticalMeta) {
   app.data = await loadVertical(verticalMeta.path);
   app.runtimeEvents = [];
   app.loggedPredictionBuckets = new Set();
+  app.loggedNudgeBuckets = new Set();
   app.selectedStation = app.data.stations[0].id;
   app.selectedEntityId = app.data.entities[0].id;
 

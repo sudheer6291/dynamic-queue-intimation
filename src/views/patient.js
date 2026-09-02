@@ -1,6 +1,7 @@
-import { getEstimate } from "../engine/estimator.js";
+import { getEstimate, currentStationWaitEstimate } from "../engine/estimator.js";
 import { fmtDuration, el } from "../util.js";
 import { nameOf } from "../i18n.js";
+import { actionStepOut, actionReturn } from "../actions.js";
 
 function stationName(config, locale, stationId, data) {
   const s = data.stations.find((x) => x.id === stationId);
@@ -52,7 +53,13 @@ export function renderPatientView(root, ctx) {
       for (const e of data.entities) {
         const st = state.entities[e.id];
         const statusTag =
-          st && st.status === "no_show" ? " (no-show)" : st && st.status === "journey_complete" ? " (done)" : "";
+          st && st.status === "no_show"
+            ? " (no-show)"
+            : st && st.status === "journey_complete"
+              ? " (done)"
+              : st && st.away
+                ? " (away)"
+                : "";
         const opt = el("option", { value: e.id }, `${e.display_token}${statusTag}`);
         if (e.id === ctx.app.selectedEntityId) opt.selected = true;
         select.appendChild(opt);
@@ -140,6 +147,9 @@ export function renderPatientView(root, ctx) {
     }
 
     const alert = computeLabFirstAlert(entityId, ctx);
+    const stepOutThreshold = (config.display && config.display.step_out_min_wait_min) || 20;
+    const nudgeThreshold = (config.display && config.display.return_nudge_lead_time_min) || 15;
+
     if (alert) {
       cardBody.appendChild(
         el("div", { class: "alert alert-primary text-start mt-3 mb-0 fw-semibold" }, [
@@ -147,6 +157,36 @@ export function renderPatientView(root, ctx) {
           alert.message
         ])
       );
+    } else if (entity.away) {
+      // stepped out of the physical waiting area — either a calm "we'll
+      // notify you" state, or, once their turn is close, a real nudge.
+      // Judge this on the wait for *this* station, not the whole
+      // remaining journey — a lab-and-return patient's total-visit
+      // estimate can stay high right up to the moment they're called.
+      const stationWait = currentStationWaitEstimate(entityId, state, data, config, ctx.nowMin);
+      const shouldNudge = stationWait.available && stationWait.p80Min <= nudgeThreshold;
+      if (shouldNudge) {
+        ctx.logNudgeShown(entityId, entity.currentStationId);
+        cardBody.appendChild(
+          el("div", { class: "alert alert-danger text-start mt-3 mb-0 fw-bold" }, [
+            el("i", { class: "bi bi-bell-fill me-2" }),
+            t("action.return_now")
+          ])
+        );
+      } else {
+        cardBody.appendChild(
+          el("div", { class: "alert alert-info text-start mt-3 mb-0" }, [
+            el("i", { class: "bi bi-geo-alt-fill me-2" }),
+            t("action.stepped_out")
+          ])
+        );
+      }
+      const backBtn = el("button", { class: "btn btn-outline-primary w-100 mt-3" }, [
+        el("i", { class: "bi bi-arrow-return-left me-2" }),
+        t("action.im_back")
+      ]);
+      backBtn.addEventListener("click", () => ctx.dispatch(actionReturn, entityId, entity.currentStationId));
+      cardBody.appendChild(backBtn);
     } else if (entity.status === "waiting" || entity.status === "called") {
       cardBody.appendChild(
         el("div", { class: "alert alert-light border text-start mt-3 mb-0" }, [
@@ -154,6 +194,14 @@ export function renderPatientView(root, ctx) {
           t("action.wait")
         ])
       );
+      if (entity.status === "waiting" && result.available && result.headlineMin >= stepOutThreshold) {
+        const stepBtn = el("button", { class: "btn btn-outline-secondary w-100 mt-2" }, [
+          el("i", { class: "bi bi-box-arrow-right me-2" }),
+          t("action.step_out")
+        ]);
+        stepBtn.addEventListener("click", () => ctx.dispatch(actionStepOut, entityId, entity.currentStationId));
+        cardBody.appendChild(stepBtn);
+      }
     }
   }
 

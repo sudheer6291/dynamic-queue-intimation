@@ -2038,6 +2038,13 @@
     "entity_id": "e15"
   },
   {
+    "id": "ev0638",
+    "type": "stepped_out",
+    "ts": "2026-09-02T10:48:00+05:30",
+    "entity_id": "e19",
+    "station_id": "st_opd_gen"
+  },
+  {
     "id": "ev0039",
     "type": "entity_registered",
     "ts": "2026-09-02T10:52:00+05:30",
@@ -2101,6 +2108,13 @@
     "entity_id": "e20",
     "station_id": "st_opd_gen",
     "step_index": 1
+  },
+  {
+    "id": "ev0640",
+    "type": "stepped_out",
+    "ts": "2026-09-02T11:01:00+05:30",
+    "entity_id": "e20",
+    "station_id": "st_opd_gen"
   },
   {
     "id": "ev0352",
@@ -2421,6 +2435,13 @@
     "resource_id": "res_pharmacy_1"
   },
   {
+    "id": "ev0642",
+    "type": "stepped_out",
+    "ts": "2026-09-02T11:25:00+05:30",
+    "entity_id": "e22",
+    "station_id": "st_opd_gen"
+  },
+  {
     "id": "ev0047",
     "type": "entity_registered",
     "ts": "2026-09-02T11:26:00+05:30",
@@ -2528,6 +2549,13 @@
     "entity_id": "e23"
   },
   {
+    "id": "ev0644",
+    "type": "stepped_out",
+    "ts": "2026-09-02T11:31:00+05:30",
+    "entity_id": "e21",
+    "station_id": "st_opd_gen"
+  },
+  {
     "id": "ev0049",
     "type": "entity_registered",
     "ts": "2026-09-02T11:35:00+05:30",
@@ -2628,6 +2656,13 @@
     "step_index": 1
   },
   {
+    "id": "ev0639",
+    "type": "returned",
+    "ts": "2026-09-02T11:51:00+05:30",
+    "entity_id": "e19",
+    "station_id": "st_opd_gen"
+  },
+  {
     "id": "ev0053",
     "type": "entity_registered",
     "ts": "2026-09-02T11:52:00+05:30",
@@ -2676,6 +2711,13 @@
     "entity_id": "e27",
     "station_id": "st_opd_gen",
     "step_index": 1
+  },
+  {
+    "id": "ev0641",
+    "type": "returned",
+    "ts": "2026-09-02T11:56:00+05:30",
+    "entity_id": "e20",
+    "station_id": "st_opd_gen"
   },
   {
     "id": "ev0367",
@@ -2833,6 +2875,13 @@
     "step_index": 1
   },
   {
+    "id": "ev0643",
+    "type": "returned",
+    "ts": "2026-09-02T12:16:00+05:30",
+    "entity_id": "e22",
+    "station_id": "st_opd_gen"
+  },
+  {
     "id": "ev0059",
     "type": "entity_registered",
     "ts": "2026-09-02T12:20:00+05:30",
@@ -2930,6 +2979,13 @@
     "entity_id": "e30",
     "station_id": "st_opd_gen",
     "step_index": 1
+  },
+  {
+    "id": "ev0645",
+    "type": "returned",
+    "ts": "2026-09-02T12:23:00+05:30",
+    "entity_id": "e21",
+    "station_id": "st_opd_gen"
   },
   {
     "id": "ev0383",

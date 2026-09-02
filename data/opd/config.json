@@ -15,7 +15,9 @@
     "headline_percentile": "p80",
     "lower_bound_percentile": "p50",
     "min_lead_time_min": 5,
-    "max_swing_per_update_min": 15
+    "max_swing_per_update_min": 15,
+    "step_out_min_wait_min": 20,
+    "return_nudge_lead_time_min": 15
   },
   "resequencing": {
     "pause_alt_route": {
@@ -40,6 +42,13 @@
       "screen.admin": { "en": "Admin dashboard", "hi": "प्रबंधक डैशबोर्ड" },
       "screen.board": { "en": "Display board", "hi": "डिस्प्ले बोर्ड" },
       "vertical.name": { "en": "Hospital OPD", "hi": "अस्पताल ओपीडी" },
+      "action.step_out": { "en": "Step out — I'll come back", "hi": "बाहर जाएँ — मैं वापस आऊँगा" },
+      "action.stepped_out": { "en": "You've stepped out — we'll notify you when it's time to head back", "hi": "आप बाहर गए हैं — वापस आने का समय होने पर हम आपको सूचित करेंगे" },
+      "action.return_now": { "en": "Please head back now", "hi": "कृपया अभी वापस आएँ" },
+      "action.im_back": { "en": "I'm back", "hi": "मैं वापस आ गया हूँ" },
+      "frontdesk.away_badge": { "en": "Away", "hi": "बाहर" },
+      "admin.currently_away": { "en": "Away (virtual queue)", "hi": "बाहर (वर्चुअल कतार)" },
+      "admin.physically_waiting": { "en": "Physically waiting", "hi": "शारीरिक रूप से प्रतीक्षारत" },
       "entity.label": { "en": "Patient", "hi": "मरीज़" },
       "entity.label_plural": { "en": "Patients", "hi": "मरीज़" },
       "entity.id_prefix": { "en": "Token", "hi": "टोकन" },

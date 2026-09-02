@@ -220,6 +220,35 @@ export function actionStationDone(stationId, ctx) {
   return { events, message: events.length ? null : "Nothing to do — no one in service and no one waiting." };
 }
 
+// "Step out & get notified" — the single biggest real-world pain in an
+// outpatient-style queue is being physically trapped in a waiting room.
+// This lets a waiting entity leave (still holding their place in the
+// queue) and get nudged back before their turn — it doesn't change the
+// estimate, it changes what the entity is free to do while they wait.
+export function actionStepOut(entityId, stationId, ctx) {
+  const { state, config, nowISO } = ctx;
+  const entity = state.entities[entityId];
+  if (!entity || entity.status !== "waiting") return { events: [], message: "Only someone currently waiting can step out." };
+  if (entity.away) return { events: [], message: "Already stepped out." };
+  return { events: [makeEvent(config, nowISO, "stepped_out", { entity_id: entityId, station_id: stationId })], message: null };
+}
+
+export function actionReturn(entityId, stationId, ctx) {
+  const { state, config, nowISO } = ctx;
+  const entity = state.entities[entityId];
+  if (!entity || !entity.away) return { events: [], message: "Not currently marked away." };
+  return { events: [makeEvent(config, nowISO, "returned", { entity_id: entityId, station_id: stationId })], message: null };
+}
+
+// Logs that a "please head back" nudge was actually shown — same spirit as
+// prediction_shown: only measurable if you log what you told someone.
+export function actionNudgeShown(entityId, stationId, ctx) {
+  const { state, config, nowISO } = ctx;
+  const entity = state.entities[entityId];
+  if (!entity || !entity.away) return { events: [] };
+  return { events: [makeEvent(config, nowISO, "return_nudge_shown", { entity_id: entityId, station_id: stationId })] };
+}
+
 export function actionPredictionShown(entityId, stationId, estimatorId, result, ctx) {
   const { config, nowISO } = ctx;
   if (!result || !result.available) return { events: [] };

@@ -225,3 +225,17 @@ export function getEstimate(estimatorId, entityId, state, data, config, nowMin) 
     ? baselineEstimate(entityId, state, data, config, nowMin)
     : proposedEstimate(entityId, state, data, config, nowMin);
 }
+
+// Just the wait for the entity's *current* station — not the whole
+// remaining journey. Use this for anything that cares about "when will I
+// physically be called here" (e.g. a return-from-stepping-out nudge): the
+// full-journey headline can stay high (future lab/pharmacy steps) even
+// while the current call is imminent, and vice versa.
+export function currentStationWaitEstimate(entityId, state, data, config, nowMin) {
+  const entity = state.entities[entityId];
+  if (!entity || !["waiting", "called", "in_service"].includes(entity.status)) {
+    return { available: false };
+  }
+  const result = currentStationWait(entityId, state, data, config, nowMin);
+  return { available: true, p50Min: result.p50, p80Min: result.p80, pausedInfo: result.pausedInfo };
+}

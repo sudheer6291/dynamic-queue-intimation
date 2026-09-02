@@ -15,7 +15,9 @@
     "headline_percentile": "p80",
     "lower_bound_percentile": "p50",
     "min_lead_time_min": 5,
-    "max_swing_per_update_min": 15
+    "max_swing_per_update_min": 15,
+    "step_out_min_wait_min": 20,
+    "return_nudge_lead_time_min": 15
   },
   "doctor_view_station_id": "st_bay",
   "comparison": {
@@ -28,6 +30,13 @@
     "strings": {
       "app.title": { "en": "Dynamic Queue Intimation" },
       "vertical.name": { "en": "Bike Service Centre" },
+      "action.step_out": { "en": "Step out — I'll come back" },
+      "action.stepped_out": { "en": "You've stepped out — we'll notify you when it's time to head back" },
+      "action.return_now": { "en": "Please head back now" },
+      "action.im_back": { "en": "I'm back" },
+      "frontdesk.away_badge": { "en": "Away" },
+      "admin.currently_away": { "en": "Away (virtual queue)" },
+      "admin.physically_waiting": { "en": "Physically waiting" },
       "entity.label": { "en": "Bike" },
       "entity.label_plural": { "en": "Bikes" },
       "entity.id_prefix": { "en": "Ticket" },

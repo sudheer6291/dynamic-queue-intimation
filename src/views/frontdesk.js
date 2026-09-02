@@ -115,6 +115,14 @@ export function renderFrontDeskView(root, ctx) {
     ]);
     confirmBtn.addEventListener("click", () => ctx.dispatch(actionConfirmArrival, stationId));
     actionRow.appendChild(confirmBtn);
+    if (calledEntity.away) {
+      actionRow.appendChild(
+        el("span", { class: "badge bg-info-subtle text-info-emphasis align-self-center" }, [
+          el("i", { class: "bi bi-geo-alt-fill me-1" }),
+          `${meta.display_token} stepped out — give them a minute before marking no-show`
+        ])
+      );
+    }
   }
 
   const noShowBtn = el("button", { class: "btn btn-outline-danger" }, [el("i", { class: "bi bi-person-dash-fill me-1" }), t("frontdesk.no_show")]);
@@ -150,7 +158,13 @@ export function renderFrontDeskView(root, ctx) {
               const left = el("span", { class: "d-flex align-items-center gap-2" }, [
                 el("span", { class: "text-muted fw-bold", style: "width:22px" }, String(idx + 1)),
                 el("span", { class: "fw-semibold" }, meta.display_token),
-                entity.priority ? el("span", { class: "badge bg-warning-subtle text-warning-emphasis" }, "priority") : null
+                entity.priority ? el("span", { class: "badge bg-warning-subtle text-warning-emphasis" }, "priority") : null,
+                entity.away
+                  ? el("span", { class: "badge bg-info-subtle text-info-emphasis" }, [
+                      el("i", { class: "bi bi-geo-alt-fill me-1" }),
+                      t("frontdesk.away_badge")
+                    ])
+                  : null
               ]);
               const right = el("span", { class: "d-flex gap-2" });
               if (idx !== 0) {

@@ -48,6 +48,21 @@ export function renderAdminView(root, ctx) {
   ]);
   wrap.appendChild(statsGrid);
 
+  // --- waiting-room load: the actual painkiller metric — how many people
+  // are NOT physically trapped in the building right now ---
+  const waitingEntities = Object.values(state.entities).filter((e) => e.status === "waiting");
+  const physicallyWaiting = waitingEntities.filter((e) => !e.away).length;
+  const currentlyAway = waitingEntities.filter((e) => e.away).length;
+  const nudgesSent = state.nudgesLog.length;
+
+  wrap.appendChild(
+    el("div", { class: "row g-3" }, [
+      statCard("bi-building", String(physicallyWaiting), t("admin.physically_waiting"), "primary"),
+      statCard("bi-geo-alt-fill", String(currentlyAway), t("admin.currently_away"), "info"),
+      statCard("bi-bell-fill", String(nudgesSent), "Return nudges sent today", "secondary")
+    ])
+  );
+
   // --- live suggestions across all stations ---
   const allSuggestions = computeLiveSuggestions(state, data, config, ctx.nowMin);
   if (allSuggestions.length) {

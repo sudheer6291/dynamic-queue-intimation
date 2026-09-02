@@ -189,3 +189,38 @@ export function simulateStation({
   }
   return completions;
 }
+
+// Post-process the finished event log to demonstrate "step out & get
+// notified" for a handful of entities who genuinely waited long enough to
+// benefit — so the feature is visible by default in replay, not only when
+// a viewer clicks it themselves. Purely additive: only reads `called` and
+// `queue_joined` events already emitted, adds `stepped_out`/`returned`
+// for entities with a long-enough wait, spread across the day.
+export function injectStepOutDemo(events, emit, { leadMin = 5, returnLeadMin = 6, minWaitMin = 35, maxCount = 4 } = {}) {
+  const joinsByEntity = new Map();
+  for (const e of events) {
+    if (e.type !== "queue_joined") continue;
+    if (!joinsByEntity.has(e.entity_id)) joinsByEntity.set(e.entity_id, []);
+    joinsByEntity.get(e.entity_id).push(e);
+  }
+  const calledEvents = events.filter((e) => e.type === "called").sort((a, b) => a.ts_min - b.ts_min);
+  const usedEntities = new Set();
+  let count = 0;
+  for (const ev of calledEvents) {
+    if (count >= maxCount) break;
+    if (usedEntities.has(ev.entity_id)) continue;
+    const joins = (joinsByEntity.get(ev.entity_id) || []).filter((j) => j.ts_min <= ev.ts_min);
+    if (!joins.length) continue;
+    const lastJoin = joins.sort((a, b) => a.ts_min - b.ts_min)[joins.length - 1];
+    const wait = ev.ts_min - lastJoin.ts_min;
+    if (wait < minWaitMin) continue;
+    usedEntities.add(ev.entity_id);
+    count += 1;
+    emit("stepped_out", lastJoin.ts_min + leadMin, { entity_id: ev.entity_id, station_id: ev.station_id });
+    emit("returned", Math.max(lastJoin.ts_min + leadMin + 1, ev.ts_min - returnLeadMin), {
+      entity_id: ev.entity_id,
+      station_id: ev.station_id
+    });
+  }
+  return count;
+}

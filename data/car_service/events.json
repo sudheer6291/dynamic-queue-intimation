@@ -791,6 +791,13 @@
     "step_index": 1
   },
   {
+    "id": "ev0412",
+    "type": "stepped_out",
+    "ts": "2026-09-02T10:41:00+05:30",
+    "entity_id": "c07",
+    "station_id": "st_bay"
+  },
+  {
     "id": "ev0284",
     "type": "service_completed",
     "ts": "2026-09-02T10:47:00+05:30",
@@ -837,6 +844,13 @@
     "type": "journey_completed",
     "ts": "2026-09-02T10:51:00+05:30",
     "entity_id": "c05"
+  },
+  {
+    "id": "ev0413",
+    "type": "returned",
+    "ts": "2026-09-02T10:51:00+05:30",
+    "entity_id": "c07",
+    "station_id": "st_bay"
   },
   {
     "id": "ev0169",
@@ -1085,6 +1099,20 @@
     "step_index": 1
   },
   {
+    "id": "ev0414",
+    "type": "stepped_out",
+    "ts": "2026-09-02T12:08:00+05:30",
+    "entity_id": "c09",
+    "station_id": "st_bay"
+  },
+  {
+    "id": "ev0415",
+    "type": "returned",
+    "ts": "2026-09-02T12:22:00+05:30",
+    "entity_id": "c09",
+    "station_id": "st_bay"
+  },
+  {
     "id": "ev0179",
     "type": "service_completed",
     "ts": "2026-09-02T12:26:00+05:30",
@@ -1197,6 +1225,20 @@
     "entity_id": "c10",
     "station_id": "st_bay",
     "step_index": 1
+  },
+  {
+    "id": "ev0416",
+    "type": "stepped_out",
+    "ts": "2026-09-02T12:36:00+05:30",
+    "entity_id": "c10",
+    "station_id": "st_bay"
+  },
+  {
+    "id": "ev0417",
+    "type": "returned",
+    "ts": "2026-09-02T12:44:00+05:30",
+    "entity_id": "c10",
+    "station_id": "st_bay"
   },
   {
     "id": "ev0187",
@@ -1476,6 +1518,20 @@
     "entity_id": "c10",
     "station_id": "st_wash",
     "resource_id": "res_wash_1"
+  },
+  {
+    "id": "ev0418",
+    "type": "stepped_out",
+    "ts": "2026-09-02T13:18:00+05:30",
+    "entity_id": "c08",
+    "station_id": "st_wash"
+  },
+  {
+    "id": "ev0419",
+    "type": "returned",
+    "ts": "2026-09-02T13:26:00+05:30",
+    "entity_id": "c08",
+    "station_id": "st_wash"
   },
   {
     "id": "ev0290",

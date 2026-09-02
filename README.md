@@ -6,6 +6,30 @@ estimate against a drift-aware p50/p80 range estimator. No backend, no
 database, no auth — everything is derived from JSON at request time in
 the browser.
 
+## Why this exists, and what actually solves the problem
+
+A nicer number on a screen is a **vitamin** — it makes waiting feel less
+uncertain, but it doesn't make anyone wait less, and a free workaround
+(the receptionist's phone, per the original brief's own evaluation plan)
+already does the "am I about to be called" job well enough for many
+people. Two things in this build are aimed at being an actual
+**painkiller** instead:
+
+- **Step out & get notified** (`action.step_out` in Patient view) — a
+  waiting entity can leave the physical waiting area without losing their
+  place in the queue, and gets nudged (`⏰ Please head back now`) once
+  their *own* station wait — not the whole remaining visit — drops inside
+  a configured lead time. This is the single biggest complaint in a real
+  OPD: being physically trapped for 40+ minutes. See "Step out & get
+  notified" below.
+- **Active re-sequencing** (M5) — pull-forward on no-show and
+  send-ahead on a paused resource change *throughput*, not just
+  perception: recovered slots are real capacity, not a UX improvement.
+
+The Admin dashboard's new **Physically waiting / Away (virtual queue)**
+tiles are the auditable proof point for the first of these — the number
+a hospital administrator would actually buy on.
+
 ## Running it
 
 Any static file server works — the app is plain ES modules, no build step.
@@ -127,6 +151,40 @@ rather than trusting a stale guess.
   no-shows, slots recovered today, mean journey time vs. a configured
   "yesterday" baseline, and today's delay log with reasons.
 - **Display board** — now serving / next up / waiting, per station.
+
+## Step out & get notified
+
+Two new event types, `stepped_out` and `returned`, let a waiting entity
+leave the physical queue without losing their place in it —
+`src/engine/deriveState.js` tracks this as `entity.away` /
+`entity.awaySince`, purely additive to the existing state machine (it
+never touches queue position, so being away changes nothing about when
+someone's actually called).
+
+- **Patient view**: once the wait clears `display.step_out_min_wait_min`
+  (default 20 min), a "Step out — I'll come back" button appears. While
+  away, the screen shows a calm "we'll notify you" state until the
+  *current-station* wait (via the new `currentStationWaitEstimate()` in
+  `estimator.js` — deliberately not the whole-journey headline, which can
+  stay high from future steps even when the current call is imminent)
+  drops under `display.return_nudge_lead_time_min` (default 15 min), at
+  which point it becomes a hard-to-miss "🔔 Please head back now" banner.
+  An "I'm back" button clears it.
+- **Front desk**: an "Away" badge on each queued entity, plus a warning
+  next to Confirm/No-show when the currently-called entity is away — a
+  real signal for the human decision of how long to actually wait before
+  marking a no-show, not a silent auto-skip.
+- **Admin dashboard**: "Physically waiting" vs. "Away (virtual queue)" —
+  the number that actually demonstrates less waiting-room crowding, plus
+  a "return nudges sent today" count (every nudge shown is logged via
+  `return_nudge_shown`, same "log what you told someone" discipline as
+  `prediction_shown`).
+- Every seed day includes a handful of real `stepped_out`/`returned`
+  events for entities that genuinely waited long enough to benefit
+  (`tools/seedkit.mjs`'s `injectStepOutDemo`, called from all three
+  generators with per-vertical thresholds since parallel bays make OPD's
+  single-doctor waits look nothing like car/bike servicing's), so the
+  feature is visible in a cold replay, not only when a viewer clicks it.
 
 ## Active re-sequencing (M5, §7)
 

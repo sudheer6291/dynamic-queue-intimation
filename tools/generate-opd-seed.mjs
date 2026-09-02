@@ -8,6 +8,7 @@
 import { writeFileSync } from "fs";
 import { fileURLToPath } from "url";
 import path from "path";
+import { injectStepOutDemo } from "./seedkit.mjs";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const OUT_DIR = path.join(__dirname, "..", "data", "opd");
@@ -557,6 +558,9 @@ for (const entityId of Object.keys(pharmacyCompletions)) {
   emit("journey_completed", pharmacyCompletions[entityId].completeMin, { entity_id: entityId });
 }
 
+// ---------- demonstrate "step out & get notified" for long waits ----------
+const stepOutCount = injectStepOutDemo(events, emit);
+
 // ---------- finalize ----------
 events.sort((a, b) => a.ts_min - b.ts_min || a.id.localeCompare(b.id));
 
@@ -600,3 +604,4 @@ journeyStats
 console.log("Total events:", cleanEvents.length);
 console.log("Entities without journey_completed:", journeyStats.filter((j) => j.journeyMin == null).map((j) => j.id));
 console.log("Tagged long journey entity:", longest && longest.journeyMin > 180 ? longest.id : "none — tune seed");
+console.log("Step-out demo entities:", stepOutCount);
