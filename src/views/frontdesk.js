@@ -11,6 +11,39 @@ import {
   actionCompleteService
 } from "../actions.js";
 
+// Front Desk is the one screen that creates appointments, not just moves
+// them along — everyone else in the system only ever reacts to an entity
+// that already exists. This lives at module scope, not inside
+// renderFrontDeskView, so the checkbox's checked state survives the
+// re-render a click on it would otherwise trigger via Bootstrap's own
+// change handling — there's no other view state to thread it through.
+let pendingPriority = false;
+
+function renderRegisterBar(ctx, t) {
+  const checkboxId = "register-priority-check";
+  const check = el("input", { class: "form-check-input", type: "checkbox", id: checkboxId });
+  check.checked = pendingPriority;
+  check.addEventListener("change", (e) => {
+    pendingPriority = e.target.checked;
+  });
+  const label = el("label", { class: "form-check-label small text-muted", for: checkboxId }, t("frontdesk.register_priority"));
+
+  const registerBtn = el("button", { class: "btn btn-outline-primary btn-sm" }, [
+    el("i", { class: "bi bi-person-plus-fill me-1" }),
+    t("frontdesk.register_walkin")
+  ]);
+  registerBtn.addEventListener("click", () => {
+    const wasPriority = pendingPriority;
+    pendingPriority = false;
+    ctx.registerAppointment(wasPriority);
+  });
+
+  return el("div", { class: "d-flex align-items-center gap-2 mb-3" }, [
+    registerBtn,
+    el("div", { class: "form-check" }, [check, label])
+  ]);
+}
+
 const STATUS_BADGE = {
   paused: "bg-danger-subtle text-danger-emphasis",
   serving: "bg-warning-subtle text-warning-emphasis",
@@ -25,6 +58,7 @@ export function renderFrontDeskView(root, ctx) {
   const main = el("div", { class: "col-12" });
 
   main.appendChild(el("h2", { class: "h4 fw-bold mb-3" }, [el("i", { class: "bi bi-clipboard2-pulse me-2 text-primary" }), t("frontdesk.title")]));
+  main.appendChild(renderRegisterBar(ctx, t));
 
   // station selector as pill nav
   const stationTabs = el("ul", { class: "nav nav-pills gap-2 mb-3" });

@@ -9,7 +9,7 @@ import { renderFrontDeskView } from "./views/frontdesk.js";
 import { renderDoctorView } from "./views/doctor.js";
 import { renderAdminView } from "./views/admin.js";
 import { renderBoardView } from "./views/board.js";
-import { actionPredictionShown, actionNudgeShown } from "./actions.js";
+import { actionPredictionShown, actionNudgeShown, actionRegisterEntity } from "./actions.js";
 import { fetchPersistedEvents, syncEventsToServer, resetPersistedEvents } from "./apiSync.js";
 
 const VIEWS = [
@@ -110,8 +110,27 @@ function ctx() {
       app.runtimeEvents.push(...events);
       syncEventsToServer(app.data.config.vertical_id, events);
     },
-    resetSimulation: () => resetSimulation()
+    resetSimulation: () => resetSimulation(),
+    registerAppointment: (priority) => registerAppointment(priority)
   };
+}
+
+// Front Desk "New Appointment" — the live equivalent of what the seed
+// generators do once, offline, for every pre-seeded entity: creates a
+// brand-new entity, joins it to the vertical's entry-station queue right
+// now, and (unlike every other action here) also has to extend
+// app.data.entities itself, since that's the static-lookup array every
+// view reads display_token and condition flags from — see
+// actionRegisterEntity's own comment for why.
+function registerAppointment(priority) {
+  app.clock.pause();
+  const { events, meta, message } = actionRegisterEntity(priority, ctx());
+  app.data.entities.push(meta);
+  app.runtimeEvents.push(...events);
+  syncEventsToServer(app.data.config.vertical_id, events);
+  app.selectedEntityId = meta.id;
+  toast(message);
+  render(true);
 }
 
 function dispatch(actionFn, ...args) {

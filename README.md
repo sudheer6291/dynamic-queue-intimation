@@ -257,7 +257,9 @@ rather than trusting a stale guess.
   auto-pauses the clock first, so a manual action never races the replay).
   Front desk can drive *any* station's queue end to end this way — verified
   by walking a synthetic entity through an entire OPD route (reception →
-  consult → lab → revisit → pharmacy → done) using only these actions.
+  secretary → consult → lab → revisit → pharmacy → done) using only these
+  actions. It's also the **only** screen that *creates* an entity rather
+  than just moving one along — see "Creating an appointment" below.
 - **Doctor view** — one station, one button. It completes whoever's
   in service (if anyone) and immediately calls the next — literally
   nothing else on the screen. `config.doctor_view_station_id` points it
@@ -271,6 +273,44 @@ rather than trusting a stale guess.
   server-persisted runtime events for the current vertical (see
   "Persistence & deployment" above).
 - **Display board** — now serving / next up / waiting, per station.
+
+## Creating an appointment, and the checkpoints between reception and the visit itself
+
+Every entity in the original build only ever came from the pre-seeded
+day — there was no way to actually see *how* an appointment comes into
+being, and the route from "checked in" straight to "in front of the
+doctor" skipped a real checkpoint every OPD actually has.
+
+- **Front desk → "+ New Appointment" / "+ New Booking"** — creates a
+  brand-new entity live, right now, at the vertical's entry station, with
+  an optional Priority checkbox. This is the missing piece: `actionRegisterEntity`
+  (`src/actions.js`) emits the same `entity_registered` + `queue_joined`
+  events the seed generators emit once, offline, for every pre-seeded
+  entity — so a walk-in created mid-demo is handled by exactly the same
+  code path as everyone else, immediately shows up in Front Desk's queue,
+  the Patient/Customer dropdown, and Admin's counts, and (like every other
+  action) persists through `/api/events` once deployed. Conditional route
+  steps a new walk-in might hit later (does this patient need a lab test,
+  does this vehicle need a wash) are decided once, up front, using that
+  step's own declared probability from `routes.json` — exactly what the
+  seed generators already do, since this prototype has no separate
+  "doctor orders a test" decision event yet.
+- **A real intermediate checkpoint before the actual appointment** —
+  `st_secretary` ("Doctor's Secretary") for OPD, `st_advisor` ("Service
+  Advisor") for car/bike servicing, inserted between the entry station and
+  the core value-add station on every route. This is the checkpoint that
+  actually exists in a real hospital or service center and was previously
+  invisible here: the person who confirms the appointment, applies triage/
+  priority ordering, and hands the file (or job card) over — not just a
+  reception desk that hands straight to the doctor/bay. It's a fully
+  operable Front Desk station like any other (Call Next, Confirm, Complete,
+  priority insert all work on it for free — nothing vertical-specific was
+  added to the engine or the view layer for this), and the seed generators
+  route every entity through it. Uses a fractional `step_index` (`0.5`,
+  between the entry station's `0` and the next station's `1`) specifically
+  so inserting it never had to renumber any *existing* step's index —
+  `deriveState`/`actions.js` only ever require a route's step indices to be
+  strictly increasing, not contiguous integers.
 
 ## Step out & get notified
 
@@ -328,10 +368,10 @@ accepted pull-forwards as "slots recovered today."
 Two more verticals, each a fully independent config/seed with zero
 application-code changes — same engine, same views, different JSON:
 
-- **`data/car_service/`** — check-in → a 2-technician service bay →
-  conditional diagnostic-and-return (the fair transfer test vs. OPD's
-  lab-and-return: same shape, different domain) → optional wash →
-  billing. Its own dramatic day: both bay technicians start 20 minutes
+- **`data/car_service/`** — check-in → service advisor → a 2-technician
+  service bay → conditional diagnostic-and-return (the fair transfer test
+  vs. OPD's lab-and-return: same shape, different domain) → optional wash
+  → billing. Its own dramatic day: both bay technicians start 20 minutes
   late, then — unlike OPD's full-stop pause — just *one* of the two bays
   goes down for 30 minutes mid-day waiting on a delivered part, a
   partial-capacity pause that exercises a code path OPD's single-resource
@@ -339,8 +379,8 @@ application-code changes — same engine, same views, different JSON:
   no-shows, a late arrival, five diagnostic-and-return visits, and one
   job that turns out to be a much bigger repair than expected (tagged
   `long_journey_gt_3h`).
-- **`data/bike_service/`** — check-in → a 3-mechanic bay → optional wash
-  → billing, deliberately *without* a revisit loop — a faster,
+- **`data/bike_service/`** — check-in → service advisor → a 3-mechanic bay
+  → optional wash → billing, deliberately *without* a revisit loop — a faster,
   higher-volume, lower-drama day than either OPD or car servicing, which
   is the point: it's the contrast case showing the estimator's rolling-mean
   adaptation and pause-awareness still work when the shape is simpler.

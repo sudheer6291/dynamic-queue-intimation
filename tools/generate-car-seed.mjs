@@ -91,9 +91,30 @@ for (const e of entities) {
 // --- 1. Check-in ---
 const checkinCompletions = simulateStation({
   stationId: "st_checkin",
-  resources: [{ id: "res_advisor_1", pauses: [] }],
+  resources: [{ id: "res_frontdesk_1", pauses: [] }],
   arrivals: entities.map((e) => ({ entityId: e.id, atMin: e.actual_arrival_min })),
   serviceTimeFor: () => ({ median: 5, p80: 9 }),
+  emit,
+  sampleDuration
+});
+
+// --- 1.5. Service Advisor ---
+// The real-world hand-off between "checked in" and "actually in a bay":
+// the advisor walks the vehicle, notes the complaint, opens the job card.
+// Fractional step_index 0.5 (between check-in's 0 and bay's 1) so this
+// insertion never has to renumber diagnostic/wash/billing's existing
+// step_index values downstream.
+for (const [entityId, c] of Object.entries(checkinCompletions)) {
+  emit("queue_joined", c.completeMin, { entity_id: entityId, station_id: "st_advisor", step_index: 0.5 });
+}
+const advisorCompletions = simulateStation({
+  stationId: "st_advisor",
+  resources: [{ id: "res_advisor_1", pauses: [] }],
+  arrivals: Object.entries(checkinCompletions).map(([entityId, c]) => ({ entityId, atMin: c.completeMin })),
+  serviceTimeFor: () => ({ median: 6, p80: 10 }),
+  entityFlags: new Map(entities.map((e) => [e.id, { isPriority: e.is_priority, isNoShowCandidate: false }])),
+  priorityApplied: new Set(),
+  noShowResolved: new Set(),
   emit,
   sampleDuration
 });
@@ -134,7 +155,7 @@ const bayFlags = new Map(entities.map((e) => [e.id, { isPriority: e.is_priority,
 const bayPriorityApplied = new Set();
 const bayNoShowResolved = new Set();
 
-const firstVisitArrivals = Object.entries(checkinCompletions)
+const firstVisitArrivals = Object.entries(advisorCompletions)
   .map(([entityId, c]) => ({ entityId, atMin: c.completeMin, visit: "first" }))
   .sort((a, b) => a.atMin - b.atMin);
 // the engine only ever learns about a queue via an explicit queue_joined

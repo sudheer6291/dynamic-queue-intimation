@@ -157,9 +157,7 @@
     "is_priority": false,
     "is_no_show_candidate": false,
     "wash_requested": true,
-    "scenario_tags": [
-      "long_journey_from_backlog"
-    ]
+    "scenario_tags": []
   },
   {
     "id": "b14",
@@ -307,7 +305,9 @@
     "is_priority": false,
     "is_no_show_candidate": false,
     "wash_requested": true,
-    "scenario_tags": []
+    "scenario_tags": [
+      "long_journey_from_backlog"
+    ]
   },
   {
     "id": "b26",

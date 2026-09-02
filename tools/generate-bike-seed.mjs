@@ -65,9 +65,35 @@ const flagsFor = (idx) =>
 // --- 1. Check-in ---
 const checkinCompletions = simulateStation({
   stationId: "st_checkin",
-  resources: [{ id: "res_advisor_1", pauses: [] }],
+  resources: [{ id: "res_frontdesk_1", pauses: [] }],
   arrivals: entities.map((e) => ({ entityId: e.id, atMin: e.actual_arrival_min })),
   serviceTimeFor: () => ({ median: 3, p80: 5 }),
+  emit,
+  sampleDuration
+});
+
+// --- 1.5. Service Advisor ---
+// The real-world hand-off between "checked in" and "actually in a bay".
+// Fractional step_index 0.5 (between check-in's 0 and bay's 1) so this
+// insertion never has to renumber wash/billing's existing step_index
+// values downstream.
+for (const [entityId, c] of Object.entries(checkinCompletions)) {
+  emit("queue_joined", c.completeMin, { entity_id: entityId, station_id: "st_advisor", step_index: 0.5 });
+}
+// no-show stays modeled only at the bay (the entity's actual service
+// appointment) — flagsFor() carries isNoShowCandidate too, which would
+// wrongly no-show these entities here instead and (since bayArrivals is
+// derived from advisorCompletions, which never gets an entry for a
+// no-show) strand them before they ever reach the bay. Priority ordering
+// is genuinely this role's job, so that flag alone carries over.
+const advisorCompletions = simulateStation({
+  stationId: "st_advisor",
+  resources: [{ id: "res_advisor_1", pauses: [] }],
+  arrivals: Object.entries(checkinCompletions).map(([entityId, c]) => ({ entityId, atMin: c.completeMin })),
+  serviceTimeFor: () => ({ median: 4, p80: 7 }),
+  entityFlags: new Map(entities.map((e) => [e.id, { isPriority: e.is_priority, isNoShowCandidate: false }])),
+  priorityApplied: new Set(),
+  noShowResolved: new Set(),
   emit,
   sampleDuration
 });
@@ -100,7 +126,7 @@ const bayFlags = flagsFor();
 const bayPriorityApplied = new Set();
 const bayNoShowResolved = new Set();
 
-const bayArrivals = Object.entries(checkinCompletions).map(([entityId, c]) => ({ entityId, atMin: c.completeMin }));
+const bayArrivals = Object.entries(advisorCompletions).map(([entityId, c]) => ({ entityId, atMin: c.completeMin }));
 // the engine only ever learns about a queue via an explicit queue_joined
 // event — simulateStation's `arrivals` list only drives its own internal
 // scheduling, so the transition itself still needs to be logged here.

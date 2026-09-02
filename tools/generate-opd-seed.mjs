@@ -315,6 +315,33 @@ const receptionCompletions = simulateStation({
   noShowResolved: new Set()
 });
 
+// ---------- 1.5. Doctor's Secretary ----------
+// The realistic hand-off checkpoint between "checked in" and "actually
+// seeing the doctor": confirms the appointment and applies triage/priority
+// ordering before the file reaches the doctor's queue. Uses fractional
+// step_index 0.5 (between reception's 0 and opd_gen's 1) specifically so
+// this insertion never has to renumber lab/pharmacy's existing step_index
+// values downstream — deriveState/actions.js only need step_index to be
+// strictly increasing along a route, not contiguous integers.
+for (const [entityId, c] of Object.entries(receptionCompletions)) {
+  emit("queue_joined", c.completeMin, { entity_id: entityId, station_id: "st_secretary", step_index: 0.5 });
+}
+const secretaryArrivals = Object.entries(receptionCompletions).map(([entityId, c]) => ({ entityId, atMin: c.completeMin }));
+// priority ordering is genuinely this role's job in a real OPD — it's who
+// actually decides whose file goes in to the doctor next — so it (unlike
+// no-show, which stays modeled only at the doctor's own call) applies here.
+const secretaryFlags = new Map(entities.map((e) => [e.id, { isPriority: e.is_priority, isNoShowCandidate: false }]));
+const secretaryCompletions = simulateStation({
+  stationId: "st_secretary",
+  resourceId: "res_secretary_1",
+  arrivals: secretaryArrivals,
+  serviceTimeFor: () => ({ median: 3, p80: 5 }),
+  pauses: [],
+  entityFlags: secretaryFlags,
+  priorityApplied: new Set(),
+  noShowResolved: new Set()
+});
+
 // ---------- 2 & 3. Doctor (opd_gen) shared queue for first-visit AND revisit, interleaved with lab ----------
 // We run this as a manual event-driven loop since opd_gen depends on lab completions.
 const opdFlags = new Map(
@@ -323,11 +350,13 @@ const opdFlags = new Map(
 const opdPriorityApplied = new Set();
 const opdNoShowResolved = new Set();
 
-// arrivals into opd_gen queue: first-visit arrivals come from reception completions (known up front).
-// revisit arrivals come from lab completions (not known up front) -> we simulate opd_gen and lab together,
-// station by station in small time-ordered batches.
+// arrivals into opd_gen queue: first-visit arrivals come from the
+// secretary's completions (known up front, since the secretary station
+// runs to completion before this loop starts). Revisit arrivals come from
+// lab completions (not known up front) -> we simulate opd_gen and lab
+// together, station by station in small time-ordered batches.
 const firstVisitArrivals = entities
-  .map((e) => ({ entityId: e.id, atMin: receptionCompletions[e.id].completeMin, kind: "first" }))
+  .map((e) => ({ entityId: e.id, atMin: secretaryCompletions[e.id].completeMin, kind: "first" }))
   .sort((a, b) => a.atMin - b.atMin);
 // the engine only ever learns about a queue via an explicit queue_joined
 // event — the DES loop below tracks its own in-memory admission order for

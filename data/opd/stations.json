@@ -7,23 +7,30 @@
     "capacity": 1
   },
   {
+    "id": "st_secretary",
+    "name_key": "station.secretary",
+    "order_hint": 2,
+    "service_time": { "median_min": 3, "p80_min": 5 },
+    "capacity": 1
+  },
+  {
     "id": "st_opd_gen",
     "name_key": "station.opd_gen",
-    "order_hint": 2,
+    "order_hint": 3,
     "service_time": { "median_min": 8, "p80_min": 15 },
     "capacity": 1
   },
   {
     "id": "st_lab",
     "name_key": "station.lab",
-    "order_hint": 3,
+    "order_hint": 4,
     "service_time": { "median_min": 12, "p80_min": 20 },
     "capacity": 1
   },
   {
     "id": "st_pharmacy",
     "name_key": "station.pharmacy",
-    "order_hint": 4,
+    "order_hint": 5,
     "service_time": { "median_min": 5, "p80_min": 9 },
     "capacity": 1
   }

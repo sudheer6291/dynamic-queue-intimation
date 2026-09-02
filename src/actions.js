@@ -72,6 +72,62 @@ export function actionMarkNoShow(stationId, ctx) {
   return { events: [noShow, suggested], message: null };
 }
 
+// Creates a brand-new walk-in appointment at the vertical's entry station —
+// the missing "how does a front desk actually create an appointment" step:
+// every entity before this only ever came from the pre-seeded day. Each
+// conditional route step's real-world outcome (does this patient end up
+// needing a lab test, does this vehicle need a wash...) isn't actually
+// known until later in the visit; this prototype has no separate "doctor
+// orders a test" decision event yet, so — exactly like the seed
+// generators already do for every pre-seeded entity — it's decided now,
+// once, using that step's own declared probability from routes.json.
+// Returns `meta` in addition to the usual `events`: the caller (app.js)
+// must push it into app.data.entities itself, the same static-lookup
+// array every view already reads display_token/condition flags from — see
+// nextStepFor below and the data.entities.find(...) call sites across
+// views. That lookup is intentionally null-safe (a live-created entity
+// that outlives a page reload without its meta just skips any conditional
+// step it hasn't reached yet, rather than crashing — see nextStepFor).
+let walkinSeq = 0;
+export function actionRegisterEntity(priority, ctx) {
+  const { data, config, nowISO } = ctx;
+  walkinSeq += 1;
+  const entityId = `walkin-${Date.now()}-${walkinSeq}`;
+
+  const tokenPrefix = (data.entities[0] && String(data.entities[0].display_token).replace(/\d+$/, "")) || "W-";
+  const maxNum = data.entities.reduce((max, e) => {
+    const n = parseInt(String(e.display_token).replace(/\D/g, ""), 10);
+    return Number.isFinite(n) ? Math.max(max, n) : max;
+  }, 0);
+  const displayToken = `${tokenPrefix}${String(maxNum + 1).padStart(2, "0")}`;
+
+  const routeId = config.default_route_id;
+  const route = data.routes.find((r) => r.id === routeId);
+  const meta = { id: entityId, display_token: displayToken, route_id: routeId, scenario_tags: ["walk_in"] };
+  if (route) {
+    for (const step of route.steps) {
+      if (step.conditional && step.condition_key && !(step.condition_key in meta)) {
+        meta[step.condition_key] = Math.random() < step.probability;
+      }
+    }
+  }
+
+  const events = [
+    makeEvent(config, nowISO, "entity_registered", {
+      entity_id: entityId,
+      display_token: displayToken,
+      route_id: routeId,
+      priority: !!priority
+    }),
+    makeEvent(config, nowISO, "queue_joined", {
+      entity_id: entityId,
+      station_id: config.entry_station_id,
+      step_index: 0
+    })
+  ];
+  return { events, meta, message: `Registered ${displayToken}${priority ? " (priority)" : ""}` };
+}
+
 export function actionPriorityInsert(stationId, entityId, reasonText, ctx) {
   const { config, nowISO } = ctx;
   const ev = makeEvent(config, nowISO, "priority_insert", {
