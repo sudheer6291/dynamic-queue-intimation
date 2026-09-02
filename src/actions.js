@@ -99,6 +99,67 @@ export function actionPullForward(stationId, entityId, reasonText, ctx) {
   return { events: [ev, accept], message: null };
 }
 
+// Generic next-step resolution — no vertical-specific condition_key names.
+// A conditional route step is due once the entity's own flag (looked up by
+// exactly the step's condition_key, whatever that vertical calls it) is
+// true; the first due step after the entity's current one wins. Returns
+// null once no further step is due (the journey is complete).
+function nextStepFor(entity, meta, route) {
+  for (const step of route.steps) {
+    if (step.step_index <= entity.stepIndex) continue;
+    const due = !step.conditional || !!(meta && meta[step.condition_key]);
+    if (due) return step;
+  }
+  return null;
+}
+
+// Completes whoever is currently in service at `resourceId` (if anyone) and
+// routes them to their next step. Shared by the doctor-style single-button
+// view and the front desk's own "Complete" action. Returns the events to
+// append plus the resource that's now free (or null).
+function completeCurrentService(stationId, resourceId, ctx) {
+  const { state, data, config, nowISO, nowMin } = ctx;
+  const rs = state.resources[resourceId];
+  if (!rs || rs.status !== "serving") return { events: [] };
+  const entityId = rs.currentEntityId;
+  const entity = state.entities[entityId];
+  const startMin = parseISOToMin(entity.serviceStartedAt);
+  const duration = Math.max(1, Math.round(nowMin - startMin));
+  const events = [
+    makeEvent(config, nowISO, "service_completed", {
+      entity_id: entityId,
+      station_id: stationId,
+      resource_id: resourceId,
+      duration_min: duration
+    })
+  ];
+
+  const meta = data.entities.find((x) => x.id === entityId);
+  const route = data.routes.find((r) => r.id === entity.routeId);
+  const target = nextStepFor(entity, meta, route);
+
+  if (target) {
+    events.push(
+      makeEvent(config, nowISO, "queue_joined", { entity_id: entityId, station_id: target.station_id, step_index: target.step_index })
+    );
+  } else {
+    events.push(makeEvent(config, nowISO, "journey_completed", { entity_id: entityId }));
+  }
+  return { events };
+}
+
+// Front desk: complete whoever is being served at this station right now.
+// Deliberately does not auto-call the next person — front desk operates
+// one deliberate tap per action.
+export function actionCompleteService(stationId, ctx) {
+  const { state, data } = ctx;
+  const resources = data.resources.filter((r) => r.station_id === stationId);
+  const serving = resources.find((r) => state.resources[r.id].status === "serving");
+  if (!serving) return { events: [], message: "No one is currently in service at this station." };
+  const { events } = completeCurrentService(stationId, serving.id, ctx);
+  return { events, message: null };
+}
+
 export function actionApplyLabFirstSuggestion(stationId, altStationId, entityIds, ctx) {
   const { config, nowISO } = ctx;
   const events = [];
@@ -131,55 +192,10 @@ export function actionApplyLabFirstSuggestion(stationId, altStationId, entityIds
 // immediately calls the next entity in the queue. This button is the
 // entire data-collection layer for that station.
 export function actionStationDone(stationId, ctx) {
-  const { state, data, config, nowISO, nowMin } = ctx;
-  const events = [];
+  const { state, data, config, nowISO } = ctx;
   const resources = data.resources.filter((r) => r.station_id === stationId);
   const serving = resources.find((r) => state.resources[r.id].status === "serving");
-
-  if (serving) {
-    const rs = state.resources[serving.id];
-    const entityId = rs.currentEntityId;
-    const entity = state.entities[entityId];
-    const startMin = parseISOToMin(entity.serviceStartedAt);
-    const duration = Math.max(1, Math.round(nowMin - startMin));
-    events.push(
-      makeEvent(config, nowISO, "service_completed", {
-        entity_id: entityId,
-        station_id: stationId,
-        resource_id: serving.id,
-        duration_min: duration
-      })
-    );
-
-    const meta = data.entities.find((x) => x.id === entityId);
-    const route = data.routes.find((r) => r.id === entity.routeId);
-    const nextStep = route.steps.find((s) => {
-      if (s.step_index <= entity.stepIndex) return false;
-      if (!s.conditional) return true;
-      if (s.condition_key === "lab_ordered") return !!(meta && meta.lab_ordered) && s.station_id !== stationId;
-      if (s.condition_key === "medicine_prescribed") return !!(meta && meta.medicine_prescribed);
-      return false;
-    });
-    // special-case: revisit after lab shares condition_key with the lab step
-    // itself, so once lab_ordered is true both are "due" — pick the nearest one.
-    let target = nextStep;
-    if (!target) {
-      const remaining = route.steps.filter((s) => s.step_index > entity.stepIndex);
-      target = remaining.find((s) => !s.conditional) || null;
-    }
-
-    if (target) {
-      events.push(
-        makeEvent(config, nowISO, "queue_joined", {
-          entity_id: entityId,
-          station_id: target.station_id,
-          step_index: target.step_index
-        })
-      );
-    } else {
-      events.push(makeEvent(config, nowISO, "journey_completed", { entity_id: entityId }));
-    }
-  }
+  const events = serving ? completeCurrentService(stationId, serving.id, ctx).events : [];
 
   // auto-advance: call the next person if the resource is now free
   const queue = state.stations[stationId].queue;

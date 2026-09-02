@@ -7,7 +7,8 @@ import {
   actionMarkNoShow,
   actionPriorityInsert,
   actionPullForward,
-  actionApplyLabFirstSuggestion
+  actionApplyLabFirstSuggestion,
+  actionCompleteService
 } from "../actions.js";
 
 const STATUS_BADGE = {
@@ -120,6 +121,17 @@ export function renderFrontDeskView(root, ctx) {
   noShowBtn.disabled = !calledEntity;
   noShowBtn.addEventListener("click", () => ctx.dispatch(actionMarkNoShow, stationId));
   actionRow.appendChild(noShowBtn);
+
+  const servingEntity = Object.values(state.entities).find((e) => e.currentStationId === stationId && e.status === "in_service");
+  if (servingEntity) {
+    const meta = data.entities.find((e) => e.id === servingEntity.id);
+    const completeBtn = el("button", { class: "btn btn-success" }, [
+      el("i", { class: "bi bi-check2-circle me-1" }),
+      `Complete — ${meta.display_token}`
+    ]);
+    completeBtn.addEventListener("click", () => ctx.dispatch(actionCompleteService, stationId));
+    actionRow.appendChild(completeBtn);
+  }
   row.appendChild(actionRow);
 
   // queue
