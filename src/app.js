@@ -10,6 +10,7 @@ import { renderDoctorView } from "./views/doctor.js";
 import { renderAdminView } from "./views/admin.js";
 import { renderBoardView } from "./views/board.js";
 import { actionPredictionShown, actionNudgeShown } from "./actions.js";
+import { fetchPersistedEvents, syncEventsToServer, resetPersistedEvents } from "./apiSync.js";
 
 const VIEWS = [
   { id: "patient", labelKey: "screen.patient", render: renderPatientView },
@@ -99,6 +100,7 @@ function ctx() {
         nowISO: iso
       });
       app.runtimeEvents.push(...events);
+      syncEventsToServer(app.data.config.vertical_id, events);
     },
     logNudgeShown: (entityId, stationId) => {
       const bucket = `${entityId}|${Math.floor(app.clock.nowMin / 5)}`;
@@ -106,7 +108,9 @@ function ctx() {
       app.loggedNudgeBuckets.add(bucket);
       const { events } = actionNudgeShown(entityId, stationId, { state, config: app.data.config, nowISO: iso });
       app.runtimeEvents.push(...events);
-    }
+      syncEventsToServer(app.data.config.vertical_id, events);
+    },
+    resetSimulation: () => resetSimulation()
   };
 }
 
@@ -115,9 +119,23 @@ function dispatch(actionFn, ...args) {
   const result = actionFn(...args, ctx());
   if (result && result.events && result.events.length) {
     app.runtimeEvents.push(...result.events);
+    syncEventsToServer(app.data.config.vertical_id, result.events);
   }
   if (result && result.message) toast(result.message);
   render(true);
+}
+
+// Clears both local and server-persisted runtime events for the current
+// vertical — a clean slate for a fresh demo, or for an automation suite to
+// call before each run so tests don't inherit a prior run's state.
+async function resetSimulation() {
+  app.clock.pause();
+  const verticalId = app.data.config.vertical_id;
+  app.runtimeEvents = [];
+  app.loggedPredictionBuckets = new Set();
+  app.loggedNudgeBuckets = new Set();
+  render(true);
+  await resetPersistedEvents(verticalId);
 }
 
 function render(force) {
@@ -231,9 +249,12 @@ function refreshLocaleOptions() {
 
 async function loadAndStart(verticalMeta) {
   app.data = await loadVertical(verticalMeta.path);
-  app.runtimeEvents = [];
+  app.runtimeEvents = await fetchPersistedEvents(verticalMeta.id);
   app.loggedPredictionBuckets = new Set();
   app.loggedNudgeBuckets = new Set();
+  if (app.runtimeEvents.length) {
+    toast(`Resumed ${app.runtimeEvents.length} action${app.runtimeEvents.length === 1 ? "" : "s"} from an earlier session`);
+  }
   app.selectedStation = app.data.stations[0].id;
   app.selectedEntityId = app.data.entities[0].id;
 

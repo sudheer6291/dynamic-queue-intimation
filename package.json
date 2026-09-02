@@ -1,0 +1,14 @@
+{
+  "name": "dynamic-queue-intimation",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Clock-replay queue intimation prototype — static frontend + Vercel serverless API for persisting runtime (front-desk/patient) actions across sessions.",
+  "type": "module",
+  "scripts": {
+    "dev": "vercel dev",
+    "serve:static": "python3 -m http.server 8080"
+  },
+  "dependencies": {
+    "@vercel/blob": "^2.8.0"
+  }
+}

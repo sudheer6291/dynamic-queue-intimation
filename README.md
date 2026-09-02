@@ -68,6 +68,68 @@ python3 -m http.server 8080
 # open http://localhost:8080/index.html
 ```
 
+Served this way, every runtime action (Front Desk calls, patient step-outs,
+Doctor completes...) lives only in the browser tab's memory — reload and the
+day resets to the seed. That's fine for a demo; it's not enough for
+automation testing, where a suite needs the state it just created to survive
+between requests and to be assertable as structured JSON, not scraped off
+the DOM. See the next section.
+
+## Persistence & deployment (Vercel)
+
+The app now ships an optional serverless API (`api/`) that persists every
+runtime event server-side, so the queue's actual state — not just the
+static seed — survives a page reload, a new browser session, or a
+different automation client hitting it a minute later.
+
+**What "save to JSON files" means once deployed.** Vercel's own filesystem
+is read-only at runtime, so a literal `fs.writeFile` to `data/*/events.json`
+would fail in production. The equivalent that actually works there is
+[Vercel Blob](https://vercel.com/docs/storage/vercel-blob): `api/_lib/blobStore.js`
+reads/writes one JSON blob per vertical
+(`queue-intimation/runtime-events/<vertical>.json`, shape
+`{ events: [...], updatedAt }`) via `@vercel/blob`'s `get`/`put`/`del`. If no
+Blob store is configured yet, it falls back to an in-memory `Map` per
+serverless instance — the app still runs, but that fallback is **not
+durable** (a fresh instance / redeploy loses it), so:
+
+**One-time setup you need to do in the Vercel dashboard:** open the
+deployed project → **Storage** tab → **Create Database** → **Blob** →
+connect it to the project. That auto-injects the `BLOB_READ_WRITE_TOKEN`
+env var the code checks for; redeploy (or just wait for the next
+deployment) and persistence becomes durable.
+
+**Endpoints:**
+
+- `GET /api/events?vertical=opd` → `{ events, storage }` — the persisted
+  runtime event log for that vertical (`storage` is `"blob"` or
+  `"memory-fallback"`, so a test can tell which mode it's running against).
+- `POST /api/events?vertical=opd` with body `{ events: [...] }` → appends;
+  called automatically by the client (`src/apiSync.js`) on every Front
+  Desk / Doctor / Patient action.
+- `DELETE /api/events?vertical=opd` → clears the persisted log for that
+  vertical. Wired to the **"Reset simulation"** button on the Admin
+  dashboard — clear both local and server state before a fresh demo or
+  before each automated test run, so a suite never inherits a prior run's
+  events.
+- `GET /api/state?vertical=opd&now=<ISO time>` → `{ vertical, now,
+  runtimeEventCount, storage, state }` — runs the exact same `deriveState()`
+  the browser uses, server-side, against the seed plus whatever's been
+  persisted, and returns the fully-derived queue/resource/entity state as
+  JSON. **This is the endpoint automation should actually assert against**
+  — e.g. "after Front Desk calls the next token, `state.entities[id].status`
+  is `in_service`" — rather than scraping the rendered DOM. Omit `now` to
+  get the fully-replayed end-of-day state.
+
+**Zero regression by design.** `src/apiSync.js`'s three functions
+(`fetchPersistedEvents`, `syncEventsToServer`, `resetPersistedEvents`) all
+fail silently (caught, swallowed) if `/api/*` isn't reachable — e.g. when
+still using `python3 -m http.server` locally with no API routes at all.
+Verified with a full Playwright pass across all three verticals and every
+screen against a plain static server: zero uncaught exceptions
+(`pageerror`), only the expected 404/501 network-log lines from the
+missing routes — the app behaves exactly as it did before this existed.
+
 ## UI
 
 The interface is built on **Bootstrap 5.3** (navbar, nav-pills, cards,
@@ -179,8 +241,11 @@ rather than trusting a stale guess.
 - **Admin dashboard** — station load (current vs. baseline vs. proposed),
   no-shows, slots recovered today, mean journey time vs. a configured
   "yesterday" baseline, today's delay log with reasons, a **prediction
-  accuracy panel** (replayed evidence, not a claim), and a **what-if
-  capacity planner** — see "Market differentiators" above for both.
+  accuracy panel** (replayed evidence, not a claim), a **what-if
+  capacity planner** — see "Market differentiators" above for both — and
+  a **"Reset simulation"** button that clears both local and
+  server-persisted runtime events for the current vertical (see
+  "Persistence & deployment" above).
 - **Display board** — now serving / next up / waiting, per station.
 
 ## Step out & get notified

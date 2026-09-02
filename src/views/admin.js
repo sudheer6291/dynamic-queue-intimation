@@ -43,7 +43,18 @@ export function renderAdminView(root, ctx) {
   root.innerHTML = "";
 
   const wrap = el("div", { class: "d-flex flex-column gap-4" });
-  wrap.appendChild(el("h2", { class: "h4 fw-bold mb-0" }, [el("i", { class: "bi bi-speedometer2 me-2 text-primary" }), t("admin.title")]));
+  const resetBtn = el("button", { class: "btn btn-sm btn-outline-danger" }, [el("i", { class: "bi bi-arrow-counterclockwise me-1" }), "Reset simulation"]);
+  resetBtn.addEventListener("click", () => {
+    if (window.confirm("Clear every action taken so far today (front desk, patient, doctor) — both locally and on the server — and start this vertical fresh?")) {
+      ctx.resetSimulation();
+    }
+  });
+  wrap.appendChild(
+    el("div", { class: "d-flex justify-content-between align-items-center" }, [
+      el("h2", { class: "h4 fw-bold mb-0" }, [el("i", { class: "bi bi-speedometer2 me-2 text-primary" }), t("admin.title")]),
+      resetBtn
+    ])
+  );
 
   // --- top stats ---
   const noShows = Object.values(state.entities).filter((e) => e.status === "no_show").length;
