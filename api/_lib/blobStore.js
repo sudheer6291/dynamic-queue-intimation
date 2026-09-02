@@ -1,13 +1,23 @@
-// Persistence for runtime (front-desk/patient) actions, one JSON blob per
-// vertical, backed by Vercel Blob — the closest thing to "a JSON file" that
-// actually survives on Vercel's serverless runtime, whose own filesystem is
-// read-only in production. Falls back to an in-memory store (per warm
-// lambda instance only — NOT durable, just enough that local `vercel dev`
-// and a store-less deploy don't hard-crash) when no Blob store is
-// configured, so the app degrades instead of erroring.
+// Persistence for runtime (front-desk/patient) actions.
 //
-// Read-modify-write, not compare-and-swap — fine for a prototype's
-// request volume, not meant to survive heavy concurrent writers.
+// The *seed* — every static data/<vertical>/*.json file — ships inside the
+// deployment itself and is what api/state.js reads directly off disk on
+// every request; no external store is involved in that at all, and none is
+// required for initial testing. What needs somewhere to live is only the
+// *incremental* log a live demo appends on top of that seed (front-desk
+// calls, walk-in registrations, ...), and by default that lives in a
+// plain in-memory Map, scoped to one warm serverless instance — good
+// enough to drive a same-session demo or a single automated test run
+// without any setup step at all.
+//
+// That in-memory store is NOT durable across a redeploy or a cold/second
+// instance, so if a deployment later needs runtime actions to survive
+// that, set BLOB_READ_WRITE_TOKEN (Vercel dashboard -> Storage -> Create
+// Database -> Blob) and this switches to writing one JSON blob per
+// vertical instead — same read/append/reset API either way, callers don't
+// need to know which mode is active. Read-modify-write, not
+// compare-and-swap, in the Blob path — fine for a prototype's request
+// volume, not meant to survive heavy concurrent writers.
 
 import { put, get, del } from "@vercel/blob";
 

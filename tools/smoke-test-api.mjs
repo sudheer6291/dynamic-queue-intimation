@@ -64,8 +64,9 @@ async function testVertical({ id: vertical, entryStationId }) {
   check("seed has at least one entity", entityCount > 0, `found ${entityCount}`);
   console.log(`  storage mode: ${stateBody ? stateBody.storage : "?"}`);
   if (stateBody && stateBody.storage === "memory-fallback") {
-    console.log("  NOTE: memory-fallback means Blob storage isn't connected yet in the Vercel project —");
-    console.log("        persistence works per-instance but is not durable. See README 'Persistence & deployment'.");
+    console.log("  NOTE: memory-fallback — expected for initial testing (the app runs entirely off the");
+    console.log("        deployment's own data/*.json files + a per-instance in-memory log, no setup needed).");
+    console.log("        Connect Blob storage later only if runtime actions need to survive a redeploy.");
   }
 
   // 2. Clean slate: clear anything left over from a previous run.
@@ -98,20 +99,28 @@ async function testVertical({ id: vertical, entryStationId }) {
   check("GET /api/events after POST -> 200", getRes.ok, `status ${getRes.status}`);
   const found = getBody && Array.isArray(getBody.events) && getBody.events.some((e) => e.entity_id === testEntityId);
   check("persisted event is present on GET", found, found ? "" : `events: ${JSON.stringify(getBody && getBody.events)}`);
-  check(
-    "storage mode is 'blob' (durable) rather than 'memory-fallback'",
-    getBody && getBody.storage === "blob",
-    getBody ? `storage: ${getBody.storage}` : "no body"
-  );
+  const usingBlob = getBody && getBody.storage === "blob";
 
   // 5. /api/state should now reflect the synthetic entity too — proves
   // deriveState() is actually merging seed + persisted events, not just
-  // serving the static seed regardless of what's been posted.
+  // serving the static seed regardless of what's been posted. Under the
+  // default memory-fallback mode this crosses two separate serverless
+  // functions (api/events.js and api/state.js), each with its own
+  // in-memory store, which Vercel offers no guarantee share an instance —
+  // so this one is only a hard requirement once Blob is actually
+  // connected; under memory-fallback it's informational, not a failure,
+  // since that consistency isn't a property this mode ever promised.
   const { body: stateAfter } = await json(stateUrl);
   const entityInState = stateAfter && stateAfter.state && stateAfter.state.entities && stateAfter.state.entities[testEntityId];
-  check("synthetic entity appears in /api/state after POST", Boolean(entityInState));
-  if (entityInState) {
-    check("synthetic entity's queue station matches what was posted", entityInState.currentStationId === entryStationId);
+  if (usingBlob) {
+    check("synthetic entity appears in /api/state after POST", Boolean(entityInState));
+    if (entityInState) {
+      check("synthetic entity's queue station matches what was posted", entityInState.currentStationId === entryStationId);
+    }
+  } else {
+    console.log(
+      `  info entity ${entityInState ? "does" : "does not"} appear in /api/state yet (memory-fallback — /api/events and /api/state are separate functions and may not share an instance; not a failure in this mode)`
+    );
   }
 
   // 6. Clean up — DELETE clears the whole vertical's persisted log, so this

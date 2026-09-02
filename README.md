@@ -77,27 +77,37 @@ the DOM. See the next section.
 
 ## Persistence & deployment (Vercel)
 
-The app now ships an optional serverless API (`api/`) that persists every
-runtime event server-side, so the queue's actual state — not just the
-static seed — survives a page reload, a new browser session, or a
-different automation client hitting it a minute later.
+**For initial testing, the deployment needs zero storage setup.** The
+seed — every static `data/<vertical>/*.json` file — ships inside the
+deployment itself; `api/state.js` reads it directly off disk on every
+request. That's the whole answer to "use the data files as part of the
+deployment": there's no external store involved in serving that data at
+all, seed or otherwise, no setup step, and it's already how the app runs
+by default the moment it's deployed.
 
-**What "save to JSON files" means once deployed.** Vercel's own filesystem
-is read-only at runtime, so a literal `fs.writeFile` to `data/*/events.json`
-would fail in production. The equivalent that actually works there is
-[Vercel Blob](https://vercel.com/docs/storage/vercel-blob): `api/_lib/blobStore.js`
-reads/writes one JSON blob per vertical
-(`queue-intimation/runtime-events/<vertical>.json`, shape
-`{ events: [...], updatedAt }`) via `@vercel/blob`'s `get`/`put`/`del`. If no
-Blob store is configured yet, it falls back to an in-memory `Map` per
-serverless instance — the app still runs, but that fallback is **not
-durable** (a fresh instance / redeploy loses it), so:
+What still needs somewhere to live is the *incremental* log a live demo
+appends on top of that seed — Front Desk calls, walk-in registrations,
+patient step-outs. By default (`api/_lib/blobStore.js`) that's a plain
+in-memory store, scoped to one warm serverless instance: no
+`BLOB_READ_WRITE_TOKEN`, no dashboard step, good enough to drive a
+same-session demo or one automated test run start to finish. Its one real
+limit: it does **not** survive a redeploy or a second/cold instance, and
+`/api/events` and `/api/state` are separate functions that Vercel offers
+no guarantee share an instance — so an `/api/state` check run
+independently of the actions that produced the state it's checking can
+occasionally miss them under this mode. The UI itself never hits that
+edge (it only ever talks to `/api/events`), and the automated smoke tests
+below treat it as informational, not a failure, in this mode.
 
-**One-time setup you need to do in the Vercel dashboard:** open the
-deployed project → **Storage** tab → **Create Database** → **Blob** →
-connect it to the project. That auto-injects the `BLOB_READ_WRITE_TOKEN`
-env var the code checks for; redeploy (or just wait for the next
-deployment) and persistence becomes durable.
+**Only if a deployment later needs runtime actions to survive a redeploy**
+— e.g. a long-lived shared demo, not a one-off test run — is there a
+second mode: [Vercel Blob](https://vercel.com/docs/storage/vercel-blob).
+Same `readEvents`/`appendEvents`/`resetEvents` API, same one-JSON-blob-per-
+vertical shape (`queue-intimation/runtime-events/<vertical>.json`), just
+durable instead of in-memory. Turning it on is one dashboard step whenever
+it's actually wanted: deployed project → **Storage** tab → **Create
+Database** → **Blob** → connect it to the project (auto-injects
+`BLOB_READ_WRITE_TOKEN`) — not a prerequisite to get started.
 
 **Endpoints:**
 
@@ -133,10 +143,11 @@ node tools/smoke-test-ui.mjs  https://your-app.vercel.app   # real browser: Fron
 `smoke-test-api.mjs` is pure `fetch` (no browser): for each vertical it
 reads `/api/state`, posts a synthetic event, re-reads it with a *separate*
 request to prove it was actually persisted (not just echoed back), checks
-`deriveState()` picked it up, confirms `storage: "blob"` (flags
-`memory-fallback` as a warning, not a hard failure, since the app still
-works either way), then cleans up after itself via `DELETE`. Safe to run
-repeatedly against a live deployment.
+whether `deriveState()` picked it up (a hard requirement once `storage`
+reports `"blob"`; informational only under the default `memory-fallback`,
+since that mode never promised cross-function consistency), then cleans
+up after itself via `DELETE`. Safe to run repeatedly against a live
+deployment.
 
 `smoke-test-ui.mjs` drives the actual deployed page with Playwright: Reset
 simulation for a clean slate, Call Next on Front Desk, then a hard page
