@@ -6,10 +6,12 @@
 // API agree, not just that each works in isolation. Reset simulation is
 // used first for a clean slate and last to leave no residue behind.
 //
-// Requires Playwright + a Chromium build. In this project's sandbox that's
-// pre-installed at PLAYWRIGHT_BROWSERS_PATH=/opt/pw-browsers; adjust
-// EXECUTABLE_PATH below (or unset it to use Playwright's own default) if
-// running elsewhere.
+// Requires Playwright + a Chromium build:
+//   npx playwright install chromium
+// By default this uses Playwright's own bundled browser. Set
+// PW_CHROMIUM_PATH to point at a specific Chromium binary instead (e.g. a
+// sandbox with a pre-installed browser at a fixed path) — leave it unset
+// anywhere else, including CI.
 //
 // Usage:
 //   node tools/smoke-test-ui.mjs [baseUrl]
@@ -18,7 +20,7 @@
 import { chromium } from "playwright";
 
 const baseUrl = (process.argv[2] || "https://dynamic-queue-intimation.vercel.app").replace(/\/$/, "");
-const EXECUTABLE_PATH = process.env.PW_CHROMIUM_PATH || "/opt/pw-browsers/chromium";
+const EXECUTABLE_PATH = process.env.PW_CHROMIUM_PATH || null;
 
 let pass = 0;
 let fail = 0;
@@ -37,11 +39,7 @@ function check(label, condition, detail) {
 async function main() {
   console.log(`UI smoke test against ${baseUrl}`);
   const launchOpts = { headless: true };
-  try {
-    launchOpts.executablePath = EXECUTABLE_PATH;
-  } catch {
-    // fall through to Playwright's own bundled browser
-  }
+  if (EXECUTABLE_PATH) launchOpts.executablePath = EXECUTABLE_PATH;
 
   const browser = await chromium.launch(launchOpts);
   const page = await browser.newPage({ viewport: { width: 1280, height: 1000 } });
@@ -73,20 +71,31 @@ async function main() {
 
   await page.click("text=Front desk");
   await page.waitForTimeout(300);
-  const stationPill = await page.$(".station-pill");
-  check("Front desk shows at least one station tab", Boolean(stationPill));
-  if (stationPill) await stationPill.click();
-  await page.waitForTimeout(300);
+  const stationPillCount = await page.$$eval(".station-pill", (els) => els.length);
+  check("Front desk shows at least one station tab", stationPillCount > 0, `found ${stationPillCount}`);
 
-  const callNextBtn = await page.$('button:has-text("Call Next")');
-  let calledToken = null;
-  if (callNextBtn) {
-    const beforeText = await page.textContent("body");
-    await callNextBtn.click();
-    await page.waitForTimeout(600); // allow the POST /api/events sync to fire
+  // Not every station has a callable queue at this exact clock position —
+  // walk the tabs until one does, rather than assuming the first tab's
+  // queue happens to be non-empty right now.
+  let clicked = false;
+  for (let i = 0; i < stationPillCount && !clicked; i++) {
+    const pills = await page.$$(".station-pill");
+    await pills[i].click();
+    await page.waitForTimeout(250);
+    const callNextBtn = await page.$('button:has-text("Call Next")');
+    if (callNextBtn && (await callNextBtn.isEnabled())) {
+      await callNextBtn.click();
+      await page.waitForTimeout(600); // allow the POST /api/events sync to fire
+      clicked = true;
+    }
+  }
+  check(
+    "found a station with a callable queue and clicked Call Next",
+    clicked,
+    clicked ? "" : "every station's queue was empty (or already mid-call) at this scrub position"
+  );
+  if (clicked) {
     check("Call Next did not throw a page error", consoleErrors.length === 0, consoleErrors.join("; "));
-  } else {
-    check("Front desk has a Call Next button to click", false, "queue may have been empty at this scrub position");
   }
 
   // reload fresh — this is the actual persistence proof: a brand new page
