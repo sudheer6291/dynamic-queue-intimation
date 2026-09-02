@@ -68,13 +68,22 @@ export function simulateStation({
   noShowResolved = new Set(),
   priorityReasonFor = () => "Priority requested",
   emit,
-  sampleDuration
+  sampleDuration,
+  // (resourceId, completionCount, freeAtMin) => pause spec | null. Called
+  // right after a resource frees up (never mid-service), letting a
+  // narrative pause (e.g. "waiting on a delivered part") land at a
+  // realistic, always-valid moment instead of a hand-picked clock time.
+  dynamicPause = () => null
 }) {
   const queue = [];
   const pending = arrivals.slice().sort((a, b) => a.atMin - b.atMin);
   const arrivalOf = new Map(pending.map((a) => [a.entityId, a.atMin]));
   const freeAt = {};
-  for (const r of resources) freeAt[r.id] = nextFreeTime(0, r.pauses || []);
+  const completionCount = {};
+  for (const r of resources) {
+    freeAt[r.id] = nextFreeTime(0, r.pauses || []);
+    completionCount[r.id] = 0;
+  }
   let pendingIdx = 0;
   const completions = {};
 
@@ -157,7 +166,26 @@ export function simulateStation({
       duration_min: duration
     });
     freeAt[resourceId] = completeAt;
+    completionCount[resourceId] += 1;
     completions[entityId] = { completeMin: completeAt, durationMin: duration };
+
+    const pause = dynamicPause(resourceId, completionCount[resourceId], completeAt);
+    if (pause) {
+      resource.pauses = (resource.pauses || []).concat([pause]);
+      emit("resource_paused", pause.start, {
+        resource_id: resourceId,
+        station_id: stationId,
+        reason_key: pause.reasonKey,
+        reason_text: pause.reasonText,
+        expected_resume_at: pause.expectedResumeAtISO
+      });
+      emit("resource_resumed", pause.end, {
+        resource_id: resourceId,
+        station_id: stationId,
+        actual_duration_min: pause.end - pause.start
+      });
+      freeAt[resourceId] = pause.end;
+    }
   }
   return completions;
 }

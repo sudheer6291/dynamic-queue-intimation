@@ -2,6 +2,7 @@
   { "id": "res_advisor_1", "station_id": "st_checkin", "name_key": "resource.advisor_1" },
   { "id": "res_bay_1", "station_id": "st_bay", "name_key": "resource.bay_1" },
   { "id": "res_bay_2", "station_id": "st_bay", "name_key": "resource.bay_2" },
+  { "id": "res_bay_3", "station_id": "st_bay", "name_key": "resource.bay_3" },
   { "id": "res_wash_1", "station_id": "st_wash", "name_key": "resource.wash_1" },
   { "id": "res_billing_1", "station_id": "st_billing", "name_key": "resource.billing_1" }
 ]

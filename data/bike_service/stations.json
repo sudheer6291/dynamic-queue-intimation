@@ -3,28 +3,28 @@
     "id": "st_checkin",
     "name_key": "station.checkin",
     "order_hint": 1,
-    "service_time": { "median_min": 4, "p80_min": 7 },
+    "service_time": { "median_min": 3, "p80_min": 5 },
     "capacity": 1
   },
   {
     "id": "st_bay",
     "name_key": "station.bay",
     "order_hint": 2,
-    "service_time": { "median_min": 35, "p80_min": 55 },
-    "capacity": 2
+    "service_time": { "median_min": 20, "p80_min": 32 },
+    "capacity": 3
   },
   {
     "id": "st_wash",
     "name_key": "station.wash",
     "order_hint": 3,
-    "service_time": { "median_min": 12, "p80_min": 18 },
+    "service_time": { "median_min": 8, "p80_min": 12 },
     "capacity": 1
   },
   {
     "id": "st_billing",
     "name_key": "station.billing",
     "order_hint": 4,
-    "service_time": { "median_min": 5, "p80_min": 8 },
+    "service_time": { "median_min": 4, "p80_min": 7 },
     "capacity": 1
   }
 ]

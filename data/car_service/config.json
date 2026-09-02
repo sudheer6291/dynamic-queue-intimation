@@ -1,8 +1,8 @@
 {
-  "vertical_id": "vehicle_service",
+  "vertical_id": "car_service",
   "date": "2026-09-02",
   "day_start": "2026-09-02T08:00:00+05:30",
-  "day_end": "2026-09-02T18:00:00+05:30",
+  "day_end": "2026-09-02T20:00:00+05:30",
   "entry_station_id": "st_checkin",
   "default_route_id": "route_standard",
   "estimator": {
@@ -18,8 +18,15 @@
     "max_swing_per_update_min": 15
   },
   "doctor_view_station_id": "st_bay",
+  "resequencing": {
+    "pause_alt_route": {
+      "trigger_station_id": "st_bay",
+      "flag_field": "pre_flagged_diagnostic",
+      "alt_station_id": "st_diagnostic"
+    }
+  },
   "comparison": {
-    "yesterday_mean_wait_min": 75,
+    "yesterday_mean_wait_min": 145,
     "yesterday_label_key": "comparison.yesterday"
   },
   "locale": {
@@ -27,17 +34,19 @@
     "available": ["en"],
     "strings": {
       "app.title": { "en": "Dynamic Queue Intimation" },
-      "vertical.name": { "en": "Vehicle Service Centre" },
+      "vertical.name": { "en": "Car Service Centre" },
       "entity.label": { "en": "Vehicle" },
       "entity.label_plural": { "en": "Vehicles" },
       "entity.id_prefix": { "en": "Job Card" },
       "station.checkin": { "en": "Check-in" },
       "station.bay": { "en": "Service Bay" },
+      "station.diagnostic": { "en": "Diagnostic Bay" },
       "station.wash": { "en": "Wash" },
       "station.billing": { "en": "Billing" },
       "resource.advisor_1": { "en": "Service Advisor" },
       "resource.bay_1": { "en": "Bay 1 Technician" },
       "resource.bay_2": { "en": "Bay 2 Technician" },
+      "resource.diagnostic_1": { "en": "Diagnostic Technician" },
       "resource.wash_1": { "en": "Wash Technician" },
       "resource.billing_1": { "en": "Billing Clerk" },
       "route.standard": { "en": "Standard Service Visit" },
@@ -62,7 +71,7 @@
       "patient.title": { "en": "Your Service Visit" },
       "comparison.yesterday": { "en": "yesterday" },
       "suggestion.pull_forward": { "en": "Pull forward a waitlisted vehicle to fill the gap" },
-      "suggestion.lab_first": { "en": "Send flagged vehicles ahead while the resource is unavailable" },
+      "suggestion.lab_first": { "en": "Send diagnostic-flagged vehicles to Diagnostic Bay first while a bay is unavailable" },
       "screen.patient": { "en": "Customer view" },
       "screen.frontdesk": { "en": "Front desk" },
       "screen.doctor": { "en": "Bay view" },

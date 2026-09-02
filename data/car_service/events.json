@@ -1,0 +1,3367 @@
+[
+  {
+    "id": "ev0116",
+    "type": "resource_paused",
+    "ts": "2026-09-02T08:00:00+05:30",
+    "resource_id": "res_bay_1",
+    "station_id": "st_bay",
+    "reason_key": "technicians_late_start",
+    "reason_text": "Technicians arriving later than scheduled",
+    "expected_resume_at": "2026-09-02T08:12:00+05:30"
+  },
+  {
+    "id": "ev0118",
+    "type": "resource_paused",
+    "ts": "2026-09-02T08:00:00+05:30",
+    "resource_id": "res_bay_2",
+    "station_id": "st_bay",
+    "reason_key": "technicians_late_start",
+    "reason_text": "Technicians arriving later than scheduled",
+    "expected_resume_at": "2026-09-02T08:12:00+05:30"
+  },
+  {
+    "id": "ev0001",
+    "type": "entity_registered",
+    "ts": "2026-09-02T08:03:00+05:30",
+    "entity_id": "c01",
+    "display_token": "C-01",
+    "route_id": "route_standard",
+    "priority": false
+  },
+  {
+    "id": "ev0002",
+    "type": "queue_joined",
+    "ts": "2026-09-02T08:03:00+05:30",
+    "entity_id": "c01",
+    "station_id": "st_checkin",
+    "step_index": 0
+  },
+  {
+    "id": "ev0047",
+    "type": "called",
+    "ts": "2026-09-02T08:03:00+05:30",
+    "entity_id": "c01",
+    "station_id": "st_checkin",
+    "resource_id": "res_advisor_1"
+  },
+  {
+    "id": "ev0048",
+    "type": "service_started",
+    "ts": "2026-09-02T08:03:00+05:30",
+    "entity_id": "c01",
+    "station_id": "st_checkin",
+    "resource_id": "res_advisor_1"
+  },
+  {
+    "id": "ev0049",
+    "type": "service_completed",
+    "ts": "2026-09-02T08:07:00+05:30",
+    "entity_id": "c01",
+    "station_id": "st_checkin",
+    "resource_id": "res_advisor_1",
+    "duration_min": 4
+  },
+  {
+    "id": "ev0120",
+    "type": "queue_joined",
+    "ts": "2026-09-02T08:07:00+05:30",
+    "entity_id": "c01",
+    "station_id": "st_bay",
+    "step_index": 1
+  },
+  {
+    "id": "ev0117",
+    "type": "resource_resumed",
+    "ts": "2026-09-02T08:20:00+05:30",
+    "resource_id": "res_bay_1",
+    "station_id": "st_bay",
+    "actual_duration_min": 20
+  },
+  {
+    "id": "ev0119",
+    "type": "resource_resumed",
+    "ts": "2026-09-02T08:20:00+05:30",
+    "resource_id": "res_bay_2",
+    "station_id": "st_bay",
+    "actual_duration_min": 20
+  },
+  {
+    "id": "ev0143",
+    "type": "called",
+    "ts": "2026-09-02T08:20:00+05:30",
+    "entity_id": "c01",
+    "station_id": "st_bay",
+    "resource_id": "res_bay_1"
+  },
+  {
+    "id": "ev0144",
+    "type": "service_started",
+    "ts": "2026-09-02T08:20:00+05:30",
+    "entity_id": "c01",
+    "station_id": "st_bay",
+    "resource_id": "res_bay_1"
+  },
+  {
+    "id": "ev0003",
+    "type": "entity_registered",
+    "ts": "2026-09-02T08:27:00+05:30",
+    "entity_id": "c02",
+    "display_token": "C-02",
+    "route_id": "route_standard",
+    "priority": false
+  },
+  {
+    "id": "ev0004",
+    "type": "queue_joined",
+    "ts": "2026-09-02T08:27:00+05:30",
+    "entity_id": "c02",
+    "station_id": "st_checkin",
+    "step_index": 0
+  },
+  {
+    "id": "ev0050",
+    "type": "called",
+    "ts": "2026-09-02T08:27:00+05:30",
+    "entity_id": "c02",
+    "station_id": "st_checkin",
+    "resource_id": "res_advisor_1"
+  },
+  {
+    "id": "ev0051",
+    "type": "service_started",
+    "ts": "2026-09-02T08:27:00+05:30",
+    "entity_id": "c02",
+    "station_id": "st_checkin",
+    "resource_id": "res_advisor_1"
+  },
+  {
+    "id": "ev0052",
+    "type": "service_completed",
+    "ts": "2026-09-02T08:32:00+05:30",
+    "entity_id": "c02",
+    "station_id": "st_checkin",
+    "resource_id": "res_advisor_1",
+    "duration_min": 5
+  },
+  {
+    "id": "ev0121",
+    "type": "queue_joined",
+    "ts": "2026-09-02T08:32:00+05:30",
+    "entity_id": "c02",
+    "station_id": "st_bay",
+    "step_index": 1
+  },
+  {
+    "id": "ev0147",
+    "type": "called",
+    "ts": "2026-09-02T08:32:00+05:30",
+    "entity_id": "c02",
+    "station_id": "st_bay",
+    "resource_id": "res_bay_2"
+  },
+  {
+    "id": "ev0148",
+    "type": "service_started",
+    "ts": "2026-09-02T08:32:00+05:30",
+    "entity_id": "c02",
+    "station_id": "st_bay",
+    "resource_id": "res_bay_2"
+  },
+  {
+    "id": "ev0145",
+    "type": "service_completed",
+    "ts": "2026-09-02T09:16:00+05:30",
+    "entity_id": "c01",
+    "station_id": "st_bay",
+    "resource_id": "res_bay_1",
+    "duration_min": 56
+  },
+  {
+    "id": "ev0146",
+    "type": "queue_joined",
+    "ts": "2026-09-02T09:16:00+05:30",
+    "entity_id": "c01",
+    "station_id": "st_wash",
+    "step_index": 4
+  },
+  {
+    "id": "ev0276",
+    "type": "called",
+    "ts": "2026-09-02T09:16:00+05:30",
+    "entity_id": "c01",
+    "station_id": "st_wash",
+    "resource_id": "res_wash_1"
+  },
+  {
+    "id": "ev0277",
+    "type": "service_started",
+    "ts": "2026-09-02T09:16:00+05:30",
+    "entity_id": "c01",
+    "station_id": "st_wash",
+    "resource_id": "res_wash_1"
+  },
+  {
+    "id": "ev0278",
+    "type": "service_completed",
+    "ts": "2026-09-02T09:26:00+05:30",
+    "entity_id": "c01",
+    "station_id": "st_wash",
+    "resource_id": "res_wash_1",
+    "duration_min": 10
+  },
+  {
+    "id": "ev0315",
+    "type": "queue_joined",
+    "ts": "2026-09-02T09:26:00+05:30",
+    "entity_id": "c01",
+    "station_id": "st_billing",
+    "step_index": 5
+  },
+  {
+    "id": "ev0328",
+    "type": "called",
+    "ts": "2026-09-02T09:26:00+05:30",
+    "entity_id": "c01",
+    "station_id": "st_billing",
+    "resource_id": "res_billing_1"
+  },
+  {
+    "id": "ev0329",
+    "type": "service_started",
+    "ts": "2026-09-02T09:26:00+05:30",
+    "entity_id": "c01",
+    "station_id": "st_billing",
+    "resource_id": "res_billing_1"
+  },
+  {
+    "id": "ev0005",
+    "type": "entity_registered",
+    "ts": "2026-09-02T09:28:00+05:30",
+    "entity_id": "c03",
+    "display_token": "C-03",
+    "route_id": "route_standard",
+    "priority": false
+  },
+  {
+    "id": "ev0006",
+    "type": "queue_joined",
+    "ts": "2026-09-02T09:28:00+05:30",
+    "entity_id": "c03",
+    "station_id": "st_checkin",
+    "step_index": 0
+  },
+  {
+    "id": "ev0053",
+    "type": "called",
+    "ts": "2026-09-02T09:28:00+05:30",
+    "entity_id": "c03",
+    "station_id": "st_checkin",
+    "resource_id": "res_advisor_1"
+  },
+  {
+    "id": "ev0054",
+    "type": "service_started",
+    "ts": "2026-09-02T09:28:00+05:30",
+    "entity_id": "c03",
+    "station_id": "st_checkin",
+    "resource_id": "res_advisor_1"
+  },
+  {
+    "id": "ev0007",
+    "type": "entity_registered",
+    "ts": "2026-09-02T09:30:00+05:30",
+    "entity_id": "c04",
+    "display_token": "C-04",
+    "route_id": "route_standard",
+    "priority": false
+  },
+  {
+    "id": "ev0008",
+    "type": "queue_joined",
+    "ts": "2026-09-02T09:30:00+05:30",
+    "entity_id": "c04",
+    "station_id": "st_checkin",
+    "step_index": 0
+  },
+  {
+    "id": "ev0055",
+    "type": "service_completed",
+    "ts": "2026-09-02T09:31:00+05:30",
+    "entity_id": "c03",
+    "station_id": "st_checkin",
+    "resource_id": "res_advisor_1",
+    "duration_min": 3
+  },
+  {
+    "id": "ev0056",
+    "type": "called",
+    "ts": "2026-09-02T09:31:00+05:30",
+    "entity_id": "c04",
+    "station_id": "st_checkin",
+    "resource_id": "res_advisor_1"
+  },
+  {
+    "id": "ev0057",
+    "type": "service_started",
+    "ts": "2026-09-02T09:31:00+05:30",
+    "entity_id": "c04",
+    "station_id": "st_checkin",
+    "resource_id": "res_advisor_1"
+  },
+  {
+    "id": "ev0122",
+    "type": "queue_joined",
+    "ts": "2026-09-02T09:31:00+05:30",
+    "entity_id": "c03",
+    "station_id": "st_bay",
+    "step_index": 1
+  },
+  {
+    "id": "ev0151",
+    "type": "called",
+    "ts": "2026-09-02T09:31:00+05:30",
+    "entity_id": "c03",
+    "station_id": "st_bay",
+    "resource_id": "res_bay_1"
+  },
+  {
+    "id": "ev0152",
+    "type": "service_started",
+    "ts": "2026-09-02T09:31:00+05:30",
+    "entity_id": "c03",
+    "station_id": "st_bay",
+    "resource_id": "res_bay_1"
+  },
+  {
+    "id": "ev0330",
+    "type": "service_completed",
+    "ts": "2026-09-02T09:35:00+05:30",
+    "entity_id": "c01",
+    "station_id": "st_billing",
+    "resource_id": "res_billing_1",
+    "duration_min": 9
+  },
+  {
+    "id": "ev0391",
+    "type": "journey_completed",
+    "ts": "2026-09-02T09:35:00+05:30",
+    "entity_id": "c01"
+  },
+  {
+    "id": "ev0149",
+    "type": "service_completed",
+    "ts": "2026-09-02T09:36:00+05:30",
+    "entity_id": "c02",
+    "station_id": "st_bay",
+    "resource_id": "res_bay_2",
+    "duration_min": 64
+  },
+  {
+    "id": "ev0150",
+    "type": "queue_joined",
+    "ts": "2026-09-02T09:36:00+05:30",
+    "entity_id": "c02",
+    "station_id": "st_wash",
+    "step_index": 4
+  },
+  {
+    "id": "ev0279",
+    "type": "called",
+    "ts": "2026-09-02T09:36:00+05:30",
+    "entity_id": "c02",
+    "station_id": "st_wash",
+    "resource_id": "res_wash_1"
+  },
+  {
+    "id": "ev0280",
+    "type": "service_started",
+    "ts": "2026-09-02T09:36:00+05:30",
+    "entity_id": "c02",
+    "station_id": "st_wash",
+    "resource_id": "res_wash_1"
+  },
+  {
+    "id": "ev0058",
+    "type": "service_completed",
+    "ts": "2026-09-02T09:43:00+05:30",
+    "entity_id": "c04",
+    "station_id": "st_checkin",
+    "resource_id": "res_advisor_1",
+    "duration_min": 12
+  },
+  {
+    "id": "ev0123",
+    "type": "queue_joined",
+    "ts": "2026-09-02T09:43:00+05:30",
+    "entity_id": "c04",
+    "station_id": "st_bay",
+    "step_index": 1
+  },
+  {
+    "id": "ev0155",
+    "type": "called",
+    "ts": "2026-09-02T09:43:00+05:30",
+    "entity_id": "c04",
+    "station_id": "st_bay",
+    "resource_id": "res_bay_2"
+  },
+  {
+    "id": "ev0156",
+    "type": "service_started",
+    "ts": "2026-09-02T09:43:00+05:30",
+    "entity_id": "c04",
+    "station_id": "st_bay",
+    "resource_id": "res_bay_2"
+  },
+  {
+    "id": "ev0281",
+    "type": "service_completed",
+    "ts": "2026-09-02T09:54:00+05:30",
+    "entity_id": "c02",
+    "station_id": "st_wash",
+    "resource_id": "res_wash_1",
+    "duration_min": 18
+  },
+  {
+    "id": "ev0316",
+    "type": "queue_joined",
+    "ts": "2026-09-02T09:54:00+05:30",
+    "entity_id": "c02",
+    "station_id": "st_billing",
+    "step_index": 5
+  },
+  {
+    "id": "ev0331",
+    "type": "called",
+    "ts": "2026-09-02T09:54:00+05:30",
+    "entity_id": "c02",
+    "station_id": "st_billing",
+    "resource_id": "res_billing_1"
+  },
+  {
+    "id": "ev0332",
+    "type": "service_started",
+    "ts": "2026-09-02T09:54:00+05:30",
+    "entity_id": "c02",
+    "station_id": "st_billing",
+    "resource_id": "res_billing_1"
+  },
+  {
+    "id": "ev0009",
+    "type": "entity_registered",
+    "ts": "2026-09-02T10:00:00+05:30",
+    "entity_id": "c05",
+    "display_token": "C-05",
+    "route_id": "route_standard",
+    "priority": false
+  },
+  {
+    "id": "ev0010",
+    "type": "queue_joined",
+    "ts": "2026-09-02T10:00:00+05:30",
+    "entity_id": "c05",
+    "station_id": "st_checkin",
+    "step_index": 0
+  },
+  {
+    "id": "ev0059",
+    "type": "called",
+    "ts": "2026-09-02T10:00:00+05:30",
+    "entity_id": "c05",
+    "station_id": "st_checkin",
+    "resource_id": "res_advisor_1"
+  },
+  {
+    "id": "ev0060",
+    "type": "service_started",
+    "ts": "2026-09-02T10:00:00+05:30",
+    "entity_id": "c05",
+    "station_id": "st_checkin",
+    "resource_id": "res_advisor_1"
+  },
+  {
+    "id": "ev0153",
+    "type": "service_completed",
+    "ts": "2026-09-02T10:03:00+05:30",
+    "entity_id": "c03",
+    "station_id": "st_bay",
+    "resource_id": "res_bay_1",
+    "duration_min": 32
+  },
+  {
+    "id": "ev0154",
+    "type": "queue_joined",
+    "ts": "2026-09-02T10:03:00+05:30",
+    "entity_id": "c03",
+    "station_id": "st_billing",
+    "step_index": 5
+  },
+  {
+    "id": "ev0333",
+    "type": "service_completed",
+    "ts": "2026-09-02T10:03:00+05:30",
+    "entity_id": "c02",
+    "station_id": "st_billing",
+    "resource_id": "res_billing_1",
+    "duration_min": 9
+  },
+  {
+    "id": "ev0334",
+    "type": "called",
+    "ts": "2026-09-02T10:03:00+05:30",
+    "entity_id": "c03",
+    "station_id": "st_billing",
+    "resource_id": "res_billing_1"
+  },
+  {
+    "id": "ev0335",
+    "type": "service_started",
+    "ts": "2026-09-02T10:03:00+05:30",
+    "entity_id": "c03",
+    "station_id": "st_billing",
+    "resource_id": "res_billing_1"
+  },
+  {
+    "id": "ev0392",
+    "type": "journey_completed",
+    "ts": "2026-09-02T10:03:00+05:30",
+    "entity_id": "c02"
+  },
+  {
+    "id": "ev0157",
+    "type": "service_completed",
+    "ts": "2026-09-02T10:05:00+05:30",
+    "entity_id": "c04",
+    "station_id": "st_bay",
+    "resource_id": "res_bay_2",
+    "duration_min": 22
+  },
+  {
+    "id": "ev0158",
+    "type": "queue_joined",
+    "ts": "2026-09-02T10:05:00+05:30",
+    "entity_id": "c04",
+    "station_id": "st_diagnostic",
+    "step_index": 2
+  },
+  {
+    "id": "ev0159",
+    "type": "called",
+    "ts": "2026-09-02T10:05:00+05:30",
+    "entity_id": "c04",
+    "station_id": "st_diagnostic",
+    "resource_id": "res_diagnostic_1"
+  },
+  {
+    "id": "ev0160",
+    "type": "service_started",
+    "ts": "2026-09-02T10:05:00+05:30",
+    "entity_id": "c04",
+    "station_id": "st_diagnostic",
+    "resource_id": "res_diagnostic_1"
+  },
+  {
+    "id": "ev0061",
+    "type": "service_completed",
+    "ts": "2026-09-02T10:09:00+05:30",
+    "entity_id": "c05",
+    "station_id": "st_checkin",
+    "resource_id": "res_advisor_1",
+    "duration_min": 9
+  },
+  {
+    "id": "ev0124",
+    "type": "queue_joined",
+    "ts": "2026-09-02T10:09:00+05:30",
+    "entity_id": "c05",
+    "station_id": "st_bay",
+    "step_index": 1
+  },
+  {
+    "id": "ev0163",
+    "type": "called",
+    "ts": "2026-09-02T10:09:00+05:30",
+    "entity_id": "c05",
+    "station_id": "st_bay",
+    "resource_id": "res_bay_1"
+  },
+  {
+    "id": "ev0164",
+    "type": "service_started",
+    "ts": "2026-09-02T10:09:00+05:30",
+    "entity_id": "c05",
+    "station_id": "st_bay",
+    "resource_id": "res_bay_1"
+  },
+  {
+    "id": "ev0336",
+    "type": "service_completed",
+    "ts": "2026-09-02T10:09:00+05:30",
+    "entity_id": "c03",
+    "station_id": "st_billing",
+    "resource_id": "res_billing_1",
+    "duration_min": 6
+  },
+  {
+    "id": "ev0393",
+    "type": "journey_completed",
+    "ts": "2026-09-02T10:09:00+05:30",
+    "entity_id": "c03"
+  },
+  {
+    "id": "ev0161",
+    "type": "service_completed",
+    "ts": "2026-09-02T10:20:00+05:30",
+    "entity_id": "c04",
+    "station_id": "st_diagnostic",
+    "resource_id": "res_diagnostic_1",
+    "duration_min": 15
+  },
+  {
+    "id": "ev0162",
+    "type": "queue_joined",
+    "ts": "2026-09-02T10:20:00+05:30",
+    "entity_id": "c04",
+    "station_id": "st_bay",
+    "step_index": 3
+  },
+  {
+    "id": "ev0167",
+    "type": "called",
+    "ts": "2026-09-02T10:20:00+05:30",
+    "entity_id": "c04",
+    "station_id": "st_bay",
+    "resource_id": "res_bay_2"
+  },
+  {
+    "id": "ev0168",
+    "type": "service_started",
+    "ts": "2026-09-02T10:20:00+05:30",
+    "entity_id": "c04",
+    "station_id": "st_bay",
+    "resource_id": "res_bay_2"
+  },
+  {
+    "id": "ev0011",
+    "type": "entity_registered",
+    "ts": "2026-09-02T10:31:00+05:30",
+    "entity_id": "c06",
+    "display_token": "C-06",
+    "route_id": "route_standard",
+    "priority": false
+  },
+  {
+    "id": "ev0012",
+    "type": "queue_joined",
+    "ts": "2026-09-02T10:31:00+05:30",
+    "entity_id": "c06",
+    "station_id": "st_checkin",
+    "step_index": 0
+  },
+  {
+    "id": "ev0062",
+    "type": "called",
+    "ts": "2026-09-02T10:31:00+05:30",
+    "entity_id": "c06",
+    "station_id": "st_checkin",
+    "resource_id": "res_advisor_1"
+  },
+  {
+    "id": "ev0063",
+    "type": "service_started",
+    "ts": "2026-09-02T10:31:00+05:30",
+    "entity_id": "c06",
+    "station_id": "st_checkin",
+    "resource_id": "res_advisor_1"
+  },
+  {
+    "id": "ev0064",
+    "type": "service_completed",
+    "ts": "2026-09-02T10:34:00+05:30",
+    "entity_id": "c06",
+    "station_id": "st_checkin",
+    "resource_id": "res_advisor_1",
+    "duration_min": 3
+  },
+  {
+    "id": "ev0125",
+    "type": "queue_joined",
+    "ts": "2026-09-02T10:34:00+05:30",
+    "entity_id": "c06",
+    "station_id": "st_bay",
+    "step_index": 1
+  },
+  {
+    "id": "ev0013",
+    "type": "entity_registered",
+    "ts": "2026-09-02T10:35:00+05:30",
+    "entity_id": "c07",
+    "display_token": "C-07",
+    "route_id": "route_standard",
+    "priority": true
+  },
+  {
+    "id": "ev0014",
+    "type": "queue_joined",
+    "ts": "2026-09-02T10:35:00+05:30",
+    "entity_id": "c07",
+    "station_id": "st_checkin",
+    "step_index": 0
+  },
+  {
+    "id": "ev0065",
+    "type": "called",
+    "ts": "2026-09-02T10:35:00+05:30",
+    "entity_id": "c07",
+    "station_id": "st_checkin",
+    "resource_id": "res_advisor_1"
+  },
+  {
+    "id": "ev0066",
+    "type": "service_started",
+    "ts": "2026-09-02T10:35:00+05:30",
+    "entity_id": "c07",
+    "station_id": "st_checkin",
+    "resource_id": "res_advisor_1"
+  },
+  {
+    "id": "ev0165",
+    "type": "service_completed",
+    "ts": "2026-09-02T10:37:00+05:30",
+    "entity_id": "c05",
+    "station_id": "st_bay",
+    "resource_id": "res_bay_1",
+    "duration_min": 28
+  },
+  {
+    "id": "ev0166",
+    "type": "queue_joined",
+    "ts": "2026-09-02T10:37:00+05:30",
+    "entity_id": "c05",
+    "station_id": "st_wash",
+    "step_index": 4
+  },
+  {
+    "id": "ev0171",
+    "type": "called",
+    "ts": "2026-09-02T10:37:00+05:30",
+    "entity_id": "c06",
+    "station_id": "st_bay",
+    "resource_id": "res_bay_1"
+  },
+  {
+    "id": "ev0172",
+    "type": "service_started",
+    "ts": "2026-09-02T10:37:00+05:30",
+    "entity_id": "c06",
+    "station_id": "st_bay",
+    "resource_id": "res_bay_1"
+  },
+  {
+    "id": "ev0282",
+    "type": "called",
+    "ts": "2026-09-02T10:37:00+05:30",
+    "entity_id": "c05",
+    "station_id": "st_wash",
+    "resource_id": "res_wash_1"
+  },
+  {
+    "id": "ev0283",
+    "type": "service_started",
+    "ts": "2026-09-02T10:37:00+05:30",
+    "entity_id": "c05",
+    "station_id": "st_wash",
+    "resource_id": "res_wash_1"
+  },
+  {
+    "id": "ev0067",
+    "type": "service_completed",
+    "ts": "2026-09-02T10:38:00+05:30",
+    "entity_id": "c07",
+    "station_id": "st_checkin",
+    "resource_id": "res_advisor_1",
+    "duration_min": 3
+  },
+  {
+    "id": "ev0126",
+    "type": "queue_joined",
+    "ts": "2026-09-02T10:38:00+05:30",
+    "entity_id": "c07",
+    "station_id": "st_bay",
+    "step_index": 1
+  },
+  {
+    "id": "ev0284",
+    "type": "service_completed",
+    "ts": "2026-09-02T10:47:00+05:30",
+    "entity_id": "c05",
+    "station_id": "st_wash",
+    "resource_id": "res_wash_1",
+    "duration_min": 10
+  },
+  {
+    "id": "ev0317",
+    "type": "queue_joined",
+    "ts": "2026-09-02T10:47:00+05:30",
+    "entity_id": "c05",
+    "station_id": "st_billing",
+    "step_index": 5
+  },
+  {
+    "id": "ev0337",
+    "type": "called",
+    "ts": "2026-09-02T10:47:00+05:30",
+    "entity_id": "c05",
+    "station_id": "st_billing",
+    "resource_id": "res_billing_1"
+  },
+  {
+    "id": "ev0338",
+    "type": "service_started",
+    "ts": "2026-09-02T10:47:00+05:30",
+    "entity_id": "c05",
+    "station_id": "st_billing",
+    "resource_id": "res_billing_1"
+  },
+  {
+    "id": "ev0339",
+    "type": "service_completed",
+    "ts": "2026-09-02T10:51:00+05:30",
+    "entity_id": "c05",
+    "station_id": "st_billing",
+    "resource_id": "res_billing_1",
+    "duration_min": 4
+  },
+  {
+    "id": "ev0394",
+    "type": "journey_completed",
+    "ts": "2026-09-02T10:51:00+05:30",
+    "entity_id": "c05"
+  },
+  {
+    "id": "ev0169",
+    "type": "service_completed",
+    "ts": "2026-09-02T10:55:00+05:30",
+    "entity_id": "c04",
+    "station_id": "st_bay",
+    "resource_id": "res_bay_2",
+    "duration_min": 35
+  },
+  {
+    "id": "ev0170",
+    "type": "queue_joined",
+    "ts": "2026-09-02T10:55:00+05:30",
+    "entity_id": "c04",
+    "station_id": "st_billing",
+    "step_index": 5
+  },
+  {
+    "id": "ev0177",
+    "type": "called",
+    "ts": "2026-09-02T10:55:00+05:30",
+    "entity_id": "c07",
+    "station_id": "st_bay",
+    "resource_id": "res_bay_2"
+  },
+  {
+    "id": "ev0178",
+    "type": "service_started",
+    "ts": "2026-09-02T10:55:00+05:30",
+    "entity_id": "c07",
+    "station_id": "st_bay",
+    "resource_id": "res_bay_2"
+  },
+  {
+    "id": "ev0340",
+    "type": "called",
+    "ts": "2026-09-02T10:55:00+05:30",
+    "entity_id": "c04",
+    "station_id": "st_billing",
+    "resource_id": "res_billing_1"
+  },
+  {
+    "id": "ev0341",
+    "type": "service_started",
+    "ts": "2026-09-02T10:55:00+05:30",
+    "entity_id": "c04",
+    "station_id": "st_billing",
+    "resource_id": "res_billing_1"
+  },
+  {
+    "id": "ev0342",
+    "type": "service_completed",
+    "ts": "2026-09-02T10:59:00+05:30",
+    "entity_id": "c04",
+    "station_id": "st_billing",
+    "resource_id": "res_billing_1",
+    "duration_min": 4
+  },
+  {
+    "id": "ev0395",
+    "type": "journey_completed",
+    "ts": "2026-09-02T10:59:00+05:30",
+    "entity_id": "c04"
+  },
+  {
+    "id": "ev0173",
+    "type": "service_completed",
+    "ts": "2026-09-02T11:17:00+05:30",
+    "entity_id": "c06",
+    "station_id": "st_bay",
+    "resource_id": "res_bay_1",
+    "duration_min": 40
+  },
+  {
+    "id": "ev0174",
+    "type": "resource_paused",
+    "ts": "2026-09-02T11:17:00+05:30",
+    "resource_id": "res_bay_1",
+    "station_id": "st_bay",
+    "reason_key": "part_delivery_wait",
+    "reason_text": "Waiting on a delivered part for an in-progress repair",
+    "expected_resume_at": "2026-09-02T11:32:00+05:30"
+  },
+  {
+    "id": "ev0176",
+    "type": "queue_joined",
+    "ts": "2026-09-02T11:17:00+05:30",
+    "entity_id": "c06",
+    "station_id": "st_billing",
+    "step_index": 5
+  },
+  {
+    "id": "ev0343",
+    "type": "called",
+    "ts": "2026-09-02T11:17:00+05:30",
+    "entity_id": "c06",
+    "station_id": "st_billing",
+    "resource_id": "res_billing_1"
+  },
+  {
+    "id": "ev0344",
+    "type": "service_started",
+    "ts": "2026-09-02T11:17:00+05:30",
+    "entity_id": "c06",
+    "station_id": "st_billing",
+    "resource_id": "res_billing_1"
+  },
+  {
+    "id": "ev0345",
+    "type": "service_completed",
+    "ts": "2026-09-02T11:23:00+05:30",
+    "entity_id": "c06",
+    "station_id": "st_billing",
+    "resource_id": "res_billing_1",
+    "duration_min": 6
+  },
+  {
+    "id": "ev0396",
+    "type": "journey_completed",
+    "ts": "2026-09-02T11:23:00+05:30",
+    "entity_id": "c06"
+  },
+  {
+    "id": "ev0015",
+    "type": "entity_registered",
+    "ts": "2026-09-02T11:31:00+05:30",
+    "entity_id": "c08",
+    "display_token": "C-08",
+    "route_id": "route_standard",
+    "priority": false
+  },
+  {
+    "id": "ev0016",
+    "type": "queue_joined",
+    "ts": "2026-09-02T11:31:00+05:30",
+    "entity_id": "c08",
+    "station_id": "st_checkin",
+    "step_index": 0
+  },
+  {
+    "id": "ev0068",
+    "type": "called",
+    "ts": "2026-09-02T11:31:00+05:30",
+    "entity_id": "c08",
+    "station_id": "st_checkin",
+    "resource_id": "res_advisor_1"
+  },
+  {
+    "id": "ev0069",
+    "type": "service_started",
+    "ts": "2026-09-02T11:31:00+05:30",
+    "entity_id": "c08",
+    "station_id": "st_checkin",
+    "resource_id": "res_advisor_1"
+  },
+  {
+    "id": "ev0070",
+    "type": "service_completed",
+    "ts": "2026-09-02T11:42:00+05:30",
+    "entity_id": "c08",
+    "station_id": "st_checkin",
+    "resource_id": "res_advisor_1",
+    "duration_min": 11
+  },
+  {
+    "id": "ev0127",
+    "type": "queue_joined",
+    "ts": "2026-09-02T11:42:00+05:30",
+    "entity_id": "c08",
+    "station_id": "st_bay",
+    "step_index": 1
+  },
+  {
+    "id": "ev0175",
+    "type": "resource_resumed",
+    "ts": "2026-09-02T11:47:00+05:30",
+    "resource_id": "res_bay_1",
+    "station_id": "st_bay",
+    "actual_duration_min": 30
+  },
+  {
+    "id": "ev0181",
+    "type": "called",
+    "ts": "2026-09-02T11:47:00+05:30",
+    "entity_id": "c08",
+    "station_id": "st_bay",
+    "resource_id": "res_bay_1"
+  },
+  {
+    "id": "ev0182",
+    "type": "service_started",
+    "ts": "2026-09-02T11:47:00+05:30",
+    "entity_id": "c08",
+    "station_id": "st_bay",
+    "resource_id": "res_bay_1"
+  },
+  {
+    "id": "ev0017",
+    "type": "entity_registered",
+    "ts": "2026-09-02T12:01:00+05:30",
+    "entity_id": "c09",
+    "display_token": "C-09",
+    "route_id": "route_standard",
+    "priority": false
+  },
+  {
+    "id": "ev0018",
+    "type": "queue_joined",
+    "ts": "2026-09-02T12:01:00+05:30",
+    "entity_id": "c09",
+    "station_id": "st_checkin",
+    "step_index": 0
+  },
+  {
+    "id": "ev0071",
+    "type": "called",
+    "ts": "2026-09-02T12:01:00+05:30",
+    "entity_id": "c09",
+    "station_id": "st_checkin",
+    "resource_id": "res_advisor_1"
+  },
+  {
+    "id": "ev0072",
+    "type": "service_started",
+    "ts": "2026-09-02T12:01:00+05:30",
+    "entity_id": "c09",
+    "station_id": "st_checkin",
+    "resource_id": "res_advisor_1"
+  },
+  {
+    "id": "ev0073",
+    "type": "service_completed",
+    "ts": "2026-09-02T12:05:00+05:30",
+    "entity_id": "c09",
+    "station_id": "st_checkin",
+    "resource_id": "res_advisor_1",
+    "duration_min": 4
+  },
+  {
+    "id": "ev0128",
+    "type": "queue_joined",
+    "ts": "2026-09-02T12:05:00+05:30",
+    "entity_id": "c09",
+    "station_id": "st_bay",
+    "step_index": 1
+  },
+  {
+    "id": "ev0179",
+    "type": "service_completed",
+    "ts": "2026-09-02T12:26:00+05:30",
+    "entity_id": "c07",
+    "station_id": "st_bay",
+    "resource_id": "res_bay_2",
+    "duration_min": 91
+  },
+  {
+    "id": "ev0180",
+    "type": "queue_joined",
+    "ts": "2026-09-02T12:26:00+05:30",
+    "entity_id": "c07",
+    "station_id": "st_billing",
+    "step_index": 5
+  },
+  {
+    "id": "ev0185",
+    "type": "called",
+    "ts": "2026-09-02T12:26:00+05:30",
+    "entity_id": "c09",
+    "station_id": "st_bay",
+    "resource_id": "res_bay_2"
+  },
+  {
+    "id": "ev0186",
+    "type": "service_started",
+    "ts": "2026-09-02T12:26:00+05:30",
+    "entity_id": "c09",
+    "station_id": "st_bay",
+    "resource_id": "res_bay_2"
+  },
+  {
+    "id": "ev0346",
+    "type": "called",
+    "ts": "2026-09-02T12:26:00+05:30",
+    "entity_id": "c07",
+    "station_id": "st_billing",
+    "resource_id": "res_billing_1"
+  },
+  {
+    "id": "ev0347",
+    "type": "service_started",
+    "ts": "2026-09-02T12:26:00+05:30",
+    "entity_id": "c07",
+    "station_id": "st_billing",
+    "resource_id": "res_billing_1"
+  },
+  {
+    "id": "ev0019",
+    "type": "entity_registered",
+    "ts": "2026-09-02T12:29:00+05:30",
+    "entity_id": "c10",
+    "display_token": "C-10",
+    "route_id": "route_standard",
+    "priority": false
+  },
+  {
+    "id": "ev0020",
+    "type": "queue_joined",
+    "ts": "2026-09-02T12:29:00+05:30",
+    "entity_id": "c10",
+    "station_id": "st_checkin",
+    "step_index": 0
+  },
+  {
+    "id": "ev0074",
+    "type": "called",
+    "ts": "2026-09-02T12:29:00+05:30",
+    "entity_id": "c10",
+    "station_id": "st_checkin",
+    "resource_id": "res_advisor_1"
+  },
+  {
+    "id": "ev0075",
+    "type": "service_started",
+    "ts": "2026-09-02T12:29:00+05:30",
+    "entity_id": "c10",
+    "station_id": "st_checkin",
+    "resource_id": "res_advisor_1"
+  },
+  {
+    "id": "ev0348",
+    "type": "service_completed",
+    "ts": "2026-09-02T12:29:00+05:30",
+    "entity_id": "c07",
+    "station_id": "st_billing",
+    "resource_id": "res_billing_1",
+    "duration_min": 3
+  },
+  {
+    "id": "ev0397",
+    "type": "journey_completed",
+    "ts": "2026-09-02T12:29:00+05:30",
+    "entity_id": "c07"
+  },
+  {
+    "id": "ev0076",
+    "type": "service_completed",
+    "ts": "2026-09-02T12:33:00+05:30",
+    "entity_id": "c10",
+    "station_id": "st_checkin",
+    "resource_id": "res_advisor_1",
+    "duration_min": 4
+  },
+  {
+    "id": "ev0129",
+    "type": "queue_joined",
+    "ts": "2026-09-02T12:33:00+05:30",
+    "entity_id": "c10",
+    "station_id": "st_bay",
+    "step_index": 1
+  },
+  {
+    "id": "ev0187",
+    "type": "service_completed",
+    "ts": "2026-09-02T12:48:00+05:30",
+    "entity_id": "c09",
+    "station_id": "st_bay",
+    "resource_id": "res_bay_2",
+    "duration_min": 22
+  },
+  {
+    "id": "ev0188",
+    "type": "queue_joined",
+    "ts": "2026-09-02T12:48:00+05:30",
+    "entity_id": "c09",
+    "station_id": "st_wash",
+    "step_index": 4
+  },
+  {
+    "id": "ev0189",
+    "type": "called",
+    "ts": "2026-09-02T12:48:00+05:30",
+    "entity_id": "c10",
+    "station_id": "st_bay",
+    "resource_id": "res_bay_2"
+  },
+  {
+    "id": "ev0190",
+    "type": "service_started",
+    "ts": "2026-09-02T12:48:00+05:30",
+    "entity_id": "c10",
+    "station_id": "st_bay",
+    "resource_id": "res_bay_2"
+  },
+  {
+    "id": "ev0285",
+    "type": "called",
+    "ts": "2026-09-02T12:48:00+05:30",
+    "entity_id": "c09",
+    "station_id": "st_wash",
+    "resource_id": "res_wash_1"
+  },
+  {
+    "id": "ev0286",
+    "type": "service_started",
+    "ts": "2026-09-02T12:48:00+05:30",
+    "entity_id": "c09",
+    "station_id": "st_wash",
+    "resource_id": "res_wash_1"
+  },
+  {
+    "id": "ev0183",
+    "type": "service_completed",
+    "ts": "2026-09-02T12:49:00+05:30",
+    "entity_id": "c08",
+    "station_id": "st_bay",
+    "resource_id": "res_bay_1",
+    "duration_min": 62
+  },
+  {
+    "id": "ev0184",
+    "type": "queue_joined",
+    "ts": "2026-09-02T12:49:00+05:30",
+    "entity_id": "c08",
+    "station_id": "st_diagnostic",
+    "step_index": 2
+  },
+  {
+    "id": "ev0193",
+    "type": "called",
+    "ts": "2026-09-02T12:49:00+05:30",
+    "entity_id": "c08",
+    "station_id": "st_diagnostic",
+    "resource_id": "res_diagnostic_1"
+  },
+  {
+    "id": "ev0194",
+    "type": "service_started",
+    "ts": "2026-09-02T12:49:00+05:30",
+    "entity_id": "c08",
+    "station_id": "st_diagnostic",
+    "resource_id": "res_diagnostic_1"
+  },
+  {
+    "id": "ev0287",
+    "type": "service_completed",
+    "ts": "2026-09-02T12:58:00+05:30",
+    "entity_id": "c09",
+    "station_id": "st_wash",
+    "resource_id": "res_wash_1",
+    "duration_min": 10
+  },
+  {
+    "id": "ev0318",
+    "type": "queue_joined",
+    "ts": "2026-09-02T12:58:00+05:30",
+    "entity_id": "c09",
+    "station_id": "st_billing",
+    "step_index": 5
+  },
+  {
+    "id": "ev0349",
+    "type": "called",
+    "ts": "2026-09-02T12:58:00+05:30",
+    "entity_id": "c09",
+    "station_id": "st_billing",
+    "resource_id": "res_billing_1"
+  },
+  {
+    "id": "ev0350",
+    "type": "service_started",
+    "ts": "2026-09-02T12:58:00+05:30",
+    "entity_id": "c09",
+    "station_id": "st_billing",
+    "resource_id": "res_billing_1"
+  },
+  {
+    "id": "ev0195",
+    "type": "service_completed",
+    "ts": "2026-09-02T13:02:00+05:30",
+    "entity_id": "c08",
+    "station_id": "st_diagnostic",
+    "resource_id": "res_diagnostic_1",
+    "duration_min": 13
+  },
+  {
+    "id": "ev0196",
+    "type": "queue_joined",
+    "ts": "2026-09-02T13:02:00+05:30",
+    "entity_id": "c08",
+    "station_id": "st_bay",
+    "step_index": 3
+  },
+  {
+    "id": "ev0197",
+    "type": "called",
+    "ts": "2026-09-02T13:02:00+05:30",
+    "entity_id": "c08",
+    "station_id": "st_bay",
+    "resource_id": "res_bay_1"
+  },
+  {
+    "id": "ev0198",
+    "type": "service_started",
+    "ts": "2026-09-02T13:02:00+05:30",
+    "entity_id": "c08",
+    "station_id": "st_bay",
+    "resource_id": "res_bay_1"
+  },
+  {
+    "id": "ev0021",
+    "type": "entity_registered",
+    "ts": "2026-09-02T13:03:00+05:30",
+    "entity_id": "c11",
+    "display_token": "C-11",
+    "route_id": "route_standard",
+    "priority": false
+  },
+  {
+    "id": "ev0022",
+    "type": "queue_joined",
+    "ts": "2026-09-02T13:03:00+05:30",
+    "entity_id": "c11",
+    "station_id": "st_checkin",
+    "step_index": 0
+  },
+  {
+    "id": "ev0077",
+    "type": "called",
+    "ts": "2026-09-02T13:03:00+05:30",
+    "entity_id": "c11",
+    "station_id": "st_checkin",
+    "resource_id": "res_advisor_1"
+  },
+  {
+    "id": "ev0078",
+    "type": "service_started",
+    "ts": "2026-09-02T13:03:00+05:30",
+    "entity_id": "c11",
+    "station_id": "st_checkin",
+    "resource_id": "res_advisor_1"
+  },
+  {
+    "id": "ev0351",
+    "type": "service_completed",
+    "ts": "2026-09-02T13:07:00+05:30",
+    "entity_id": "c09",
+    "station_id": "st_billing",
+    "resource_id": "res_billing_1",
+    "duration_min": 9
+  },
+  {
+    "id": "ev0398",
+    "type": "journey_completed",
+    "ts": "2026-09-02T13:07:00+05:30",
+    "entity_id": "c09"
+  },
+  {
+    "id": "ev0079",
+    "type": "service_completed",
+    "ts": "2026-09-02T13:08:00+05:30",
+    "entity_id": "c11",
+    "station_id": "st_checkin",
+    "resource_id": "res_advisor_1",
+    "duration_min": 5
+  },
+  {
+    "id": "ev0130",
+    "type": "queue_joined",
+    "ts": "2026-09-02T13:08:00+05:30",
+    "entity_id": "c11",
+    "station_id": "st_bay",
+    "step_index": 1
+  },
+  {
+    "id": "ev0191",
+    "type": "service_completed",
+    "ts": "2026-09-02T13:15:00+05:30",
+    "entity_id": "c10",
+    "station_id": "st_bay",
+    "resource_id": "res_bay_2",
+    "duration_min": 27
+  },
+  {
+    "id": "ev0192",
+    "type": "queue_joined",
+    "ts": "2026-09-02T13:15:00+05:30",
+    "entity_id": "c10",
+    "station_id": "st_wash",
+    "step_index": 4
+  },
+  {
+    "id": "ev0199",
+    "type": "service_completed",
+    "ts": "2026-09-02T13:15:00+05:30",
+    "entity_id": "c08",
+    "station_id": "st_bay",
+    "resource_id": "res_bay_1",
+    "duration_min": 13
+  },
+  {
+    "id": "ev0200",
+    "type": "queue_joined",
+    "ts": "2026-09-02T13:15:00+05:30",
+    "entity_id": "c08",
+    "station_id": "st_wash",
+    "step_index": 4
+  },
+  {
+    "id": "ev0201",
+    "type": "called",
+    "ts": "2026-09-02T13:15:00+05:30",
+    "entity_id": "c11",
+    "station_id": "st_bay",
+    "resource_id": "res_bay_1"
+  },
+  {
+    "id": "ev0202",
+    "type": "service_started",
+    "ts": "2026-09-02T13:15:00+05:30",
+    "entity_id": "c11",
+    "station_id": "st_bay",
+    "resource_id": "res_bay_1"
+  },
+  {
+    "id": "ev0288",
+    "type": "called",
+    "ts": "2026-09-02T13:15:00+05:30",
+    "entity_id": "c10",
+    "station_id": "st_wash",
+    "resource_id": "res_wash_1"
+  },
+  {
+    "id": "ev0289",
+    "type": "service_started",
+    "ts": "2026-09-02T13:15:00+05:30",
+    "entity_id": "c10",
+    "station_id": "st_wash",
+    "resource_id": "res_wash_1"
+  },
+  {
+    "id": "ev0290",
+    "type": "service_completed",
+    "ts": "2026-09-02T13:30:00+05:30",
+    "entity_id": "c10",
+    "station_id": "st_wash",
+    "resource_id": "res_wash_1",
+    "duration_min": 15
+  },
+  {
+    "id": "ev0291",
+    "type": "called",
+    "ts": "2026-09-02T13:30:00+05:30",
+    "entity_id": "c08",
+    "station_id": "st_wash",
+    "resource_id": "res_wash_1"
+  },
+  {
+    "id": "ev0292",
+    "type": "service_started",
+    "ts": "2026-09-02T13:30:00+05:30",
+    "entity_id": "c08",
+    "station_id": "st_wash",
+    "resource_id": "res_wash_1"
+  },
+  {
+    "id": "ev0319",
+    "type": "queue_joined",
+    "ts": "2026-09-02T13:30:00+05:30",
+    "entity_id": "c10",
+    "station_id": "st_billing",
+    "step_index": 5
+  },
+  {
+    "id": "ev0352",
+    "type": "called",
+    "ts": "2026-09-02T13:30:00+05:30",
+    "entity_id": "c10",
+    "station_id": "st_billing",
+    "resource_id": "res_billing_1"
+  },
+  {
+    "id": "ev0353",
+    "type": "service_started",
+    "ts": "2026-09-02T13:30:00+05:30",
+    "entity_id": "c10",
+    "station_id": "st_billing",
+    "resource_id": "res_billing_1"
+  },
+  {
+    "id": "ev0023",
+    "type": "entity_registered",
+    "ts": "2026-09-02T13:33:00+05:30",
+    "entity_id": "c12",
+    "display_token": "C-12",
+    "route_id": "route_standard",
+    "priority": false
+  },
+  {
+    "id": "ev0024",
+    "type": "queue_joined",
+    "ts": "2026-09-02T13:33:00+05:30",
+    "entity_id": "c12",
+    "station_id": "st_checkin",
+    "step_index": 0
+  },
+  {
+    "id": "ev0080",
+    "type": "called",
+    "ts": "2026-09-02T13:33:00+05:30",
+    "entity_id": "c12",
+    "station_id": "st_checkin",
+    "resource_id": "res_advisor_1"
+  },
+  {
+    "id": "ev0081",
+    "type": "service_started",
+    "ts": "2026-09-02T13:33:00+05:30",
+    "entity_id": "c12",
+    "station_id": "st_checkin",
+    "resource_id": "res_advisor_1"
+  },
+  {
+    "id": "ev0354",
+    "type": "service_completed",
+    "ts": "2026-09-02T13:35:00+05:30",
+    "entity_id": "c10",
+    "station_id": "st_billing",
+    "resource_id": "res_billing_1",
+    "duration_min": 5
+  },
+  {
+    "id": "ev0399",
+    "type": "journey_completed",
+    "ts": "2026-09-02T13:35:00+05:30",
+    "entity_id": "c10"
+  },
+  {
+    "id": "ev0082",
+    "type": "service_completed",
+    "ts": "2026-09-02T13:42:00+05:30",
+    "entity_id": "c12",
+    "station_id": "st_checkin",
+    "resource_id": "res_advisor_1",
+    "duration_min": 9
+  },
+  {
+    "id": "ev0131",
+    "type": "queue_joined",
+    "ts": "2026-09-02T13:42:00+05:30",
+    "entity_id": "c12",
+    "station_id": "st_bay",
+    "step_index": 1
+  },
+  {
+    "id": "ev0205",
+    "type": "called",
+    "ts": "2026-09-02T13:42:00+05:30",
+    "entity_id": "c12",
+    "station_id": "st_bay",
+    "resource_id": "res_bay_2"
+  },
+  {
+    "id": "ev0206",
+    "type": "service_started",
+    "ts": "2026-09-02T13:42:00+05:30",
+    "entity_id": "c12",
+    "station_id": "st_bay",
+    "resource_id": "res_bay_2"
+  },
+  {
+    "id": "ev0293",
+    "type": "service_completed",
+    "ts": "2026-09-02T13:43:00+05:30",
+    "entity_id": "c08",
+    "station_id": "st_wash",
+    "resource_id": "res_wash_1",
+    "duration_min": 13
+  },
+  {
+    "id": "ev0320",
+    "type": "queue_joined",
+    "ts": "2026-09-02T13:43:00+05:30",
+    "entity_id": "c08",
+    "station_id": "st_billing",
+    "step_index": 5
+  },
+  {
+    "id": "ev0355",
+    "type": "called",
+    "ts": "2026-09-02T13:43:00+05:30",
+    "entity_id": "c08",
+    "station_id": "st_billing",
+    "resource_id": "res_billing_1"
+  },
+  {
+    "id": "ev0356",
+    "type": "service_started",
+    "ts": "2026-09-02T13:43:00+05:30",
+    "entity_id": "c08",
+    "station_id": "st_billing",
+    "resource_id": "res_billing_1"
+  },
+  {
+    "id": "ev0203",
+    "type": "service_completed",
+    "ts": "2026-09-02T13:48:00+05:30",
+    "entity_id": "c11",
+    "station_id": "st_bay",
+    "resource_id": "res_bay_1",
+    "duration_min": 33
+  },
+  {
+    "id": "ev0204",
+    "type": "queue_joined",
+    "ts": "2026-09-02T13:48:00+05:30",
+    "entity_id": "c11",
+    "station_id": "st_wash",
+    "step_index": 4
+  },
+  {
+    "id": "ev0294",
+    "type": "called",
+    "ts": "2026-09-02T13:48:00+05:30",
+    "entity_id": "c11",
+    "station_id": "st_wash",
+    "resource_id": "res_wash_1"
+  },
+  {
+    "id": "ev0295",
+    "type": "service_started",
+    "ts": "2026-09-02T13:48:00+05:30",
+    "entity_id": "c11",
+    "station_id": "st_wash",
+    "resource_id": "res_wash_1"
+  },
+  {
+    "id": "ev0357",
+    "type": "service_completed",
+    "ts": "2026-09-02T13:48:00+05:30",
+    "entity_id": "c08",
+    "station_id": "st_billing",
+    "resource_id": "res_billing_1",
+    "duration_min": 5
+  },
+  {
+    "id": "ev0400",
+    "type": "journey_completed",
+    "ts": "2026-09-02T13:48:00+05:30",
+    "entity_id": "c08"
+  },
+  {
+    "id": "ev0025",
+    "type": "entity_registered",
+    "ts": "2026-09-02T13:57:00+05:30",
+    "entity_id": "c13",
+    "display_token": "C-13",
+    "route_id": "route_standard",
+    "priority": false
+  },
+  {
+    "id": "ev0026",
+    "type": "queue_joined",
+    "ts": "2026-09-02T13:57:00+05:30",
+    "entity_id": "c13",
+    "station_id": "st_checkin",
+    "step_index": 0
+  },
+  {
+    "id": "ev0083",
+    "type": "called",
+    "ts": "2026-09-02T13:57:00+05:30",
+    "entity_id": "c13",
+    "station_id": "st_checkin",
+    "resource_id": "res_advisor_1"
+  },
+  {
+    "id": "ev0084",
+    "type": "service_started",
+    "ts": "2026-09-02T13:57:00+05:30",
+    "entity_id": "c13",
+    "station_id": "st_checkin",
+    "resource_id": "res_advisor_1"
+  },
+  {
+    "id": "ev0085",
+    "type": "service_completed",
+    "ts": "2026-09-02T14:00:00+05:30",
+    "entity_id": "c13",
+    "station_id": "st_checkin",
+    "resource_id": "res_advisor_1",
+    "duration_min": 3
+  },
+  {
+    "id": "ev0132",
+    "type": "queue_joined",
+    "ts": "2026-09-02T14:00:00+05:30",
+    "entity_id": "c13",
+    "station_id": "st_bay",
+    "step_index": 1
+  },
+  {
+    "id": "ev0209",
+    "type": "called",
+    "ts": "2026-09-02T14:00:00+05:30",
+    "entity_id": "c13",
+    "station_id": "st_bay",
+    "resource_id": "res_bay_1"
+  },
+  {
+    "id": "ev0296",
+    "type": "service_completed",
+    "ts": "2026-09-02T14:02:00+05:30",
+    "entity_id": "c11",
+    "station_id": "st_wash",
+    "resource_id": "res_wash_1",
+    "duration_min": 14
+  },
+  {
+    "id": "ev0321",
+    "type": "queue_joined",
+    "ts": "2026-09-02T14:02:00+05:30",
+    "entity_id": "c11",
+    "station_id": "st_billing",
+    "step_index": 5
+  },
+  {
+    "id": "ev0358",
+    "type": "called",
+    "ts": "2026-09-02T14:02:00+05:30",
+    "entity_id": "c11",
+    "station_id": "st_billing",
+    "resource_id": "res_billing_1"
+  },
+  {
+    "id": "ev0359",
+    "type": "service_started",
+    "ts": "2026-09-02T14:02:00+05:30",
+    "entity_id": "c11",
+    "station_id": "st_billing",
+    "resource_id": "res_billing_1"
+  },
+  {
+    "id": "ev0210",
+    "type": "no_show",
+    "ts": "2026-09-02T14:04:00+05:30",
+    "entity_id": "c13",
+    "station_id": "st_bay"
+  },
+  {
+    "id": "ev0211",
+    "type": "resequence_suggested",
+    "ts": "2026-09-02T14:04:00+05:30",
+    "suggestion": "pull_forward",
+    "reason_key": "no_show_gap",
+    "station_id": "st_bay",
+    "related_entity_id": "c13",
+    "accepted": true
+  },
+  {
+    "id": "ev0207",
+    "type": "service_completed",
+    "ts": "2026-09-02T14:06:00+05:30",
+    "entity_id": "c12",
+    "station_id": "st_bay",
+    "resource_id": "res_bay_2",
+    "duration_min": 24
+  },
+  {
+    "id": "ev0208",
+    "type": "queue_joined",
+    "ts": "2026-09-02T14:06:00+05:30",
+    "entity_id": "c12",
+    "station_id": "st_billing",
+    "step_index": 5
+  },
+  {
+    "id": "ev0360",
+    "type": "service_completed",
+    "ts": "2026-09-02T14:09:00+05:30",
+    "entity_id": "c11",
+    "station_id": "st_billing",
+    "resource_id": "res_billing_1",
+    "duration_min": 7
+  },
+  {
+    "id": "ev0361",
+    "type": "called",
+    "ts": "2026-09-02T14:09:00+05:30",
+    "entity_id": "c12",
+    "station_id": "st_billing",
+    "resource_id": "res_billing_1"
+  },
+  {
+    "id": "ev0362",
+    "type": "service_started",
+    "ts": "2026-09-02T14:09:00+05:30",
+    "entity_id": "c12",
+    "station_id": "st_billing",
+    "resource_id": "res_billing_1"
+  },
+  {
+    "id": "ev0401",
+    "type": "journey_completed",
+    "ts": "2026-09-02T14:09:00+05:30",
+    "entity_id": "c11"
+  },
+  {
+    "id": "ev0363",
+    "type": "service_completed",
+    "ts": "2026-09-02T14:23:00+05:30",
+    "entity_id": "c12",
+    "station_id": "st_billing",
+    "resource_id": "res_billing_1",
+    "duration_min": 14
+  },
+  {
+    "id": "ev0402",
+    "type": "journey_completed",
+    "ts": "2026-09-02T14:23:00+05:30",
+    "entity_id": "c12"
+  },
+  {
+    "id": "ev0027",
+    "type": "entity_registered",
+    "ts": "2026-09-02T14:29:00+05:30",
+    "entity_id": "c14",
+    "display_token": "C-14",
+    "route_id": "route_standard",
+    "priority": false
+  },
+  {
+    "id": "ev0028",
+    "type": "queue_joined",
+    "ts": "2026-09-02T14:29:00+05:30",
+    "entity_id": "c14",
+    "station_id": "st_checkin",
+    "step_index": 0
+  },
+  {
+    "id": "ev0086",
+    "type": "called",
+    "ts": "2026-09-02T14:29:00+05:30",
+    "entity_id": "c14",
+    "station_id": "st_checkin",
+    "resource_id": "res_advisor_1"
+  },
+  {
+    "id": "ev0087",
+    "type": "service_started",
+    "ts": "2026-09-02T14:29:00+05:30",
+    "entity_id": "c14",
+    "station_id": "st_checkin",
+    "resource_id": "res_advisor_1"
+  },
+  {
+    "id": "ev0088",
+    "type": "service_completed",
+    "ts": "2026-09-02T14:32:00+05:30",
+    "entity_id": "c14",
+    "station_id": "st_checkin",
+    "resource_id": "res_advisor_1",
+    "duration_min": 3
+  },
+  {
+    "id": "ev0133",
+    "type": "queue_joined",
+    "ts": "2026-09-02T14:32:00+05:30",
+    "entity_id": "c14",
+    "station_id": "st_bay",
+    "step_index": 1
+  },
+  {
+    "id": "ev0212",
+    "type": "called",
+    "ts": "2026-09-02T14:32:00+05:30",
+    "entity_id": "c14",
+    "station_id": "st_bay",
+    "resource_id": "res_bay_1"
+  },
+  {
+    "id": "ev0213",
+    "type": "service_started",
+    "ts": "2026-09-02T14:32:00+05:30",
+    "entity_id": "c14",
+    "station_id": "st_bay",
+    "resource_id": "res_bay_1"
+  },
+  {
+    "id": "ev0029",
+    "type": "entity_registered",
+    "ts": "2026-09-02T15:03:00+05:30",
+    "entity_id": "c15",
+    "display_token": "C-15",
+    "route_id": "route_standard",
+    "priority": false
+  },
+  {
+    "id": "ev0030",
+    "type": "queue_joined",
+    "ts": "2026-09-02T15:03:00+05:30",
+    "entity_id": "c15",
+    "station_id": "st_checkin",
+    "step_index": 0
+  },
+  {
+    "id": "ev0089",
+    "type": "called",
+    "ts": "2026-09-02T15:03:00+05:30",
+    "entity_id": "c15",
+    "station_id": "st_checkin",
+    "resource_id": "res_advisor_1"
+  },
+  {
+    "id": "ev0090",
+    "type": "service_started",
+    "ts": "2026-09-02T15:03:00+05:30",
+    "entity_id": "c15",
+    "station_id": "st_checkin",
+    "resource_id": "res_advisor_1"
+  },
+  {
+    "id": "ev0091",
+    "type": "service_completed",
+    "ts": "2026-09-02T15:10:00+05:30",
+    "entity_id": "c15",
+    "station_id": "st_checkin",
+    "resource_id": "res_advisor_1",
+    "duration_min": 7
+  },
+  {
+    "id": "ev0134",
+    "type": "queue_joined",
+    "ts": "2026-09-02T15:10:00+05:30",
+    "entity_id": "c15",
+    "station_id": "st_bay",
+    "step_index": 1
+  },
+  {
+    "id": "ev0216",
+    "type": "called",
+    "ts": "2026-09-02T15:10:00+05:30",
+    "entity_id": "c15",
+    "station_id": "st_bay",
+    "resource_id": "res_bay_2"
+  },
+  {
+    "id": "ev0217",
+    "type": "service_started",
+    "ts": "2026-09-02T15:10:00+05:30",
+    "entity_id": "c15",
+    "station_id": "st_bay",
+    "resource_id": "res_bay_2"
+  },
+  {
+    "id": "ev0031",
+    "type": "entity_registered",
+    "ts": "2026-09-02T15:30:00+05:30",
+    "entity_id": "c16",
+    "display_token": "C-16",
+    "route_id": "route_standard",
+    "priority": false
+  },
+  {
+    "id": "ev0032",
+    "type": "queue_joined",
+    "ts": "2026-09-02T15:30:00+05:30",
+    "entity_id": "c16",
+    "station_id": "st_checkin",
+    "step_index": 0
+  },
+  {
+    "id": "ev0092",
+    "type": "called",
+    "ts": "2026-09-02T15:30:00+05:30",
+    "entity_id": "c16",
+    "station_id": "st_checkin",
+    "resource_id": "res_advisor_1"
+  },
+  {
+    "id": "ev0093",
+    "type": "service_started",
+    "ts": "2026-09-02T15:30:00+05:30",
+    "entity_id": "c16",
+    "station_id": "st_checkin",
+    "resource_id": "res_advisor_1"
+  },
+  {
+    "id": "ev0033",
+    "type": "entity_registered",
+    "ts": "2026-09-02T15:34:00+05:30",
+    "entity_id": "c17",
+    "display_token": "C-17",
+    "route_id": "route_standard",
+    "priority": true
+  },
+  {
+    "id": "ev0034",
+    "type": "queue_joined",
+    "ts": "2026-09-02T15:34:00+05:30",
+    "entity_id": "c17",
+    "station_id": "st_checkin",
+    "step_index": 0
+  },
+  {
+    "id": "ev0094",
+    "type": "service_completed",
+    "ts": "2026-09-02T15:36:00+05:30",
+    "entity_id": "c16",
+    "station_id": "st_checkin",
+    "resource_id": "res_advisor_1",
+    "duration_min": 6
+  },
+  {
+    "id": "ev0095",
+    "type": "called",
+    "ts": "2026-09-02T15:36:00+05:30",
+    "entity_id": "c17",
+    "station_id": "st_checkin",
+    "resource_id": "res_advisor_1"
+  },
+  {
+    "id": "ev0096",
+    "type": "service_started",
+    "ts": "2026-09-02T15:36:00+05:30",
+    "entity_id": "c17",
+    "station_id": "st_checkin",
+    "resource_id": "res_advisor_1"
+  },
+  {
+    "id": "ev0135",
+    "type": "queue_joined",
+    "ts": "2026-09-02T15:36:00+05:30",
+    "entity_id": "c16",
+    "station_id": "st_bay",
+    "step_index": 1
+  },
+  {
+    "id": "ev0097",
+    "type": "service_completed",
+    "ts": "2026-09-02T15:44:00+05:30",
+    "entity_id": "c17",
+    "station_id": "st_checkin",
+    "resource_id": "res_advisor_1",
+    "duration_min": 8
+  },
+  {
+    "id": "ev0136",
+    "type": "queue_joined",
+    "ts": "2026-09-02T15:44:00+05:30",
+    "entity_id": "c17",
+    "station_id": "st_bay",
+    "step_index": 1
+  },
+  {
+    "id": "ev0220",
+    "type": "priority_insert",
+    "ts": "2026-09-02T15:46:00+05:30",
+    "entity_id": "c17",
+    "station_id": "st_bay",
+    "reason": "Fleet customer — contracted SLA, escalated by dispatch"
+  },
+  {
+    "id": "ev0218",
+    "type": "service_completed",
+    "ts": "2026-09-02T15:47:00+05:30",
+    "entity_id": "c15",
+    "station_id": "st_bay",
+    "resource_id": "res_bay_2",
+    "duration_min": 37
+  },
+  {
+    "id": "ev0219",
+    "type": "queue_joined",
+    "ts": "2026-09-02T15:47:00+05:30",
+    "entity_id": "c15",
+    "station_id": "st_wash",
+    "step_index": 4
+  },
+  {
+    "id": "ev0221",
+    "type": "called",
+    "ts": "2026-09-02T15:47:00+05:30",
+    "entity_id": "c17",
+    "station_id": "st_bay",
+    "resource_id": "res_bay_2"
+  },
+  {
+    "id": "ev0222",
+    "type": "service_started",
+    "ts": "2026-09-02T15:47:00+05:30",
+    "entity_id": "c17",
+    "station_id": "st_bay",
+    "resource_id": "res_bay_2"
+  },
+  {
+    "id": "ev0297",
+    "type": "called",
+    "ts": "2026-09-02T15:47:00+05:30",
+    "entity_id": "c15",
+    "station_id": "st_wash",
+    "resource_id": "res_wash_1"
+  },
+  {
+    "id": "ev0298",
+    "type": "service_started",
+    "ts": "2026-09-02T15:47:00+05:30",
+    "entity_id": "c15",
+    "station_id": "st_wash",
+    "resource_id": "res_wash_1"
+  },
+  {
+    "id": "ev0214",
+    "type": "service_completed",
+    "ts": "2026-09-02T15:57:00+05:30",
+    "entity_id": "c14",
+    "station_id": "st_bay",
+    "resource_id": "res_bay_1",
+    "duration_min": 85
+  },
+  {
+    "id": "ev0215",
+    "type": "queue_joined",
+    "ts": "2026-09-02T15:57:00+05:30",
+    "entity_id": "c14",
+    "station_id": "st_diagnostic",
+    "step_index": 2
+  },
+  {
+    "id": "ev0225",
+    "type": "called",
+    "ts": "2026-09-02T15:57:00+05:30",
+    "entity_id": "c16",
+    "station_id": "st_bay",
+    "resource_id": "res_bay_1"
+  },
+  {
+    "id": "ev0226",
+    "type": "service_started",
+    "ts": "2026-09-02T15:57:00+05:30",
+    "entity_id": "c16",
+    "station_id": "st_bay",
+    "resource_id": "res_bay_1"
+  },
+  {
+    "id": "ev0229",
+    "type": "called",
+    "ts": "2026-09-02T15:57:00+05:30",
+    "entity_id": "c14",
+    "station_id": "st_diagnostic",
+    "resource_id": "res_diagnostic_1"
+  },
+  {
+    "id": "ev0230",
+    "type": "service_started",
+    "ts": "2026-09-02T15:57:00+05:30",
+    "entity_id": "c14",
+    "station_id": "st_diagnostic",
+    "resource_id": "res_diagnostic_1"
+  },
+  {
+    "id": "ev0299",
+    "type": "service_completed",
+    "ts": "2026-09-02T15:58:00+05:30",
+    "entity_id": "c15",
+    "station_id": "st_wash",
+    "resource_id": "res_wash_1",
+    "duration_min": 11
+  },
+  {
+    "id": "ev0322",
+    "type": "queue_joined",
+    "ts": "2026-09-02T15:58:00+05:30",
+    "entity_id": "c15",
+    "station_id": "st_billing",
+    "step_index": 5
+  },
+  {
+    "id": "ev0364",
+    "type": "called",
+    "ts": "2026-09-02T15:58:00+05:30",
+    "entity_id": "c15",
+    "station_id": "st_billing",
+    "resource_id": "res_billing_1"
+  },
+  {
+    "id": "ev0365",
+    "type": "service_started",
+    "ts": "2026-09-02T15:58:00+05:30",
+    "entity_id": "c15",
+    "station_id": "st_billing",
+    "resource_id": "res_billing_1"
+  },
+  {
+    "id": "ev0366",
+    "type": "service_completed",
+    "ts": "2026-09-02T16:08:00+05:30",
+    "entity_id": "c15",
+    "station_id": "st_billing",
+    "resource_id": "res_billing_1",
+    "duration_min": 10
+  },
+  {
+    "id": "ev0403",
+    "type": "journey_completed",
+    "ts": "2026-09-02T16:08:00+05:30",
+    "entity_id": "c15"
+  },
+  {
+    "id": "ev0231",
+    "type": "service_completed",
+    "ts": "2026-09-02T16:21:00+05:30",
+    "entity_id": "c14",
+    "station_id": "st_diagnostic",
+    "resource_id": "res_diagnostic_1",
+    "duration_min": 24
+  },
+  {
+    "id": "ev0232",
+    "type": "queue_joined",
+    "ts": "2026-09-02T16:21:00+05:30",
+    "entity_id": "c14",
+    "station_id": "st_bay",
+    "step_index": 3
+  },
+  {
+    "id": "ev0035",
+    "type": "entity_registered",
+    "ts": "2026-09-02T16:28:00+05:30",
+    "entity_id": "c18",
+    "display_token": "C-18",
+    "route_id": "route_standard",
+    "priority": false
+  },
+  {
+    "id": "ev0036",
+    "type": "queue_joined",
+    "ts": "2026-09-02T16:28:00+05:30",
+    "entity_id": "c18",
+    "station_id": "st_checkin",
+    "step_index": 0
+  },
+  {
+    "id": "ev0098",
+    "type": "called",
+    "ts": "2026-09-02T16:28:00+05:30",
+    "entity_id": "c18",
+    "station_id": "st_checkin",
+    "resource_id": "res_advisor_1"
+  },
+  {
+    "id": "ev0099",
+    "type": "service_started",
+    "ts": "2026-09-02T16:28:00+05:30",
+    "entity_id": "c18",
+    "station_id": "st_checkin",
+    "resource_id": "res_advisor_1"
+  },
+  {
+    "id": "ev0100",
+    "type": "service_completed",
+    "ts": "2026-09-02T16:32:00+05:30",
+    "entity_id": "c18",
+    "station_id": "st_checkin",
+    "resource_id": "res_advisor_1",
+    "duration_min": 4
+  },
+  {
+    "id": "ev0137",
+    "type": "queue_joined",
+    "ts": "2026-09-02T16:32:00+05:30",
+    "entity_id": "c18",
+    "station_id": "st_bay",
+    "step_index": 1
+  },
+  {
+    "id": "ev0227",
+    "type": "service_completed",
+    "ts": "2026-09-02T16:49:00+05:30",
+    "entity_id": "c16",
+    "station_id": "st_bay",
+    "resource_id": "res_bay_1",
+    "duration_min": 52
+  },
+  {
+    "id": "ev0228",
+    "type": "queue_joined",
+    "ts": "2026-09-02T16:49:00+05:30",
+    "entity_id": "c16",
+    "station_id": "st_wash",
+    "step_index": 4
+  },
+  {
+    "id": "ev0233",
+    "type": "called",
+    "ts": "2026-09-02T16:49:00+05:30",
+    "entity_id": "c14",
+    "station_id": "st_bay",
+    "resource_id": "res_bay_1"
+  },
+  {
+    "id": "ev0234",
+    "type": "service_started",
+    "ts": "2026-09-02T16:49:00+05:30",
+    "entity_id": "c14",
+    "station_id": "st_bay",
+    "resource_id": "res_bay_1"
+  },
+  {
+    "id": "ev0300",
+    "type": "called",
+    "ts": "2026-09-02T16:49:00+05:30",
+    "entity_id": "c16",
+    "station_id": "st_wash",
+    "resource_id": "res_wash_1"
+  },
+  {
+    "id": "ev0301",
+    "type": "service_started",
+    "ts": "2026-09-02T16:49:00+05:30",
+    "entity_id": "c16",
+    "station_id": "st_wash",
+    "resource_id": "res_wash_1"
+  },
+  {
+    "id": "ev0037",
+    "type": "entity_registered",
+    "ts": "2026-09-02T16:57:00+05:30",
+    "entity_id": "c19",
+    "display_token": "C-19",
+    "route_id": "route_standard",
+    "priority": false
+  },
+  {
+    "id": "ev0038",
+    "type": "queue_joined",
+    "ts": "2026-09-02T16:57:00+05:30",
+    "entity_id": "c19",
+    "station_id": "st_checkin",
+    "step_index": 0
+  },
+  {
+    "id": "ev0101",
+    "type": "called",
+    "ts": "2026-09-02T16:57:00+05:30",
+    "entity_id": "c19",
+    "station_id": "st_checkin",
+    "resource_id": "res_advisor_1"
+  },
+  {
+    "id": "ev0102",
+    "type": "service_started",
+    "ts": "2026-09-02T16:57:00+05:30",
+    "entity_id": "c19",
+    "station_id": "st_checkin",
+    "resource_id": "res_advisor_1"
+  },
+  {
+    "id": "ev0223",
+    "type": "service_completed",
+    "ts": "2026-09-02T16:57:00+05:30",
+    "entity_id": "c17",
+    "station_id": "st_bay",
+    "resource_id": "res_bay_2",
+    "duration_min": 70
+  },
+  {
+    "id": "ev0224",
+    "type": "queue_joined",
+    "ts": "2026-09-02T16:57:00+05:30",
+    "entity_id": "c17",
+    "station_id": "st_wash",
+    "step_index": 4
+  },
+  {
+    "id": "ev0237",
+    "type": "called",
+    "ts": "2026-09-02T16:57:00+05:30",
+    "entity_id": "c18",
+    "station_id": "st_bay",
+    "resource_id": "res_bay_2"
+  },
+  {
+    "id": "ev0238",
+    "type": "service_started",
+    "ts": "2026-09-02T16:57:00+05:30",
+    "entity_id": "c18",
+    "station_id": "st_bay",
+    "resource_id": "res_bay_2"
+  },
+  {
+    "id": "ev0302",
+    "type": "service_completed",
+    "ts": "2026-09-02T16:59:00+05:30",
+    "entity_id": "c16",
+    "station_id": "st_wash",
+    "resource_id": "res_wash_1",
+    "duration_min": 10
+  },
+  {
+    "id": "ev0303",
+    "type": "called",
+    "ts": "2026-09-02T16:59:00+05:30",
+    "entity_id": "c17",
+    "station_id": "st_wash",
+    "resource_id": "res_wash_1"
+  },
+  {
+    "id": "ev0304",
+    "type": "service_started",
+    "ts": "2026-09-02T16:59:00+05:30",
+    "entity_id": "c17",
+    "station_id": "st_wash",
+    "resource_id": "res_wash_1"
+  },
+  {
+    "id": "ev0323",
+    "type": "queue_joined",
+    "ts": "2026-09-02T16:59:00+05:30",
+    "entity_id": "c16",
+    "station_id": "st_billing",
+    "step_index": 5
+  },
+  {
+    "id": "ev0367",
+    "type": "called",
+    "ts": "2026-09-02T16:59:00+05:30",
+    "entity_id": "c16",
+    "station_id": "st_billing",
+    "resource_id": "res_billing_1"
+  },
+  {
+    "id": "ev0368",
+    "type": "service_started",
+    "ts": "2026-09-02T16:59:00+05:30",
+    "entity_id": "c16",
+    "station_id": "st_billing",
+    "resource_id": "res_billing_1"
+  },
+  {
+    "id": "ev0369",
+    "type": "service_completed",
+    "ts": "2026-09-02T17:03:00+05:30",
+    "entity_id": "c16",
+    "station_id": "st_billing",
+    "resource_id": "res_billing_1",
+    "duration_min": 4
+  },
+  {
+    "id": "ev0404",
+    "type": "journey_completed",
+    "ts": "2026-09-02T17:03:00+05:30",
+    "entity_id": "c16"
+  },
+  {
+    "id": "ev0103",
+    "type": "service_completed",
+    "ts": "2026-09-02T17:09:00+05:30",
+    "entity_id": "c19",
+    "station_id": "st_checkin",
+    "resource_id": "res_advisor_1",
+    "duration_min": 12
+  },
+  {
+    "id": "ev0138",
+    "type": "queue_joined",
+    "ts": "2026-09-02T17:09:00+05:30",
+    "entity_id": "c19",
+    "station_id": "st_bay",
+    "step_index": 1
+  },
+  {
+    "id": "ev0305",
+    "type": "service_completed",
+    "ts": "2026-09-02T17:10:00+05:30",
+    "entity_id": "c17",
+    "station_id": "st_wash",
+    "resource_id": "res_wash_1",
+    "duration_min": 11
+  },
+  {
+    "id": "ev0324",
+    "type": "queue_joined",
+    "ts": "2026-09-02T17:10:00+05:30",
+    "entity_id": "c17",
+    "station_id": "st_billing",
+    "step_index": 5
+  },
+  {
+    "id": "ev0370",
+    "type": "called",
+    "ts": "2026-09-02T17:10:00+05:30",
+    "entity_id": "c17",
+    "station_id": "st_billing",
+    "resource_id": "res_billing_1"
+  },
+  {
+    "id": "ev0371",
+    "type": "service_started",
+    "ts": "2026-09-02T17:10:00+05:30",
+    "entity_id": "c17",
+    "station_id": "st_billing",
+    "resource_id": "res_billing_1"
+  },
+  {
+    "id": "ev0372",
+    "type": "service_completed",
+    "ts": "2026-09-02T17:15:00+05:30",
+    "entity_id": "c17",
+    "station_id": "st_billing",
+    "resource_id": "res_billing_1",
+    "duration_min": 5
+  },
+  {
+    "id": "ev0405",
+    "type": "journey_completed",
+    "ts": "2026-09-02T17:15:00+05:30",
+    "entity_id": "c17"
+  },
+  {
+    "id": "ev0235",
+    "type": "service_completed",
+    "ts": "2026-09-02T17:33:00+05:30",
+    "entity_id": "c14",
+    "station_id": "st_bay",
+    "resource_id": "res_bay_1",
+    "duration_min": 44
+  },
+  {
+    "id": "ev0236",
+    "type": "queue_joined",
+    "ts": "2026-09-02T17:33:00+05:30",
+    "entity_id": "c14",
+    "station_id": "st_billing",
+    "step_index": 5
+  },
+  {
+    "id": "ev0241",
+    "type": "called",
+    "ts": "2026-09-02T17:33:00+05:30",
+    "entity_id": "c19",
+    "station_id": "st_bay",
+    "resource_id": "res_bay_1"
+  },
+  {
+    "id": "ev0373",
+    "type": "called",
+    "ts": "2026-09-02T17:33:00+05:30",
+    "entity_id": "c14",
+    "station_id": "st_billing",
+    "resource_id": "res_billing_1"
+  },
+  {
+    "id": "ev0374",
+    "type": "service_started",
+    "ts": "2026-09-02T17:33:00+05:30",
+    "entity_id": "c14",
+    "station_id": "st_billing",
+    "resource_id": "res_billing_1"
+  },
+  {
+    "id": "ev0039",
+    "type": "entity_registered",
+    "ts": "2026-09-02T17:34:00+05:30",
+    "entity_id": "c20",
+    "display_token": "C-20",
+    "route_id": "route_standard",
+    "priority": false
+  },
+  {
+    "id": "ev0040",
+    "type": "queue_joined",
+    "ts": "2026-09-02T17:34:00+05:30",
+    "entity_id": "c20",
+    "station_id": "st_checkin",
+    "step_index": 0
+  },
+  {
+    "id": "ev0104",
+    "type": "called",
+    "ts": "2026-09-02T17:34:00+05:30",
+    "entity_id": "c20",
+    "station_id": "st_checkin",
+    "resource_id": "res_advisor_1"
+  },
+  {
+    "id": "ev0105",
+    "type": "service_started",
+    "ts": "2026-09-02T17:34:00+05:30",
+    "entity_id": "c20",
+    "station_id": "st_checkin",
+    "resource_id": "res_advisor_1"
+  },
+  {
+    "id": "ev0242",
+    "type": "no_show",
+    "ts": "2026-09-02T17:37:00+05:30",
+    "entity_id": "c19",
+    "station_id": "st_bay"
+  },
+  {
+    "id": "ev0243",
+    "type": "resequence_suggested",
+    "ts": "2026-09-02T17:37:00+05:30",
+    "suggestion": "pull_forward",
+    "reason_key": "no_show_gap",
+    "station_id": "st_bay",
+    "related_entity_id": "c19",
+    "accepted": true
+  },
+  {
+    "id": "ev0375",
+    "type": "service_completed",
+    "ts": "2026-09-02T17:39:00+05:30",
+    "entity_id": "c14",
+    "station_id": "st_billing",
+    "resource_id": "res_billing_1",
+    "duration_min": 6
+  },
+  {
+    "id": "ev0406",
+    "type": "journey_completed",
+    "ts": "2026-09-02T17:39:00+05:30",
+    "entity_id": "c14"
+  },
+  {
+    "id": "ev0106",
+    "type": "service_completed",
+    "ts": "2026-09-02T17:41:00+05:30",
+    "entity_id": "c20",
+    "station_id": "st_checkin",
+    "resource_id": "res_advisor_1",
+    "duration_min": 7
+  },
+  {
+    "id": "ev0139",
+    "type": "queue_joined",
+    "ts": "2026-09-02T17:41:00+05:30",
+    "entity_id": "c20",
+    "station_id": "st_bay",
+    "step_index": 1
+  },
+  {
+    "id": "ev0244",
+    "type": "called",
+    "ts": "2026-09-02T17:41:00+05:30",
+    "entity_id": "c20",
+    "station_id": "st_bay",
+    "resource_id": "res_bay_1"
+  },
+  {
+    "id": "ev0245",
+    "type": "service_started",
+    "ts": "2026-09-02T17:41:00+05:30",
+    "entity_id": "c20",
+    "station_id": "st_bay",
+    "resource_id": "res_bay_1"
+  },
+  {
+    "id": "ev0239",
+    "type": "service_completed",
+    "ts": "2026-09-02T17:54:00+05:30",
+    "entity_id": "c18",
+    "station_id": "st_bay",
+    "resource_id": "res_bay_2",
+    "duration_min": 57
+  },
+  {
+    "id": "ev0240",
+    "type": "queue_joined",
+    "ts": "2026-09-02T17:54:00+05:30",
+    "entity_id": "c18",
+    "station_id": "st_billing",
+    "step_index": 5
+  },
+  {
+    "id": "ev0376",
+    "type": "called",
+    "ts": "2026-09-02T17:54:00+05:30",
+    "entity_id": "c18",
+    "station_id": "st_billing",
+    "resource_id": "res_billing_1"
+  },
+  {
+    "id": "ev0377",
+    "type": "service_started",
+    "ts": "2026-09-02T17:54:00+05:30",
+    "entity_id": "c18",
+    "station_id": "st_billing",
+    "resource_id": "res_billing_1"
+  },
+  {
+    "id": "ev0041",
+    "type": "entity_registered",
+    "ts": "2026-09-02T17:58:00+05:30",
+    "entity_id": "c21",
+    "display_token": "C-21",
+    "route_id": "route_standard",
+    "priority": false
+  },
+  {
+    "id": "ev0042",
+    "type": "queue_joined",
+    "ts": "2026-09-02T17:58:00+05:30",
+    "entity_id": "c21",
+    "station_id": "st_checkin",
+    "step_index": 0
+  },
+  {
+    "id": "ev0107",
+    "type": "called",
+    "ts": "2026-09-02T17:58:00+05:30",
+    "entity_id": "c21",
+    "station_id": "st_checkin",
+    "resource_id": "res_advisor_1"
+  },
+  {
+    "id": "ev0108",
+    "type": "service_started",
+    "ts": "2026-09-02T17:58:00+05:30",
+    "entity_id": "c21",
+    "station_id": "st_checkin",
+    "resource_id": "res_advisor_1"
+  },
+  {
+    "id": "ev0378",
+    "type": "service_completed",
+    "ts": "2026-09-02T17:58:00+05:30",
+    "entity_id": "c18",
+    "station_id": "st_billing",
+    "resource_id": "res_billing_1",
+    "duration_min": 4
+  },
+  {
+    "id": "ev0407",
+    "type": "journey_completed",
+    "ts": "2026-09-02T17:58:00+05:30",
+    "entity_id": "c18"
+  },
+  {
+    "id": "ev0043",
+    "type": "entity_registered",
+    "ts": "2026-09-02T18:02:00+05:30",
+    "entity_id": "c22",
+    "display_token": "C-22",
+    "route_id": "route_standard",
+    "priority": true
+  },
+  {
+    "id": "ev0044",
+    "type": "queue_joined",
+    "ts": "2026-09-02T18:02:00+05:30",
+    "entity_id": "c22",
+    "station_id": "st_checkin",
+    "step_index": 0
+  },
+  {
+    "id": "ev0109",
+    "type": "service_completed",
+    "ts": "2026-09-02T18:03:00+05:30",
+    "entity_id": "c21",
+    "station_id": "st_checkin",
+    "resource_id": "res_advisor_1",
+    "duration_min": 5
+  },
+  {
+    "id": "ev0110",
+    "type": "called",
+    "ts": "2026-09-02T18:03:00+05:30",
+    "entity_id": "c22",
+    "station_id": "st_checkin",
+    "resource_id": "res_advisor_1"
+  },
+  {
+    "id": "ev0111",
+    "type": "service_started",
+    "ts": "2026-09-02T18:03:00+05:30",
+    "entity_id": "c22",
+    "station_id": "st_checkin",
+    "resource_id": "res_advisor_1"
+  },
+  {
+    "id": "ev0140",
+    "type": "queue_joined",
+    "ts": "2026-09-02T18:03:00+05:30",
+    "entity_id": "c21",
+    "station_id": "st_bay",
+    "step_index": 1
+  },
+  {
+    "id": "ev0248",
+    "type": "called",
+    "ts": "2026-09-02T18:03:00+05:30",
+    "entity_id": "c21",
+    "station_id": "st_bay",
+    "resource_id": "res_bay_2"
+  },
+  {
+    "id": "ev0249",
+    "type": "service_started",
+    "ts": "2026-09-02T18:03:00+05:30",
+    "entity_id": "c21",
+    "station_id": "st_bay",
+    "resource_id": "res_bay_2"
+  },
+  {
+    "id": "ev0112",
+    "type": "service_completed",
+    "ts": "2026-09-02T18:10:00+05:30",
+    "entity_id": "c22",
+    "station_id": "st_checkin",
+    "resource_id": "res_advisor_1",
+    "duration_min": 7
+  },
+  {
+    "id": "ev0141",
+    "type": "queue_joined",
+    "ts": "2026-09-02T18:10:00+05:30",
+    "entity_id": "c22",
+    "station_id": "st_bay",
+    "step_index": 1
+  },
+  {
+    "id": "ev0246",
+    "type": "service_completed",
+    "ts": "2026-09-02T18:27:00+05:30",
+    "entity_id": "c20",
+    "station_id": "st_bay",
+    "resource_id": "res_bay_1",
+    "duration_min": 46
+  },
+  {
+    "id": "ev0247",
+    "type": "queue_joined",
+    "ts": "2026-09-02T18:27:00+05:30",
+    "entity_id": "c20",
+    "station_id": "st_diagnostic",
+    "step_index": 2
+  },
+  {
+    "id": "ev0252",
+    "type": "called",
+    "ts": "2026-09-02T18:27:00+05:30",
+    "entity_id": "c22",
+    "station_id": "st_bay",
+    "resource_id": "res_bay_1"
+  },
+  {
+    "id": "ev0253",
+    "type": "service_started",
+    "ts": "2026-09-02T18:27:00+05:30",
+    "entity_id": "c22",
+    "station_id": "st_bay",
+    "resource_id": "res_bay_1"
+  },
+  {
+    "id": "ev0256",
+    "type": "called",
+    "ts": "2026-09-02T18:27:00+05:30",
+    "entity_id": "c20",
+    "station_id": "st_diagnostic",
+    "resource_id": "res_diagnostic_1"
+  },
+  {
+    "id": "ev0257",
+    "type": "service_started",
+    "ts": "2026-09-02T18:27:00+05:30",
+    "entity_id": "c20",
+    "station_id": "st_diagnostic",
+    "resource_id": "res_diagnostic_1"
+  },
+  {
+    "id": "ev0258",
+    "type": "service_completed",
+    "ts": "2026-09-02T18:42:00+05:30",
+    "entity_id": "c20",
+    "station_id": "st_diagnostic",
+    "resource_id": "res_diagnostic_1",
+    "duration_min": 15
+  },
+  {
+    "id": "ev0259",
+    "type": "queue_joined",
+    "ts": "2026-09-02T18:42:00+05:30",
+    "entity_id": "c20",
+    "station_id": "st_bay",
+    "step_index": 3
+  },
+  {
+    "id": "ev0250",
+    "type": "service_completed",
+    "ts": "2026-09-02T18:56:00+05:30",
+    "entity_id": "c21",
+    "station_id": "st_bay",
+    "resource_id": "res_bay_2",
+    "duration_min": 53
+  },
+  {
+    "id": "ev0251",
+    "type": "queue_joined",
+    "ts": "2026-09-02T18:56:00+05:30",
+    "entity_id": "c21",
+    "station_id": "st_billing",
+    "step_index": 5
+  },
+  {
+    "id": "ev0260",
+    "type": "called",
+    "ts": "2026-09-02T18:56:00+05:30",
+    "entity_id": "c20",
+    "station_id": "st_bay",
+    "resource_id": "res_bay_2"
+  },
+  {
+    "id": "ev0261",
+    "type": "service_started",
+    "ts": "2026-09-02T18:56:00+05:30",
+    "entity_id": "c20",
+    "station_id": "st_bay",
+    "resource_id": "res_bay_2"
+  },
+  {
+    "id": "ev0379",
+    "type": "called",
+    "ts": "2026-09-02T18:56:00+05:30",
+    "entity_id": "c21",
+    "station_id": "st_billing",
+    "resource_id": "res_billing_1"
+  },
+  {
+    "id": "ev0380",
+    "type": "service_started",
+    "ts": "2026-09-02T18:56:00+05:30",
+    "entity_id": "c21",
+    "station_id": "st_billing",
+    "resource_id": "res_billing_1"
+  },
+  {
+    "id": "ev0254",
+    "type": "service_completed",
+    "ts": "2026-09-02T18:57:00+05:30",
+    "entity_id": "c22",
+    "station_id": "st_bay",
+    "resource_id": "res_bay_1",
+    "duration_min": 30
+  },
+  {
+    "id": "ev0255",
+    "type": "queue_joined",
+    "ts": "2026-09-02T18:57:00+05:30",
+    "entity_id": "c22",
+    "station_id": "st_wash",
+    "step_index": 4
+  },
+  {
+    "id": "ev0306",
+    "type": "called",
+    "ts": "2026-09-02T18:57:00+05:30",
+    "entity_id": "c22",
+    "station_id": "st_wash",
+    "resource_id": "res_wash_1"
+  },
+  {
+    "id": "ev0307",
+    "type": "service_started",
+    "ts": "2026-09-02T18:57:00+05:30",
+    "entity_id": "c22",
+    "station_id": "st_wash",
+    "resource_id": "res_wash_1"
+  },
+  {
+    "id": "ev0045",
+    "type": "entity_registered",
+    "ts": "2026-09-02T18:59:00+05:30",
+    "entity_id": "c23",
+    "display_token": "C-23",
+    "route_id": "route_standard",
+    "priority": false
+  },
+  {
+    "id": "ev0046",
+    "type": "queue_joined",
+    "ts": "2026-09-02T18:59:00+05:30",
+    "entity_id": "c23",
+    "station_id": "st_checkin",
+    "step_index": 0
+  },
+  {
+    "id": "ev0113",
+    "type": "called",
+    "ts": "2026-09-02T18:59:00+05:30",
+    "entity_id": "c23",
+    "station_id": "st_checkin",
+    "resource_id": "res_advisor_1"
+  },
+  {
+    "id": "ev0114",
+    "type": "service_started",
+    "ts": "2026-09-02T18:59:00+05:30",
+    "entity_id": "c23",
+    "station_id": "st_checkin",
+    "resource_id": "res_advisor_1"
+  },
+  {
+    "id": "ev0381",
+    "type": "service_completed",
+    "ts": "2026-09-02T19:02:00+05:30",
+    "entity_id": "c21",
+    "station_id": "st_billing",
+    "resource_id": "res_billing_1",
+    "duration_min": 6
+  },
+  {
+    "id": "ev0408",
+    "type": "journey_completed",
+    "ts": "2026-09-02T19:02:00+05:30",
+    "entity_id": "c21"
+  },
+  {
+    "id": "ev0115",
+    "type": "service_completed",
+    "ts": "2026-09-02T19:05:00+05:30",
+    "entity_id": "c23",
+    "station_id": "st_checkin",
+    "resource_id": "res_advisor_1",
+    "duration_min": 6
+  },
+  {
+    "id": "ev0142",
+    "type": "queue_joined",
+    "ts": "2026-09-02T19:05:00+05:30",
+    "entity_id": "c23",
+    "station_id": "st_bay",
+    "step_index": 1
+  },
+  {
+    "id": "ev0264",
+    "type": "called",
+    "ts": "2026-09-02T19:05:00+05:30",
+    "entity_id": "c23",
+    "station_id": "st_bay",
+    "resource_id": "res_bay_1"
+  },
+  {
+    "id": "ev0265",
+    "type": "service_started",
+    "ts": "2026-09-02T19:05:00+05:30",
+    "entity_id": "c23",
+    "station_id": "st_bay",
+    "resource_id": "res_bay_1"
+  },
+  {
+    "id": "ev0262",
+    "type": "service_completed",
+    "ts": "2026-09-02T19:07:00+05:30",
+    "entity_id": "c20",
+    "station_id": "st_bay",
+    "resource_id": "res_bay_2",
+    "duration_min": 11
+  },
+  {
+    "id": "ev0263",
+    "type": "queue_joined",
+    "ts": "2026-09-02T19:07:00+05:30",
+    "entity_id": "c20",
+    "station_id": "st_wash",
+    "step_index": 4
+  },
+  {
+    "id": "ev0308",
+    "type": "service_completed",
+    "ts": "2026-09-02T19:11:00+05:30",
+    "entity_id": "c22",
+    "station_id": "st_wash",
+    "resource_id": "res_wash_1",
+    "duration_min": 14
+  },
+  {
+    "id": "ev0309",
+    "type": "called",
+    "ts": "2026-09-02T19:11:00+05:30",
+    "entity_id": "c20",
+    "station_id": "st_wash",
+    "resource_id": "res_wash_1"
+  },
+  {
+    "id": "ev0310",
+    "type": "service_started",
+    "ts": "2026-09-02T19:11:00+05:30",
+    "entity_id": "c20",
+    "station_id": "st_wash",
+    "resource_id": "res_wash_1"
+  },
+  {
+    "id": "ev0325",
+    "type": "queue_joined",
+    "ts": "2026-09-02T19:11:00+05:30",
+    "entity_id": "c22",
+    "station_id": "st_billing",
+    "step_index": 5
+  },
+  {
+    "id": "ev0382",
+    "type": "called",
+    "ts": "2026-09-02T19:11:00+05:30",
+    "entity_id": "c22",
+    "station_id": "st_billing",
+    "resource_id": "res_billing_1"
+  },
+  {
+    "id": "ev0383",
+    "type": "service_started",
+    "ts": "2026-09-02T19:11:00+05:30",
+    "entity_id": "c22",
+    "station_id": "st_billing",
+    "resource_id": "res_billing_1"
+  },
+  {
+    "id": "ev0311",
+    "type": "service_completed",
+    "ts": "2026-09-02T19:18:00+05:30",
+    "entity_id": "c20",
+    "station_id": "st_wash",
+    "resource_id": "res_wash_1",
+    "duration_min": 7
+  },
+  {
+    "id": "ev0326",
+    "type": "queue_joined",
+    "ts": "2026-09-02T19:18:00+05:30",
+    "entity_id": "c20",
+    "station_id": "st_billing",
+    "step_index": 5
+  },
+  {
+    "id": "ev0384",
+    "type": "service_completed",
+    "ts": "2026-09-02T19:23:00+05:30",
+    "entity_id": "c22",
+    "station_id": "st_billing",
+    "resource_id": "res_billing_1",
+    "duration_min": 12
+  },
+  {
+    "id": "ev0385",
+    "type": "called",
+    "ts": "2026-09-02T19:23:00+05:30",
+    "entity_id": "c20",
+    "station_id": "st_billing",
+    "resource_id": "res_billing_1"
+  },
+  {
+    "id": "ev0386",
+    "type": "service_started",
+    "ts": "2026-09-02T19:23:00+05:30",
+    "entity_id": "c20",
+    "station_id": "st_billing",
+    "resource_id": "res_billing_1"
+  },
+  {
+    "id": "ev0409",
+    "type": "journey_completed",
+    "ts": "2026-09-02T19:23:00+05:30",
+    "entity_id": "c22"
+  },
+  {
+    "id": "ev0387",
+    "type": "service_completed",
+    "ts": "2026-09-02T19:29:00+05:30",
+    "entity_id": "c20",
+    "station_id": "st_billing",
+    "resource_id": "res_billing_1",
+    "duration_min": 6
+  },
+  {
+    "id": "ev0410",
+    "type": "journey_completed",
+    "ts": "2026-09-02T19:29:00+05:30",
+    "entity_id": "c20"
+  },
+  {
+    "id": "ev0266",
+    "type": "service_completed",
+    "ts": "2026-09-02T19:35:00+05:30",
+    "entity_id": "c23",
+    "station_id": "st_bay",
+    "resource_id": "res_bay_1",
+    "duration_min": 30
+  },
+  {
+    "id": "ev0267",
+    "type": "queue_joined",
+    "ts": "2026-09-02T19:35:00+05:30",
+    "entity_id": "c23",
+    "station_id": "st_diagnostic",
+    "step_index": 2
+  },
+  {
+    "id": "ev0268",
+    "type": "called",
+    "ts": "2026-09-02T19:35:00+05:30",
+    "entity_id": "c23",
+    "station_id": "st_diagnostic",
+    "resource_id": "res_diagnostic_1"
+  },
+  {
+    "id": "ev0269",
+    "type": "service_started",
+    "ts": "2026-09-02T19:35:00+05:30",
+    "entity_id": "c23",
+    "station_id": "st_diagnostic",
+    "resource_id": "res_diagnostic_1"
+  },
+  {
+    "id": "ev0270",
+    "type": "service_completed",
+    "ts": "2026-09-02T19:45:00+05:30",
+    "entity_id": "c23",
+    "station_id": "st_diagnostic",
+    "resource_id": "res_diagnostic_1",
+    "duration_min": 10
+  },
+  {
+    "id": "ev0271",
+    "type": "queue_joined",
+    "ts": "2026-09-02T19:45:00+05:30",
+    "entity_id": "c23",
+    "station_id": "st_bay",
+    "step_index": 3
+  },
+  {
+    "id": "ev0272",
+    "type": "called",
+    "ts": "2026-09-02T19:45:00+05:30",
+    "entity_id": "c23",
+    "station_id": "st_bay",
+    "resource_id": "res_bay_2"
+  },
+  {
+    "id": "ev0273",
+    "type": "service_started",
+    "ts": "2026-09-02T19:45:00+05:30",
+    "entity_id": "c23",
+    "station_id": "st_bay",
+    "resource_id": "res_bay_2"
+  },
+  {
+    "id": "ev0274",
+    "type": "service_completed",
+    "ts": "2026-09-02T19:59:00+05:30",
+    "entity_id": "c23",
+    "station_id": "st_bay",
+    "resource_id": "res_bay_2",
+    "duration_min": 14
+  },
+  {
+    "id": "ev0275",
+    "type": "queue_joined",
+    "ts": "2026-09-02T19:59:00+05:30",
+    "entity_id": "c23",
+    "station_id": "st_wash",
+    "step_index": 4
+  },
+  {
+    "id": "ev0312",
+    "type": "called",
+    "ts": "2026-09-02T19:59:00+05:30",
+    "entity_id": "c23",
+    "station_id": "st_wash",
+    "resource_id": "res_wash_1"
+  },
+  {
+    "id": "ev0313",
+    "type": "service_started",
+    "ts": "2026-09-02T19:59:00+05:30",
+    "entity_id": "c23",
+    "station_id": "st_wash",
+    "resource_id": "res_wash_1"
+  },
+  {
+    "id": "ev0314",
+    "type": "service_completed",
+    "ts": "2026-09-02T20:10:00+05:30",
+    "entity_id": "c23",
+    "station_id": "st_wash",
+    "resource_id": "res_wash_1",
+    "duration_min": 11
+  },
+  {
+    "id": "ev0327",
+    "type": "queue_joined",
+    "ts": "2026-09-02T20:10:00+05:30",
+    "entity_id": "c23",
+    "station_id": "st_billing",
+    "step_index": 5
+  },
+  {
+    "id": "ev0388",
+    "type": "called",
+    "ts": "2026-09-02T20:10:00+05:30",
+    "entity_id": "c23",
+    "station_id": "st_billing",
+    "resource_id": "res_billing_1"
+  },
+  {
+    "id": "ev0389",
+    "type": "service_started",
+    "ts": "2026-09-02T20:10:00+05:30",
+    "entity_id": "c23",
+    "station_id": "st_billing",
+    "resource_id": "res_billing_1"
+  },
+  {
+    "id": "ev0390",
+    "type": "service_completed",
+    "ts": "2026-09-02T20:17:00+05:30",
+    "entity_id": "c23",
+    "station_id": "st_billing",
+    "resource_id": "res_billing_1",
+    "duration_min": 7
+  },
+  {
+    "id": "ev0411",
+    "type": "journey_completed",
+    "ts": "2026-09-02T20:17:00+05:30",
+    "entity_id": "c23"
+  }
+]

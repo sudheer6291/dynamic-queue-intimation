@@ -1,0 +1,436 @@
+[
+  {
+    "id": "b01",
+    "display_token": "B-01",
+    "route_id": "route_standard",
+    "scheduled_arrival_min": 479,
+    "actual_arrival_min": 479,
+    "is_late_arrival": false,
+    "is_priority": false,
+    "is_no_show_candidate": false,
+    "wash_requested": false,
+    "scenario_tags": []
+  },
+  {
+    "id": "b02",
+    "display_token": "B-02",
+    "route_id": "route_standard",
+    "scheduled_arrival_min": 494,
+    "actual_arrival_min": 494,
+    "is_late_arrival": false,
+    "is_priority": false,
+    "is_no_show_candidate": false,
+    "wash_requested": true,
+    "scenario_tags": []
+  },
+  {
+    "id": "b03",
+    "display_token": "B-03",
+    "route_id": "route_standard",
+    "scheduled_arrival_min": 510,
+    "actual_arrival_min": 510,
+    "is_late_arrival": false,
+    "is_priority": false,
+    "is_no_show_candidate": false,
+    "wash_requested": false,
+    "scenario_tags": []
+  },
+  {
+    "id": "b04",
+    "display_token": "B-04",
+    "route_id": "route_standard",
+    "scheduled_arrival_min": 526,
+    "actual_arrival_min": 526,
+    "is_late_arrival": false,
+    "is_priority": false,
+    "is_no_show_candidate": false,
+    "wash_requested": false,
+    "scenario_tags": []
+  },
+  {
+    "id": "b05",
+    "display_token": "B-05",
+    "route_id": "route_standard",
+    "scheduled_arrival_min": 538,
+    "actual_arrival_min": 538,
+    "is_late_arrival": false,
+    "is_priority": true,
+    "is_no_show_candidate": false,
+    "wash_requested": true,
+    "scenario_tags": [
+      "priority_insert"
+    ]
+  },
+  {
+    "id": "b06",
+    "display_token": "B-06",
+    "route_id": "route_standard",
+    "scheduled_arrival_min": 557,
+    "actual_arrival_min": 557,
+    "is_late_arrival": false,
+    "is_priority": false,
+    "is_no_show_candidate": false,
+    "wash_requested": false,
+    "scenario_tags": []
+  },
+  {
+    "id": "b07",
+    "display_token": "B-07",
+    "route_id": "route_standard",
+    "scheduled_arrival_min": 567,
+    "actual_arrival_min": 567,
+    "is_late_arrival": false,
+    "is_priority": false,
+    "is_no_show_candidate": false,
+    "wash_requested": true,
+    "scenario_tags": []
+  },
+  {
+    "id": "b08",
+    "display_token": "B-08",
+    "route_id": "route_standard",
+    "scheduled_arrival_min": 583,
+    "actual_arrival_min": 583,
+    "is_late_arrival": false,
+    "is_priority": false,
+    "is_no_show_candidate": false,
+    "wash_requested": false,
+    "scenario_tags": []
+  },
+  {
+    "id": "b09",
+    "display_token": "B-09",
+    "route_id": "route_standard",
+    "scheduled_arrival_min": 601,
+    "actual_arrival_min": 601,
+    "is_late_arrival": false,
+    "is_priority": false,
+    "is_no_show_candidate": false,
+    "wash_requested": false,
+    "scenario_tags": []
+  },
+  {
+    "id": "b10",
+    "display_token": "B-10",
+    "route_id": "route_standard",
+    "scheduled_arrival_min": 616,
+    "actual_arrival_min": 616,
+    "is_late_arrival": false,
+    "is_priority": false,
+    "is_no_show_candidate": true,
+    "wash_requested": true,
+    "scenario_tags": [
+      "no_show"
+    ]
+  },
+  {
+    "id": "b11",
+    "display_token": "B-11",
+    "route_id": "route_standard",
+    "scheduled_arrival_min": 630,
+    "actual_arrival_min": 630,
+    "is_late_arrival": false,
+    "is_priority": false,
+    "is_no_show_candidate": false,
+    "wash_requested": true,
+    "scenario_tags": []
+  },
+  {
+    "id": "b12",
+    "display_token": "B-12",
+    "route_id": "route_standard",
+    "scheduled_arrival_min": 644,
+    "actual_arrival_min": 644,
+    "is_late_arrival": false,
+    "is_priority": false,
+    "is_no_show_candidate": false,
+    "wash_requested": false,
+    "scenario_tags": []
+  },
+  {
+    "id": "b13",
+    "display_token": "B-13",
+    "route_id": "route_standard",
+    "scheduled_arrival_min": 658,
+    "actual_arrival_min": 658,
+    "is_late_arrival": false,
+    "is_priority": false,
+    "is_no_show_candidate": false,
+    "wash_requested": true,
+    "scenario_tags": [
+      "long_journey_from_backlog"
+    ]
+  },
+  {
+    "id": "b14",
+    "display_token": "B-14",
+    "route_id": "route_standard",
+    "scheduled_arrival_min": 677,
+    "actual_arrival_min": 677,
+    "is_late_arrival": false,
+    "is_priority": false,
+    "is_no_show_candidate": false,
+    "wash_requested": false,
+    "scenario_tags": []
+  },
+  {
+    "id": "b15",
+    "display_token": "B-15",
+    "route_id": "route_standard",
+    "scheduled_arrival_min": 693,
+    "actual_arrival_min": 693,
+    "is_late_arrival": false,
+    "is_priority": false,
+    "is_no_show_candidate": false,
+    "wash_requested": true,
+    "scenario_tags": []
+  },
+  {
+    "id": "b16",
+    "display_token": "B-16",
+    "route_id": "route_standard",
+    "scheduled_arrival_min": 705,
+    "actual_arrival_min": 727,
+    "is_late_arrival": true,
+    "is_priority": false,
+    "is_no_show_candidate": false,
+    "wash_requested": false,
+    "scenario_tags": [
+      "late_arrival"
+    ]
+  },
+  {
+    "id": "b17",
+    "display_token": "B-17",
+    "route_id": "route_standard",
+    "scheduled_arrival_min": 719,
+    "actual_arrival_min": 719,
+    "is_late_arrival": false,
+    "is_priority": false,
+    "is_no_show_candidate": false,
+    "wash_requested": true,
+    "scenario_tags": []
+  },
+  {
+    "id": "b18",
+    "display_token": "B-18",
+    "route_id": "route_standard",
+    "scheduled_arrival_min": 733,
+    "actual_arrival_min": 733,
+    "is_late_arrival": false,
+    "is_priority": false,
+    "is_no_show_candidate": false,
+    "wash_requested": false,
+    "scenario_tags": []
+  },
+  {
+    "id": "b19",
+    "display_token": "B-19",
+    "route_id": "route_standard",
+    "scheduled_arrival_min": 747,
+    "actual_arrival_min": 747,
+    "is_late_arrival": false,
+    "is_priority": true,
+    "is_no_show_candidate": false,
+    "wash_requested": true,
+    "scenario_tags": [
+      "priority_insert"
+    ]
+  },
+  {
+    "id": "b20",
+    "display_token": "B-20",
+    "route_id": "route_standard",
+    "scheduled_arrival_min": 767,
+    "actual_arrival_min": 767,
+    "is_late_arrival": false,
+    "is_priority": false,
+    "is_no_show_candidate": false,
+    "wash_requested": true,
+    "scenario_tags": []
+  },
+  {
+    "id": "b21",
+    "display_token": "B-21",
+    "route_id": "route_standard",
+    "scheduled_arrival_min": 778,
+    "actual_arrival_min": 778,
+    "is_late_arrival": false,
+    "is_priority": false,
+    "is_no_show_candidate": false,
+    "wash_requested": false,
+    "scenario_tags": []
+  },
+  {
+    "id": "b22",
+    "display_token": "B-22",
+    "route_id": "route_standard",
+    "scheduled_arrival_min": 793,
+    "actual_arrival_min": 793,
+    "is_late_arrival": false,
+    "is_priority": false,
+    "is_no_show_candidate": false,
+    "wash_requested": true,
+    "scenario_tags": []
+  },
+  {
+    "id": "b23",
+    "display_token": "B-23",
+    "route_id": "route_standard",
+    "scheduled_arrival_min": 809,
+    "actual_arrival_min": 809,
+    "is_late_arrival": false,
+    "is_priority": false,
+    "is_no_show_candidate": false,
+    "wash_requested": false,
+    "scenario_tags": []
+  },
+  {
+    "id": "b24",
+    "display_token": "B-24",
+    "route_id": "route_standard",
+    "scheduled_arrival_min": 827,
+    "actual_arrival_min": 827,
+    "is_late_arrival": false,
+    "is_priority": false,
+    "is_no_show_candidate": false,
+    "wash_requested": false,
+    "scenario_tags": []
+  },
+  {
+    "id": "b25",
+    "display_token": "B-25",
+    "route_id": "route_standard",
+    "scheduled_arrival_min": 839,
+    "actual_arrival_min": 839,
+    "is_late_arrival": false,
+    "is_priority": false,
+    "is_no_show_candidate": false,
+    "wash_requested": true,
+    "scenario_tags": []
+  },
+  {
+    "id": "b26",
+    "display_token": "B-26",
+    "route_id": "route_standard",
+    "scheduled_arrival_min": 858,
+    "actual_arrival_min": 858,
+    "is_late_arrival": false,
+    "is_priority": false,
+    "is_no_show_candidate": true,
+    "wash_requested": false,
+    "scenario_tags": [
+      "no_show"
+    ]
+  },
+  {
+    "id": "b27",
+    "display_token": "B-27",
+    "route_id": "route_standard",
+    "scheduled_arrival_min": 869,
+    "actual_arrival_min": 869,
+    "is_late_arrival": false,
+    "is_priority": false,
+    "is_no_show_candidate": false,
+    "wash_requested": false,
+    "scenario_tags": []
+  },
+  {
+    "id": "b28",
+    "display_token": "B-28",
+    "route_id": "route_standard",
+    "scheduled_arrival_min": 883,
+    "actual_arrival_min": 883,
+    "is_late_arrival": false,
+    "is_priority": false,
+    "is_no_show_candidate": false,
+    "wash_requested": false,
+    "scenario_tags": []
+  },
+  {
+    "id": "b29",
+    "display_token": "B-29",
+    "route_id": "route_standard",
+    "scheduled_arrival_min": 899,
+    "actual_arrival_min": 899,
+    "is_late_arrival": false,
+    "is_priority": false,
+    "is_no_show_candidate": false,
+    "wash_requested": true,
+    "scenario_tags": []
+  },
+  {
+    "id": "b30",
+    "display_token": "B-30",
+    "route_id": "route_standard",
+    "scheduled_arrival_min": 914,
+    "actual_arrival_min": 914,
+    "is_late_arrival": false,
+    "is_priority": false,
+    "is_no_show_candidate": false,
+    "wash_requested": true,
+    "scenario_tags": []
+  },
+  {
+    "id": "b31",
+    "display_token": "B-31",
+    "route_id": "route_standard",
+    "scheduled_arrival_min": 932,
+    "actual_arrival_min": 932,
+    "is_late_arrival": false,
+    "is_priority": true,
+    "is_no_show_candidate": false,
+    "wash_requested": true,
+    "scenario_tags": [
+      "priority_insert"
+    ]
+  },
+  {
+    "id": "b32",
+    "display_token": "B-32",
+    "route_id": "route_standard",
+    "scheduled_arrival_min": 944,
+    "actual_arrival_min": 944,
+    "is_late_arrival": false,
+    "is_priority": false,
+    "is_no_show_candidate": false,
+    "wash_requested": false,
+    "scenario_tags": []
+  },
+  {
+    "id": "b33",
+    "display_token": "B-33",
+    "route_id": "route_standard",
+    "scheduled_arrival_min": 961,
+    "actual_arrival_min": 961,
+    "is_late_arrival": false,
+    "is_priority": false,
+    "is_no_show_candidate": false,
+    "wash_requested": false,
+    "scenario_tags": []
+  },
+  {
+    "id": "b34",
+    "display_token": "B-34",
+    "route_id": "route_standard",
+    "scheduled_arrival_min": 976,
+    "actual_arrival_min": 976,
+    "is_late_arrival": false,
+    "is_priority": false,
+    "is_no_show_candidate": false,
+    "wash_requested": false,
+    "scenario_tags": []
+  },
+  {
+    "id": "b35",
+    "display_token": "B-35",
+    "route_id": "route_standard",
+    "scheduled_arrival_min": 989,
+    "actual_arrival_min": 989,
+    "is_late_arrival": false,
+    "is_priority": false,
+    "is_no_show_candidate": false,
+    "wash_requested": true,
+    "scenario_tags": []
+  }
+]

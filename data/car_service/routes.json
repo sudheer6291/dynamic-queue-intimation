@@ -1,0 +1,34 @@
+[
+  {
+    "id": "route_standard",
+    "name_key": "route.standard",
+    "steps": [
+      { "step_index": 0, "station_id": "st_checkin", "conditional": false },
+      { "step_index": 1, "station_id": "st_bay", "conditional": false },
+      {
+        "step_index": 2,
+        "station_id": "st_diagnostic",
+        "conditional": true,
+        "condition_key": "diagnostic_needed",
+        "probability": 0.3
+      },
+      {
+        "step_index": 3,
+        "station_id": "st_bay",
+        "conditional": true,
+        "condition_key": "diagnostic_needed",
+        "probability": 0.3,
+        "revisit": true,
+        "service_time_override": { "median_min": 20, "p80_min": 35 }
+      },
+      {
+        "step_index": 4,
+        "station_id": "st_wash",
+        "conditional": true,
+        "condition_key": "wash_requested",
+        "probability": 0.6
+      },
+      { "step_index": 5, "station_id": "st_billing", "conditional": false }
+    ]
+  }
+]

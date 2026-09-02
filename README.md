@@ -112,10 +112,13 @@ rather than trusting a stale guess.
   actionable "go to X now" alert (suppressed unless there's real lead
   time — `display.min_lead_time_min`).
 - **Front desk** — a multi-station operator console (tabs per station):
-  live queue, Call Next → Confirm Arrival / No-show, priority insert,
-  pull-forward, and the live M5 suggestion banners with an Apply button.
-  Every button appends real events at the current clock time (and
+  live queue, Call Next → Confirm Arrival → Complete / No-show, priority
+  insert, pull-forward, and the live M5 suggestion banners with an Apply
+  button. Every button appends real events at the current clock time (and
   auto-pauses the clock first, so a manual action never races the replay).
+  Front desk can drive *any* station's queue end to end this way — verified
+  by walking a synthetic entity through an entire OPD route (reception →
+  consult → lab → revisit → pharmacy → done) using only these actions.
 - **Doctor view** — one station, one button. It completes whoever's
   in service (if anyone) and immediately calls the next — literally
   nothing else on the screen. `config.doctor_view_station_id` points it
@@ -142,15 +145,33 @@ seed):
 Front Desk surfaces both as a banner with an Apply button; Admin counts
 accepted pull-forwards as "slots recovered today."
 
-## M6 — vertical swap
+## M6 — vertical swap: car and bike servicing
 
-`data/vehicle_service/` is a second, unrelated vertical (check-in → a
-2-technician service bay → optional wash → billing) with its own
-config/stations/resources/routes/seed. Switching the "Vertical" dropdown
-in the top bar re-renders every screen with zero application-code
-changes — same engine, same views, different JSON. It also exercises a
-path the OPD data never does: a station with `capacity > 1` (two bays
-serving in parallel).
+Two more verticals, each a fully independent config/seed with zero
+application-code changes — same engine, same views, different JSON:
+
+- **`data/car_service/`** — check-in → a 2-technician service bay →
+  conditional diagnostic-and-return (the fair transfer test vs. OPD's
+  lab-and-return: same shape, different domain) → optional wash →
+  billing. Its own dramatic day: both bay technicians start 20 minutes
+  late, then — unlike OPD's full-stop pause — just *one* of the two bays
+  goes down for 30 minutes mid-day waiting on a delivered part, a
+  partial-capacity pause that exercises a code path OPD's single-resource
+  station never does (effective capacity drops to 1, not 0). Two
+  no-shows, a late arrival, five diagnostic-and-return visits, and one
+  job that turns out to be a much bigger repair than expected (tagged
+  `long_journey_gt_3h`).
+- **`data/bike_service/`** — check-in → a 3-mechanic bay → optional wash
+  → billing, deliberately *without* a revisit loop — a faster,
+  higher-volume, lower-drama day than either OPD or car servicing, which
+  is the point: it's the contrast case showing the estimator's rolling-mean
+  adaptation and pause-awareness still work when the shape is simpler.
+  One mechanic starts late, another is pulled away mid-day to collect a
+  spare part, two no-shows, a late arrival.
+
+Switching the "Vertical" dropdown in the top bar re-renders every screen
+immediately. Both new verticals also exercise `capacity > 1` stations
+(2 and 3 servers respectively) with genuinely parallel scheduling.
 
 ## Checkpoints (§8) — self-assessment
 
@@ -163,7 +184,7 @@ serving in parallel).
   (view components are explicitly exempted by this checkpoint); all
   user-visible tab labels are pulled from `config.locale.strings`
   (`screen.*` keys), so relabeling them per vertical needs no code change,
-  as the vehicle-service vertical demonstrates ("Customer view", "Bay view").
+  as the car/bike verticals demonstrate ("Customer view", "Bay view").
 - **Events are append-only.** Nothing in `deriveState.js` mutates an
   event; state is always rebuilt from the full log up to `now`.
 - **Every prediction is logged.** `prediction_shown` events are appended
@@ -195,8 +216,26 @@ billing, no native apps — as specified.
 ## Regenerating seed data
 
 ```bash
-node tools/generate-opd-seed.mjs        # data/opd/{entities,events}.json
-node tools/generate-vehicle-seed.mjs    # data/vehicle_service/{entities,events}.json
+node tools/generate-opd-seed.mjs    # data/opd/{entities,events}.json
+node tools/generate-car-seed.mjs    # data/car_service/{entities,events}.json
+node tools/generate-bike-seed.mjs   # data/bike_service/{entities,events}.json
 ```
 
-Both are deterministic (seeded PRNG) — re-running produces the same day.
+All three are deterministic (seeded PRNG) — re-running produces the same
+day. `tools/seedkit.mjs` holds the shared multi-resource FIFO station
+simulator (pause/priority/no-show support, including pauses triggered
+dynamically after a resource's Nth completion so they can never land
+mid-service) used by the car and bike generators; OPD's generator predates
+it and keeps its own inline version.
+
+A note on two bugs this uncovered along the way, in case you're extending
+a vertical yourself: (1) a station transition only exists in derived state
+if the generator emits an explicit `queue_joined` event for it — the
+in-memory arrival list you feed a simulator only drives *that simulator's*
+own scheduling, not the log; and (2) a pause window handed to the scheduler
+for timing purposes still needs its own `resource_paused`/`resource_resumed`
+events, or the state engine never finds out it happened. Both classes of
+bug are easy to introduce when hand-rolling a new station chain and easy to
+miss visually (the day still "runs," just with an empty-looking queue or
+a missing delay banner) — worth specifically checking for after any new
+generator script.
